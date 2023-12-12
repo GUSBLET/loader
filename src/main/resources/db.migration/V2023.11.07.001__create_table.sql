@@ -23,9 +23,6 @@ create table if not exists models
     brand_id            int references brands (id)
 );
 
-
-
 INSERT INTO accounts (login, password, role)
 VALUES ('admin', '$2a$10$seKGFkh9vSVkvLzipl6xNuFpEVsdzJAP05e9Twk2iTK6hpO3RH4sq', 'Admin');
---password: pupsen24
-
+--password: 

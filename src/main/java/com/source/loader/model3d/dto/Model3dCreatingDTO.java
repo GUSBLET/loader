@@ -4,6 +4,7 @@ import com.source.loader.brand.Brand;
 import com.source.loader.mapper.Mapper;
 import com.source.loader.model3d.Model3D;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,10 +25,12 @@ public class Model3dCreatingDTO implements Mapper<Model3dCreatingDTO, Model3D> {
 
     private String description;
 
+    @NotNull(message = "Enter file height polygon model")
     private MultipartFile heightPolygonPath;
 
     private MultipartFile backgroundPath;
 
+    @NotNull(message = "Enter file low polygon model")
     private MultipartFile lowPolygonPath;
 
     @Override
