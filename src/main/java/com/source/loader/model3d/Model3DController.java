@@ -38,7 +38,7 @@ public class Model3DController {
             return "model3d/create-model-form";
         }
         if(model3DService.createModel(dto))
-            return "model3d/create-model-form";
+            return "fragments/success";
         return "fragments/error";
     }
 }
