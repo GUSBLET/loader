@@ -58,7 +58,8 @@ public class SecurityConfig {
                         .defaultSuccessUrl("/model3d/controller-panel")
                         .permitAll()
                 )
-                .logout(logout -> logout.logoutSuccessUrl("/account/technical/login-page"))
+                .logout(logout ->  logout.logoutUrl("/account/technical/logout")
+                        .logoutSuccessUrl("/account/technical/login-page"))
                 .authorizeHttpRequests(authorize -> {
                     authorize.requestMatchers(
                             "/api/**",

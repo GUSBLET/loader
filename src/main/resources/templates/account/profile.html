@@ -7,7 +7,7 @@
 </head>
 <body>
 <main th:fragment="content(account)">
-    <a th:href="@{/account/login-page(logout=${account.id})}"
+    <a th:href="@{/account/technical/logout}" th:method="post"
        class="btn btn-primary btn-l g active" role="button" aria-pressed="true">log out</a>
 </main>
 </body>
