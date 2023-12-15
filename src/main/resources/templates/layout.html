@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}"></title>
+    <script defer src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="/css/modal.css">
+    <link rel="stylesheet" href="/css/pageable.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<nav th:replace="~{fragments/navbar :: navbar()}"></nav>
+
+<th:block th:switch="${content}">
+    <th:block th:case="'profile'">
+        <main th:replace="~{account/profile :: content(${account})}"></main>
+    </th:block>
+    <th:block th:case="'login-page'">
+        <main th:replace="~{account/login :: content(signIn)}"></main>
+    </th:block>
+    <th:block th:case="'registration-page'">
+        <main th:replace="~{account/registration :: content(signUp)}"></main>
+    </th:block>
+    <th:block th:case="'controller-panel'">
+        <main th:replace="~{model3d/controller-panel :: content(${model3DPage})}"></main>
+    </th:block>
+    <th:block th:case="'create-model-form'">
+        <main th:replace="~{model3d/create-model-form :: content(${model})}"></main>
+    </th:block>
+    <th:block th:case="'show-more'">
+        <main th:replace="~{model3d/show-more :: content(${model})}"></main>
+    </th:block>
+    <th:block th:case="'success'">
+        <main th:replace="~{fragments/success :: content(message)}"></main>
+    </th:block>
+    <th:block th:case="'error'">
+        <main th:replace="~{fragments/error :: content(message)}"></main>
+    </th:block>
+</th:block>
+
+<div th:replace="~{fragments/footer :: footer()}"></div>
+
+
+
+<div id="modal-temp" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div class="main-content">
+
+        </div>
+        <div style="padding-top: 10px" id="controller-panel">
+
+        </div>
+    </div>
+</div>
+
+<script src="/js/modal.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

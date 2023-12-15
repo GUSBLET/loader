@@ -1,6 +1,8 @@
 package com.source.loader.brand;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -12,22 +14,29 @@ public class BrandService {
         return brandRepository.existsByName(name);
     }
 
+    @Modifying
+    @Transactional
+    public Brand updateBrand(String brandName){
+        Brand brand = findBrandByName(brandName);
+        if(brand != null)
+            return brand;
+        brand = Brand.builder().name(brandName).build();
+        brandRepository.save(brand);
+        return brand;
+    }
+
     public void createNewBrand(String name){
         if(brandRepository.existsByName(name))
             return;
         Brand brand = Brand.builder()
-                .name(capitalizeBrandName(name))
+                .name(name)
                 .build();
         brandRepository.save(brand);
     }
 
     public Brand findBrandByName(String name){
-        return brandRepository.findByName(capitalizeBrandName(name)).get();
+        return brandRepository.findByName(name).orElse(null);
     }
 
-    private String capitalizeBrandName(String name){
-        if (name != null && !name.isEmpty())
-            return name.substring(0, 1).toUpperCase() + name.substring(1);
-        return name;
-    }
+
 }

@@ -1,0 +1,65 @@
+.custom-table {
+    /* Стили вашей таблицы */
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.table-header {
+    /* Стили заголовков таблицы */
+    background-color: #f2f2f2;
+    padding: 8px;
+    text-align: left;
+    font-weight: bold;
+}
+
+.table-cell {
+    /* Стили ячеек таблицы */
+    padding: 8px;
+}
+
+.show-link {
+    /* Стили ссылок "Show" */
+    text-decoration: none;
+    color: #3498db;
+}
+
+.btn-delete {
+    /* Стили кнопок "Delete" */
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.pagination {
+    /* Стили пагинации */
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination a {
+    /* Стили для кнопок пагинации */
+    color: #3498db;
+    padding: 8px 16px;
+    text-decoration: none;
+    border: 1px solid #ddd;
+    margin: 0 4px;
+    cursor: pointer;
+}
+
+.pagination a:hover {
+    /* Стили при наведении на кнопки пагинации */
+    background-color: #f2f2f2;
+}
+
+.current-page {
+    /* Стили текущей страницы */
+    background-color: #3498db;
+    color: #fff;
+    padding: 8px 16px;
+    border: 1px solid #3498db;
+    margin: 0 4px;
+}

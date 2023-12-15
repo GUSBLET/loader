@@ -1,9 +1,9 @@
 create table if not exists accounts
 (
-    id            bigserial primary key,
-    login         varchar(50) not null unique,
-    password      text        not null,
-    role          varchar(20) not null
+    id       bigserial primary key,
+    login    varchar(50) not null unique,
+    password text        not null,
+    role     varchar(20) not null
 );
 
 create table if not exists brands
@@ -14,7 +14,7 @@ create table if not exists brands
 
 create table if not exists models
 (
-    id                  bigserial primary key,
+    id                  uuid primary key,
     name                varchar(50) not null unique,
     description         varchar(500),
     low_polygon_path    text        not null unique,

@@ -46,45 +46,33 @@ public class SecurityConfig {
                 .build();
     }
 
-
-//    @Bean
-//    CorsConfigurationSource corsConfigurationSource() {
-//        CorsConfiguration configuration = new CorsConfiguration();
-//        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173/"));
-//        configuration.setAllowedMethods(Arrays.asList("GET","POST"));
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", configuration);
-//        return source;
-//    }
-
-
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-                .cors(cors -> cors.disable())
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(formLogin -> formLogin
                         .usernameParameter("login")
                         .passwordParameter("password")
-                        .loginPage("/account/login-page")
+                        .loginPage("/account/technical/login-page")
                         .loginProcessingUrl("/authenticate")
-                        .defaultSuccessUrl("/account/profile")
+                        .defaultSuccessUrl("/model3d/controller-panel")///account/profile
                         .permitAll()
                 )
-                .logout(logout -> logout.logoutSuccessUrl("/account/login-page"))
+                .logout(logout -> logout.logoutSuccessUrl("/account/technical/login-page"))
                 .authorizeHttpRequests(authorize -> {
                     authorize.requestMatchers(
                             "/api/**",
-                            "/account/login-page"
-                    ).permitAll();
-                    authorize.requestMatchers(
-                            HttpMethod.POST, "/api/get-model-page/**"
+                            "/account/login-page",
+                            "/account/technical/**"
+
                     ).permitAll();
                     authorize
                             .requestMatchers(
                                     "/account/profile",
                                     "/model3d/**",
-                                    "/model3d/create-model-form"
+                                    "/model3d/create-model-form",
+                                    "/model3d/update-model-form",
+                                    "/model3d/show-models**"
                             ).authenticated();
                 })
                 .build();

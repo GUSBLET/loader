@@ -8,7 +8,8 @@
 
 <main th:fragment="content(model)">
     <div class="container mt-5">
-        <form th:action="@{/model3d/create-model}" th:object="${model}" method="post" enctype="multipart/form-data">
+        <form th:action="@{/model3d/update-model}" th:object="${model}" method="post" enctype="multipart/form-data">
+            <input th:field="*{id}" readonly type="hidden" >
             <div class="form-group">
                 <label for="name">Name:</label>
                 <input th:field="*{name}" type="text" class="form-control" id="name" name="name">
@@ -29,20 +30,26 @@
             </div>
 
             <div class="form-group">
+                <h3>Current path to height polygon: </h3><p th:text="${model.currentHeightPolygonPath}"></p>
+                <input th:field="*{currentHeightPolygonPath}" readonly type="hidden" >
                 <label>File height polygon model:</label>
-                <input th:field="*{heightPolygonPath}" type="file" class="form-control-file" required>
+                <input th:field="*{heightPolygonPath}" type="file" class="form-control-file" >
                 <span style="color:red" th:if="${#fields.hasErrors('heightPolygonPath')}"
                       th:errors="*{heightPolygonPath}"></span>
             </div>
 
             <div class="form-group">
+                <h3>Current path to low polygon: </h3><p th:text="${model.currentLowPolygonPath}"></p>
+                <input th:field="*{currentLowPolygonPath}" readonly type="hidden" >
                 <label>File low polygon model:</label>
-                <input th:field="*{lowPolygonPath}" type="file" class="form-control-file" required>
+                <input th:field="*{lowPolygonPath}" type="file" class="form-control-file" >
                 <span style="color:red" th:if="${#fields.hasErrors('lowPolygonPath')}"
                       th:errors="*{lowPolygonPath}"></span>
             </div>
 
             <div class="form-group">
+                <h3>Current path to background: </h3> <p th:text="${model.currentBackgroundPath}"></p>
+                <input th:field="*{currentBackgroundPath}" readonly type="hidden" >
                 <label>File background:</label>
                 <input th:field="*{backgroundPath}" type="file" class="form-control-file">
                 <span style="color:red" th:if="${#fields.hasErrors('backgroundPath')}"

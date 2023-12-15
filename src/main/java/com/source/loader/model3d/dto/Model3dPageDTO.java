@@ -7,6 +7,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.zip.GZIPOutputStream;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,8 +24,6 @@ public class Model3dPageDTO implements Mapper<Model3dPageDTO, Model3D> {
 
     private String brand;
 
-    private String backgroundPath;
-
     private String heightPolygonPath;
 
     @Override
@@ -30,7 +33,6 @@ public class Model3dPageDTO implements Mapper<Model3dPageDTO, Model3D> {
                 .brand(entity.getBrand().getName())
                 .description(entity.getDescription())
                 .heightPolygonPath(entity.getHeightPolygonPath())
-                .backgroundPath(entity.getBackgroundPath())
                 .build();
     }
 

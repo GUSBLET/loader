@@ -1,10 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${title}"></title>
 </head>
 <body>
-<!--    <div th:replace="navbar :: navbar"></div>-->
+
+<main th:fragment="content(model3DPage)">
+    <table class="custom-table">
+        <thead>
+        <tr>
+            <th class="table-header">Id</th>
+            <th class="table-header">Name</th>
+            <th class="table-header">Brand</th>
+            <th class="table-header">Update</th>
+            <th class="table-header">Remove</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="model3D : ${model3DPage}" th:id="${model3D.id}">
+            <td th:text="${model3D.id}" class="table-cell"></td>
+            <td th:text="${model3D.name}" class="table-cell"></td>
+            <td th:text="${model3D.brand.name}" class="table-cell"></td>
+            <td class="table-cell"><a th:href="@{/model3d/show-more(id=${model3D.id})}" class="show-link">Show</a></td>
+            <td class="table-cell">
+                <button class="btn btn-delete" onclick="openModalRemove(this)" th:data-news-id="${model3D.id}"
+                        type="button">Delete
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+    <div class="pagination">
+    <span th:if="${model3DPage.hasPrevious()}">
+        <a th:href="@{/model3d/controller-panel(page=${model3DPage.number - 1})}" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+        </a>
+    </span>
+        <span th:each="pageNumber : ${#numbers.sequence(0, model3DPage.totalPages - 1)}">
+        <span th:if="${pageNumber == model3DPage.number}">
+            <span th:text="${pageNumber + 1}" class="current-page"></span>
+        </span>
+        <span th:unless="${pageNumber == model3DPage.number}">
+            <a th:href="@{/model3d/controller-panel(page=${pageNumber})}" th:text="${pageNumber + 1}"></a>
+        </span>
+    </span>
+        <span th:if="${model3DPage.hasNext()}">
+        <a th:href="@{/model3d/controller-panel(page=${model3DPage.number + 1})}" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+        </a>
+    </span>
+    </div>
+
+
+</main>
+
 </body>
 </html>

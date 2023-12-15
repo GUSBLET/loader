@@ -7,13 +7,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class Model3dCardDTO implements Mapper<Model3dCardDTO, Model3D> {
 
-    private Long id;
+    private UUID id;
 
     private String name;
 

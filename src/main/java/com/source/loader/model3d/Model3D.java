@@ -5,6 +5,9 @@ import com.source.loader.brand.Brand;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
+
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -14,9 +17,10 @@ import lombok.*;
 @NoArgsConstructor
 @Table(name = "models")
 public class Model3D {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(columnDefinition = "BINARY(16) primary key")
+    private UUID id;
 
     @Column(name = "name", columnDefinition = "varchar(50) not null unique")
     private String name;

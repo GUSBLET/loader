@@ -1,0 +1,91 @@
+const modalTemp = document.getElementById("modal-temp");
+const controllerPanel = document.getElementById('controller-panel');
+const modalContent = document.querySelector('.main-content');
+const span = document.getElementsByClassName("close")[0];
+
+span.onclick = function() {
+    modalTemp.style.display = "none";
+    const modalContent = document.querySelector('.main-content');
+    const controllerPanel = document.querySelector('#controller-panel');
+    while (controllerPanel.firstChild) {
+        controllerPanel.removeChild(controllerPanel.firstChild);
+    }
+    while (modalContent.firstChild) {
+        modalContent.removeChild(modalContent.firstChild);
+    }
+}
+
+window.onclick = function(event) {
+    if (event.target === modalTemp) {
+        modalTemp.style.display = "none";
+        const modalContent = document.querySelector('.main-content');
+        const controllerPanel = document.querySelector('#controller-panel');
+        while (controllerPanel.firstChild) {
+            controllerPanel.removeChild(controllerPanel.firstChild);
+        }
+        while (modalContent.firstChild) {
+            modalContent.removeChild(modalContent.firstChild);
+        }
+    }
+}
+
+
+function getCallModalWindow(url){
+    axios.get(url)
+        .then(response => {
+            modalContent.innerHTML = response.data;
+            modalTemp.appendChild(controllerPanel);
+
+            modalTemp.style.display = 'block';
+        }).catch(error => {
+        // Handle any errors that occur during the request
+        console.error('Error:', error);
+    });;
+
+
+}
+
+function deleteNewsConfirming(id){
+    axios.post('/model3d/delete-new-confirming?id='+ id)
+        .then(response => {
+            if(response.data){
+                const elementToDelete = document.getElementById(id);
+                if(elementToDelete){
+                    elementToDelete.remove();
+                    modalTemp.style.display = "none";
+                    const modalContent = document.querySelector('.main-content');
+                    const controllerPanel = document.querySelector('#controller-panel');
+                    while (controllerPanel.firstChild) {
+                        controllerPanel.removeChild(controllerPanel.firstChild);
+                    }
+                    while (modalContent.firstChild) {
+                        modalContent.removeChild(modalContent.firstChild);
+                    }
+                }
+
+                console.log('Delete successful:', response.data);
+            }
+            else{
+
+            }
+
+        })
+        .catch(error => {
+            // Handle any errors that occur during the request
+            console.error('Error:', error);
+        });
+}
+
+function openModalRemove(button){
+    const id = button.getAttribute('data-news-id');
+    const action = document.createElement("button");
+    action.textContent = "Delete";
+    action.className = "button-modal"
+    action.onclick = function (){
+        deleteNewsConfirming(id);
+    };
+
+    modalContent.appendChild(action);
+    modalTemp.appendChild(modalContent);
+    modalTemp.style.display = 'block';
+}
