@@ -33,7 +33,7 @@ public class Model3DRestController {
     }
 
 
-    @GetMapping("/get-cards")
+    @GetMapping("/get-page")
     public ResponseEntity<Page<Model3D>> getCardsPageable(@RequestParam(name = "page", defaultValue = "0") int page,
                                                           @RequestParam(name = "size", defaultValue = "20") int size){
         return ResponseEntity.status(HttpStatus.OK).body(model3DService.getTablePage(page, size));
