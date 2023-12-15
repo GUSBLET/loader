@@ -2,20 +2,22 @@ package com.source.loader.account;
 
 import com.source.loader.account.dtos.SignUpDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.Objects;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class AccountService implements UserDetailsService {
     private final AccountRepository accountRepository;
     private final PasswordEncoder passwordEncoder;
+    @Value("${secret.key}")
+    String SECRET_KEY;
+
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
@@ -28,8 +30,8 @@ public class AccountService implements UserDetailsService {
     }
 
     public boolean registration(SignUpDTO dto){
-        final String SECRET_KEY = "123";
-        return Objects.equals(dto.getSecretKey(), SECRET_KEY) && !createNewAccount(dto);
+
+        return Objects.equals(dto.getSecretKey(), SECRET_KEY) && createNewAccount(dto);
     }
 
     private boolean createNewAccount(SignUpDTO dto){
