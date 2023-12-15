@@ -55,14 +55,13 @@ public class SecurityConfig {
                         .passwordParameter("password")
                         .loginPage("/account/technical/login-page")
                         .loginProcessingUrl("/authenticate")
-                        .defaultSuccessUrl("/model3d/controller-panel")///account/profile
+                        .defaultSuccessUrl("/model3d/controller-panel")
                         .permitAll()
                 )
                 .logout(logout -> logout.logoutSuccessUrl("/account/technical/login-page"))
                 .authorizeHttpRequests(authorize -> {
                     authorize.requestMatchers(
                             "/api/**",
-                            "/account/login-page",
                             "/account/technical/**"
 
                     ).permitAll();
