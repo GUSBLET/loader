@@ -101,7 +101,7 @@ public class Model3DController {
             model.addAttribute("title", "create");
             model.addAttribute("model", dto);
             model.addAttribute("content", "create-model-form");
-            bindingResult.rejectValue("name", "error","secret key is wrong");
+            bindingResult.rejectValue("name", "error","name already exists");
         }
 
         return "layout";

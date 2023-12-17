@@ -21,6 +21,7 @@ public class FileRestController {
                 fileService.getResource(directory, filename);
         if(resource.isFile()){
             return ResponseEntity.ok()
+                    .header("Content-Disposition", "attachment; filename=" + filename)
                     .body(resource);
         }
         else {
