@@ -14,7 +14,7 @@ import java.util.UUID;
 public abstract class AbstractFileProcessing {
 
 
-    public final String ABSOLUTE_PATH = "/home/goose/files";
+    public final String ABSOLUTE_PATH = "/home/goose/files/";
 
     protected String generateUniqueFileName(String filename){
         return filename + UUID.randomUUID();
