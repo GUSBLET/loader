@@ -7,7 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ChangeFilePathDTO {
+public class FileNameSeparatorDTO {
 
     private String name;
 

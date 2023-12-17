@@ -38,20 +38,25 @@
             <span aria-hidden="true">&laquo;</span>
         </a>
     </span>
+
+        <span th:if="${model3DPage.getTotalElements() > 0}">
         <span th:each="pageNumber : ${#numbers.sequence(0, model3DPage.totalPages - 1)}">
-        <span th:if="${pageNumber == model3DPage.number}">
-            <span th:text="${pageNumber + 1}" class="current-page"></span>
-        </span>
-        <span th:unless="${pageNumber == model3DPage.number}">
-            <a th:href="@{/model3d/controller-panel(page=${pageNumber})}" th:text="${pageNumber + 1}"></a>
+            <span th:if="${pageNumber == model3DPage.number}">
+                <span th:text="${pageNumber + 1}" class="current-page"></span>
+            </span>
+            <span th:unless="${pageNumber == model3DPage.number}">
+                <a th:href="@{/model3d/controller-panel(page=${pageNumber})}" th:text="${pageNumber + 1}"></a>
+            </span>
         </span>
     </span>
+
         <span th:if="${model3DPage.hasNext()}">
         <a th:href="@{/model3d/controller-panel(page=${model3DPage.number + 1})}" aria-label="Next">
             <span aria-hidden="true">&raquo;</span>
         </a>
     </span>
     </div>
+
 
 
 </main>

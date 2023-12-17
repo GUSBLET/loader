@@ -15,8 +15,10 @@ public class FileRestController {
     private final FileService fileService;
 
     @GetMapping("/get-file")
-    public ResponseEntity<Resource> downloadFile(@RequestParam String path) {
-        Resource resource = fileService.getResource(path);
+    public ResponseEntity<Resource> downloadFile(@RequestParam String directory,
+                                                 @RequestParam String filename) {
+        Resource resource =
+                fileService.getResource(directory, filename);
         if(resource.isFile()){
             return ResponseEntity.ok()
                     .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + "\"")

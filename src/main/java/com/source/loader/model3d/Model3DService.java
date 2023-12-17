@@ -7,6 +7,9 @@ import com.source.loader.model3d.dto.Model3dCreatingDTO;
 import com.source.loader.model3d.dto.Model3dPageDTO;
 import com.source.loader.model3d.dto.Model3dUpdateDTO;
 import com.source.loader.technical.*;
+import com.source.loader.technical.file.strategy.BackgroundProcessing;
+import com.source.loader.technical.file.strategy.HeightPolygonFileProcessing;
+import com.source.loader.technical.file.strategy.LowPolygonFileProcessing;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
@@ -50,7 +53,7 @@ public class Model3DService {
     @Transactional
     public void removeModel(UUID id) {
         Model3D model3D = model3DRepository.findById(id).orElseThrow();
-        fileService.removeModelResources(model3D);
+        fileService.removeModelResourcesById(model3D.getId());
         model3DRepository.delete(model3D);
     }
 
@@ -91,9 +94,9 @@ public class Model3DService {
     public void updateModel3d(Model3dUpdateDTO dto) {
         capitalizeMainVariables(dto);
         Model3D model3D = dto.toEntity(dto);
-        model3D.setBackgroundPath(fileService.updateFile(dto.getBackgroundPath(), dto.getCurrentBackgroundPath(), model3D.getId()));
-        model3D.setHeightPolygonPath(fileService.updateFile(dto.getHeightPolygonPath(), dto.getCurrentHeightPolygonPath(), model3D.getId()));
-        model3D.setLowPolygonPath(fileService.updateFile(dto.getLowPolygonPath(), dto.getCurrentLowPolygonPath(), model3D.getId()));
+        model3D.setBackgroundPath(fileService.updateFile(dto.getBackgroundPath(), dto.getCurrentBackgroundPath(), model3D.getId(), new BackgroundProcessing()));
+        model3D.setHeightPolygonPath(fileService.updateFile(dto.getHeightPolygonPath(), dto.getCurrentHeightPolygonPath(), model3D.getId(), new HeightPolygonFileProcessing()));
+        model3D.setLowPolygonPath(fileService.updateFile(dto.getLowPolygonPath(), dto.getCurrentLowPolygonPath(), model3D.getId(), new LowPolygonFileProcessing()));
         model3D.setBrand(brandService.updateBrand(dto.getBrand()));
         model3DRepository.updateModel3DById(model3D.getId(), model3D.getName(), model3D.getDescription(),
                 model3D.getLowPolygonPath(), model3D.getHeightPolygonPath(), model3D.getBackgroundPath(),

@@ -104,7 +104,6 @@ public class Model3DController {
             bindingResult.rejectValue("name", "error","secret key is wrong");
         }
 
-
         return "layout";
     }
 

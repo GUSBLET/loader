@@ -36,19 +36,6 @@ public class Model3DRestController {
         return ResponseEntity.status(HttpStatus.OK).body(model3DService.getModel3dCardList());
     }
 
-
-    @GetMapping("/get-file")
-    public ResponseEntity<Resource> downloadFile(@RequestParam String filename) {
-        Resource resource = fileService.getResource(filename);
-        if(resource.isFile()){
-            return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + "\"")
-                    .body(resource);
-        }
-        else {
-            return ResponseEntity.notFound().build();
-        }
-    }
     
     @GetMapping("/get-page")
     public ResponseEntity<Page<Model3D>> getCardsPageable(@RequestParam(name = "page", defaultValue = "0") int page,
