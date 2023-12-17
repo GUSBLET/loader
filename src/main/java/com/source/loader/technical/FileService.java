@@ -5,6 +5,8 @@ import com.source.loader.model3d.dto.Model3dCreatingDTO;
 import lombok.Getter;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,12 +14,14 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.zip.GZIPOutputStream;
+import org.springframework.core.io.Resource;
 
 @Service
 @Getter
@@ -27,8 +31,26 @@ public class FileService {
     private String FOLDER_SPLITTER;
     @Value("${folder.path}")
     private String ABSOLUTE_PATH;
-    private final String NETWORK_PATH = "https://puppetpalm.com/files/";
+    @Value("${folder.network.path}")
+    private String NETWORK_PATH;
 
+
+    public Resource getResource(String filename){
+        try {
+            Path pathToFolder = Path.of(this.ABSOLUTE_PATH);
+            Path filePath = pathToFolder.resolve(filename).normalize();
+            Resource resource = new UrlResource(filePath.toUri());
+
+            if (resource.exists()) {
+                return resource;
+            }else {
+                return null;
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
 
     public Model3D saveResources(Model3D model3D, Model3dCreatingDTO dto) {
 

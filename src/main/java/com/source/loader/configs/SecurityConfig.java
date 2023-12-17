@@ -63,6 +63,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> {
                     authorize.requestMatchers(
                             "/api/**",
+                            "/files/**",
                             "/account/technical/**"
 
                     ).permitAll();
