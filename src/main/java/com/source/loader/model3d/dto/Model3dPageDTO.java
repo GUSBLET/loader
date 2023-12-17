@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.UUID;
 import java.util.zip.GZIPOutputStream;
 
 @Data
@@ -17,6 +18,8 @@ import java.util.zip.GZIPOutputStream;
 @NoArgsConstructor
 @Builder
 public class Model3dPageDTO implements Mapper<Model3dPageDTO, Model3D> {
+
+    private UUID id;
 
     private String name;
 
@@ -26,6 +29,8 @@ public class Model3dPageDTO implements Mapper<Model3dPageDTO, Model3D> {
 
     private String heightPolygonPath;
 
+    private String backgroundPath;
+
     @Override
     public Model3dPageDTO toDto(Model3D entity) {
         return Model3dPageDTO.builder()
@@ -33,6 +38,8 @@ public class Model3dPageDTO implements Mapper<Model3dPageDTO, Model3D> {
                 .brand(entity.getBrand().getName())
                 .description(entity.getDescription())
                 .heightPolygonPath(entity.getHeightPolygonPath())
+                .backgroundPath(entity.getBackgroundPath())
+                .id(entity.getId())
                 .build();
     }
 
