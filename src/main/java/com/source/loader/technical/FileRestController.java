@@ -17,7 +17,7 @@ public class FileRestController {
 
     private final FileService fileService;
 
-    @GetMapping("/files/{filename:.+}")
+    @GetMapping("/get-file{filename:.+}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String filename) {
         Resource resource = fileService.getResource(filename);
         if(resource.isFile()){
