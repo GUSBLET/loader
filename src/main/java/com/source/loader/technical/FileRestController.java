@@ -5,10 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/files")
@@ -17,9 +14,9 @@ public class FileRestController {
 
     private final FileService fileService;
 
-    @GetMapping("/get-file{filename:.+}")
-    public ResponseEntity<Resource> downloadFile(@PathVariable String filename) {
-        Resource resource = fileService.getResource(filename);
+    @GetMapping("/get-file")
+    public ResponseEntity<Resource> downloadFile(@RequestParam String path) {
+        Resource resource = fileService.getResource(path);
         if(resource.isFile()){
             return ResponseEntity.ok()
                     .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + "\"")

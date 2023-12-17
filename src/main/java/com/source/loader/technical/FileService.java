@@ -35,10 +35,10 @@ public class FileService {
     private String NETWORK_PATH;
 
 
-    public Resource getResource(String filename){
+    public Resource getResource(String path){
         try {
             Path pathToFolder = Path.of(this.ABSOLUTE_PATH);
-            Path filePath = pathToFolder.resolve(filename).normalize();
+            Path filePath = pathToFolder.resolve(convertNetworkPathToAbsolutePath(path)).normalize();
             Resource resource = new UrlResource(filePath.toUri());
 
             if (resource.exists()) {
@@ -51,6 +51,8 @@ public class FileService {
             return null;
         }
     }
+
+
 
     public Model3D saveResources(Model3D model3D, Model3dCreatingDTO dto) {
 
