@@ -38,9 +38,13 @@ public class Model3DRestController {
 
     
     @GetMapping("/get-page")
-    public ResponseEntity<Page<Model3D>> getCardsPageable(@RequestParam(name = "page", defaultValue = "0") int page,
-                                                          @RequestParam(name = "size", defaultValue = "20") int size){
-        return ResponseEntity.status(HttpStatus.OK).body(model3DService.getTablePage(page, size));
+    public ResponseEntity<Page<Model3dPageDTO>> getCardsPageable(@RequestParam(name = "page", defaultValue = "0") int page,
+                                                          @RequestParam(name = "size", defaultValue = "8") int size){
+        Page<Model3D> buffer = model3DService.getTablePage(page, size);
+        Model3dPageDTO dto = new Model3dPageDTO();
+        Page<Model3dPageDTO> result = buffer.map(dto::toDto);
+
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
 }
