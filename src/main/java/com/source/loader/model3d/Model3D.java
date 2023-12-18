@@ -31,8 +31,8 @@ public class Model3D {
     @Column(name = "low_polygon_path", columnDefinition = "text not null unique")
     private String lowPolygonPath;
 
-    @Column(name = "height_polygon_path", columnDefinition = "text not null unique")
-    private String heightPolygonPath;
+    @Column(name = "high_polygon_path", columnDefinition = "text not null unique")
+    private String highPolygonPath;
 
     @Column(name = "background_path", columnDefinition = "text unique")
     private String backgroundPath;

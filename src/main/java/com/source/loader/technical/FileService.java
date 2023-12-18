@@ -55,7 +55,7 @@ public class FileService {
         fileProcessing = new LowPolygonFileProcessing();
         model3D.setLowPolygonPath(fileProcessing.processSaveFile(dto.getLowPolygonPath(), model3D.getId()));
         fileProcessing = new HeightPolygonFileProcessing();
-        model3D.setHeightPolygonPath(fileProcessing.processSaveFile( dto.getHeightPolygonPath(), model3D.getId()));
+        model3D.setHighPolygonPath(fileProcessing.processSaveFile( dto.getHighPolygonPath(), model3D.getId()));
         return model3D;
     }
 

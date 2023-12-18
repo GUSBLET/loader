@@ -31,7 +31,7 @@ public class Model3dUpdateDTO implements Mapper<Model3dUpdateDTO, Model3D> {
 
     private String currentBackgroundPath;
 
-    private String currentHeightPolygonPath;
+    private String currentHighPolygonPath;
 
     private String currentLowPolygonPath;
 
@@ -49,7 +49,7 @@ public class Model3dUpdateDTO implements Mapper<Model3dUpdateDTO, Model3D> {
                 .description(entity.getDescription())
                 .currentBackgroundPath(entity.getBackgroundPath())
                 .currentLowPolygonPath(entity.getLowPolygonPath())
-                .currentHeightPolygonPath(entity.getHeightPolygonPath())
+                .currentHighPolygonPath(entity.getHighPolygonPath())
                 .brand(entity.getBrand().getName())
                 .build();
     }

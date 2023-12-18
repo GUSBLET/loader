@@ -26,7 +26,7 @@ public class Model3dCreatingDTO implements Mapper<Model3dCreatingDTO, Model3D> {
     private String description;
 
     @NotNull(message = "Enter file height polygon model")
-    private MultipartFile heightPolygonPath;
+    private MultipartFile highPolygonPath;
 
     private MultipartFile backgroundPath;
 
