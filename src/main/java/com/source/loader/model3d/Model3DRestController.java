@@ -37,7 +37,7 @@ public class Model3DRestController {
     }
 
     
-    @GetMapping("/get-page")
+    @GetMapping("/get-showcase-page")
     public ResponseEntity<Page<Model3dPageDTO>> getCardsPageable(@RequestParam(name = "page", defaultValue = "0") int page,
                                                           @RequestParam(name = "size", defaultValue = "8") int size){
         Page<Model3D> buffer = model3DService.getTablePage(page, size);

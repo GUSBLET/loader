@@ -27,9 +27,8 @@ public class Model3dPageDTO implements Mapper<Model3dPageDTO, Model3D> {
 
     private String brand;
 
-    private String highPolygonPath;
+    private String lowPolygonPath;
 
-    private String backgroundPath;
 
     @Override
     public Model3dPageDTO toDto(Model3D entity) {
@@ -37,8 +36,7 @@ public class Model3dPageDTO implements Mapper<Model3dPageDTO, Model3D> {
                 .name(entity.getName())
                 .brand(entity.getBrand().getName())
                 .description(entity.getDescription())
-                .highPolygonPath(entity.getHighPolygonPath())
-                .backgroundPath(entity.getBackgroundPath())
+                .lowPolygonPath(entity.getHighPolygonPath())
                 .id(entity.getId())
                 .build();
     }
