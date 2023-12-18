@@ -3,6 +3,7 @@ package com.source.loader.model3d;
 import com.source.loader.brand.Brand;
 import com.source.loader.brand.BrandService;
 import com.source.loader.model3d.dto.Model3dCreatingDTO;
+import com.source.loader.model3d.dto.Model3dPageDTO;
 import com.source.loader.model3d.dto.Model3dShowcasePageDTO;
 import com.source.loader.model3d.dto.Model3dUpdateDTO;
 import com.source.loader.technical.*;
@@ -81,10 +82,10 @@ public class Model3DService {
         return dto.toDtoList(result);
     }
 
-    public Model3dShowcasePageDTO getModel3dPageById(UUID id) {
+    public Model3dPageDTO getModel3dPageById(UUID id) {
         Optional<Model3D> model3D = model3DRepository.findById(id);
         if (model3D.isPresent()) {
-            Model3dShowcasePageDTO dto = new Model3dShowcasePageDTO();
+            Model3dPageDTO dto = new Model3dPageDTO();
             return dto.toDto(model3D.get());
         }
         return null;

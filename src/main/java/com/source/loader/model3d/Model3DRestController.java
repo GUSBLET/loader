@@ -1,8 +1,8 @@
 package com.source.loader.model3d;
 
 
+import com.source.loader.model3d.dto.Model3dPageDTO;
 import com.source.loader.model3d.dto.Model3dShowcasePageDTO;
-import com.source.loader.technical.FileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -17,12 +17,11 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class Model3DRestController {
     private final Model3DService model3DService;
-    private FileService fileService;
 
 
     @PostMapping("/get-model-page/{id}")
-    public ResponseEntity<Model3dShowcasePageDTO> getPageData(@PathVariable UUID id){
-        Model3dShowcasePageDTO dto = model3DService.getModel3dPageById(id);
+    public ResponseEntity<Model3dPageDTO> getPageData(@PathVariable UUID id){
+        Model3dPageDTO dto = model3DService.getModel3dPageById(id);
         if(dto == null)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         return ResponseEntity.status(HttpStatus.OK).body(dto);
