@@ -13,23 +13,17 @@ public class HeightPolygonFileProcessing extends AbstractFileProcessing {
     @Override
     public String processSaveFile(MultipartFile file, UUID directory) {
         FileNameSeparatorDTO dto = removeExtension(Objects.requireNonNull(file.getOriginalFilename()));
-        CachingFile cachingFile = new CachingFile();
         String fileUniqueName = generateUniqueFileName(dto.getName());
         saveFile(file, ABSOLUTE_PATH + directory + "/" + fileUniqueName + dto.getType());
-        cachingFile.saveFileInGzip(ABSOLUTE_PATH + directory + "/" + fileUniqueName, dto.getType());
-        removeFileByPath(ABSOLUTE_PATH + directory + "/" + fileUniqueName + dto.getType());
-        return fileUniqueName + ".gz";
+        return fileUniqueName + dto.getType();
     }
 
     @Override
     public String processUpdateFile(MultipartFile newFile, String currentFilePath, String directory) {
         FileNameSeparatorDTO dto = removeExtension(Objects.requireNonNull(newFile.getOriginalFilename()));
-        CachingFile cachingFile = new CachingFile();
         String fileUniqueName = generateUniqueFileName(dto.getName());
         saveFile(newFile, ABSOLUTE_PATH + directory + "/" + fileUniqueName + dto.getType());
         removeFileByPath(ABSOLUTE_PATH + directory + "/" + currentFilePath);
-        cachingFile.saveFileInGzip(ABSOLUTE_PATH + directory + "/" + fileUniqueName, dto.getType());
-        removeFileByPath(ABSOLUTE_PATH + directory + "/" + fileUniqueName + dto.getType());
-        return fileUniqueName + ".gz";
+        return fileUniqueName + dto.getType();
     }
 }
