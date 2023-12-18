@@ -32,9 +32,9 @@
             <div class="form-group">
                 <h3>Current path to high polygon: </h3><p th:text="${model.currentHighPolygonPath}"></p>
                 <input th:field="*{currentHighPolygonPath}" readonly type="hidden" >
-                <label>File height polygon model:</label>
+                <label>File high polygon model:</label>
                 <input th:field="*{highPolygonPath}" type="file" class="form-control-file" >
-                <span style="color:red" th:if="${#fields.hasErrors('heightPolygonPath')}"
+                <span style="color:red" th:if="${#fields.hasErrors('highPolygonPath')}"
                       th:errors="*{highPolygonPath}"></span>
             </div>
 

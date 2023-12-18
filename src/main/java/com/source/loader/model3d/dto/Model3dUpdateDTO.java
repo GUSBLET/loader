@@ -35,7 +35,7 @@ public class Model3dUpdateDTO implements Mapper<Model3dUpdateDTO, Model3D> {
 
     private String currentLowPolygonPath;
 
-    private MultipartFile heightPolygonPath;
+    private MultipartFile highPolygonPath;
 
     private MultipartFile backgroundPath;
 

@@ -31,7 +31,7 @@
             <div class="form-group">
                 <label>File high polygon model:</label>
                 <input th:field="*{highPolygonPath}" type="file" class="form-control-file" required>
-                <span style="color:red" th:if="${#fields.hasErrors('heightPolygonPath')}"
+                <span style="color:red" th:if="${#fields.hasErrors('highPolygonPath')}"
                       th:errors="*{highPolygonPath}"></span>
             </div>
 

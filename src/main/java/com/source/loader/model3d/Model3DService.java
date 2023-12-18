@@ -95,7 +95,7 @@ public class Model3DService {
         capitalizeMainVariables(dto);
         Model3D model3D = dto.toEntity(dto);
         model3D.setBackgroundPath(fileService.updateFile(dto.getBackgroundPath(), dto.getCurrentBackgroundPath(), model3D.getId(), new BackgroundProcessing()));
-        model3D.setHighPolygonPath(fileService.updateFile(dto.getHeightPolygonPath(), dto.getCurrentHighPolygonPath(), model3D.getId(), new HeightPolygonFileProcessing()));
+        model3D.setHighPolygonPath(fileService.updateFile(dto.getHighPolygonPath(), dto.getCurrentHighPolygonPath(), model3D.getId(), new HeightPolygonFileProcessing()));
         model3D.setLowPolygonPath(fileService.updateFile(dto.getLowPolygonPath(), dto.getCurrentLowPolygonPath(), model3D.getId(), new LowPolygonFileProcessing()));
         model3D.setBrand(brandService.updateBrand(dto.getBrand()));
         model3DRepository.updateModel3DById(model3D.getId(), model3D.getName(), model3D.getDescription(),
