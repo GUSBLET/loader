@@ -57,9 +57,12 @@ public class SecurityConfig {
                         .loginProcessingUrl("/authenticate")
                         .defaultSuccessUrl("/model3d/controller-panel")
                         .permitAll()
-                )
+                ).sessionManagement(s -> {
+                    s.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
+                })
                 .logout(logout ->  logout.logoutUrl("/account/technical/logout")
                         .logoutSuccessUrl("/account/technical/login-page"))
+                .exceptionHandling(e -> e.accessDeniedPage("/account/technical/login-page"))
                 .authorizeHttpRequests(authorize -> {
                     authorize.requestMatchers(
                             "/api/**",
