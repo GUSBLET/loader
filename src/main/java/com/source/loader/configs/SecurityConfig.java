@@ -62,11 +62,12 @@ public class SecurityConfig {
                 })
                 .logout(logout ->  logout.logoutUrl("/account/technical/logout")
                         .logoutSuccessUrl("/account/technical/login-page"))
-                .exceptionHandling(e -> e.accessDeniedPage("/account/technical/login-page"))
+                .exceptionHandling(e -> e.accessDeniedPage("/"))
                 .authorizeHttpRequests(authorize -> {
                     authorize.requestMatchers(
                             "/api/**",
                             "/files/**",
+                            "/",
                             "/account/technical/**"
 
                     ).permitAll();

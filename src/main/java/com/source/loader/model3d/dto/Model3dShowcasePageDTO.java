@@ -29,7 +29,7 @@ public class Model3dShowcasePageDTO implements Mapper<Model3dShowcasePageDTO, Mo
         return Model3dShowcasePageDTO.builder()
                 .name(entity.getName())
                 .brand(entity.getBrand().getName())
-                .lowPolygonPath(entity.getHighPolygonPath())
+                .lowPolygonPath(entity.getLowPolygonPath())
                 .id(entity.getId())
                 .build();
     }
