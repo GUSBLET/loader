@@ -7,7 +7,8 @@
 <body>
 
 <main th:fragment="content(model)">
-    <div class="container-model">
+    <div class="container">
+    <div class="container-model" style="height: 900px;">
         <h1 class="model-title">Add Model</h1>
         <form th:action="@{/model3d/create-model}" th:object="${model}" method="post" enctype="multipart/form-data" class="model-form">
             <div class="input-model-container">
@@ -23,19 +24,19 @@
                 <input th:field="*{brand}" type="text" id="brand" placeholder="Type brand name...">
                 <span style="color:red" th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}"></span>
 
-                <label for="highPolygonPath" class="custom-file-label">Choose High Polygon Model</label>
-                <input th:field="*{highPolygonPath}" type="file" id="highPolygonPath" required>
+                <label for="highPolygonPath">Choose High Polygon Model</label>
+                <input th:field="*{highPolygonPath}" type="file" id="highPolygonPath" accept=".glb" required>
                 <span style="color:red" th:if="${#fields.hasErrors('highPolygonPath')}"
                       th:errors="*{highPolygonPath}"></span>
 
-                <label for="lowPolygonPath" class="custom-file-label">Choose Low Polygon Model</label>
-                <input th:field="*{lowPolygonPath}" type="file" id="lowPolygonPath" required>
+                <label for="lowPolygonPath" c>Choose Low Polygon Model</label>
+                <input th:field="*{lowPolygonPath}" type="file" id="lowPolygonPath" accept=".glb" required>
                 <span style="color:red" th:if="${#fields.hasErrors('lowPolygonPath')}"
                       th:errors="*{lowPolygonPath}"></span>
 
 
-                <label for="backgroundPath" class="custom-file-label">Choose Background</label>
-                <input th:field="*{backgroundPath}" type="file" id="backgroundPath" required>
+                <label for="backgroundPath" >Choose Background</label>
+                <input th:field="*{backgroundPath}" accept=".jpg" type="file" id="backgroundPath" required>
                 <span style="color:red" th:if="${#fields.hasErrors('backgroundPath')}"
                       th:errors="*{backgroundPath}"></span>
             </div>
@@ -43,6 +44,7 @@
                 <button type="submit" class="btn-login">Submit</button>
             </div>
         </form>
+    </div>
     </div>
 
 </main>
