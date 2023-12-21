@@ -55,13 +55,13 @@ public class SecurityConfig {
                         .passwordParameter("password")
                         .loginPage("/account/technical/login-page")
                         .loginProcessingUrl("/authenticate")
-                        .defaultSuccessUrl("/")
+                        .defaultSuccessUrl("https://puppetpalm.com:9999/")
                         .permitAll()
                 ).sessionManagement(s -> {
                     s.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
                 })
                 .logout(logout ->  logout.logoutUrl("/account/technical/logout")
-                        .logoutSuccessUrl("/account/technical/login-page"))
+                        .logoutSuccessUrl("https://puppetpalm.com:9999/account/technical/login-page"))
                 .exceptionHandling(e -> e.accessDeniedPage("/"))
                 .authorizeHttpRequests(authorize -> {
                     authorize.requestMatchers(
