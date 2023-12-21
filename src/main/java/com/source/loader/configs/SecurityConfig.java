@@ -53,7 +53,7 @@ public class SecurityConfig {
                 .formLogin(formLogin -> formLogin
                         .usernameParameter("login")
                         .passwordParameter("password")
-                        .loginPage("/account/technical/login-page")
+                        .loginPage("https://puppetpalm.com:9999/account/technical/login-page")
                         .loginProcessingUrl("/authenticate")
                         .defaultSuccessUrl("https://puppetpalm.com:9999/")
                         .permitAll()
