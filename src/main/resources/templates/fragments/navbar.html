@@ -17,9 +17,10 @@
 
         <th:block sec:authorize="isAuthenticated()">
             <li class="nav-item">
-                <a class="btn-primary" href="/account/profile">Profile</a>
                 <a class="btn-primary" href="/model3d/controller-panel">Panel</a>
                 <a class="btn-primary" href="/model3d/create-model-form">Create form</a>
+                <a th:href="@{/account/technical/logout}" th:method="post"
+                   class="btn-primary" role="button">Log out</a>
             </li>
         </th:block>
         <th:block sec:authorize="!isAuthenticated()">

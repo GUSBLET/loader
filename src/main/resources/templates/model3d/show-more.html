@@ -7,57 +7,50 @@
 <body>
 
 <main th:fragment="content(model)">
-    <div class="container mt-5">
-        <form th:action="@{/model3d/update-model}" th:object="${model}" method="post" enctype="multipart/form-data">
-            <input th:field="*{id}" readonly type="hidden" >
-            <div class="form-group">
-                <label for="name">Name:</label>
-                <input th:field="*{name}" type="text" class="form-control" id="name" name="name">
-                <span style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
-            </div>
+    <div class="container">
+        <div class="container-model">
+            <h1 class="model-title">Add Model</h1>
+            <form th:action="@{/model3d/update-model}" th:object="${model}" method="post" enctype="multipart/form-data" class="model-form">
+                <input th:field="*{id}" readonly type="hidden" >
+                <div class="input-model-container">
+                    <label for="name">Name</label>
+                    <input th:field="*{name}" type="text" id="name" placeholder="Type name..." >
+                    <span style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
 
-            <div class="form-group">
-                <label for="description">Description:</label>
-                <textarea th:field="*{description}" class="form-control" id="description" name="description" rows="4"
-                          maxlength="500"></textarea>
-                <span style="color:red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
-            </div>
+                    <label for="description">Description</label>
+                    <textarea th:field="*{description}" id="description" placeholder="Type description..." maxlength="500"></textarea>
+                    <span style="color:red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
 
-            <div class="form-group">
-                <label for="brand">Brand:</label>
-                <input th:field="*{brand}" type="text" class="form-control" id="brand" name="brand">
-                <span style="color:red" th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}"></span>
-            </div>
+                    <label for="brand">Brand</label>
+                    <input th:field="*{brand}" type="text" id="brand" placeholder="Type brand name...">
+                    <span style="color:red" th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}"></span>
 
-            <div class="form-group">
-                <h3>Current path to high polygon: </h3><p th:text="${model.currentHighPolygonPath}"></p>
-                <input th:field="*{currentHighPolygonPath}" readonly type="hidden" >
-                <label>File high polygon model:</label>
-                <input th:field="*{highPolygonPath}" type="file" class="form-control-file" >
-                <span style="color:red" th:if="${#fields.hasErrors('highPolygonPath')}"
-                      th:errors="*{highPolygonPath}"></span>
-            </div>
+                    <label for="currentHighPolygonPath">High Polygon Path</label>
+                    <input th:field="*{currentHighPolygonPath}" type="text" id="currentHighPolygonPath" readonly value="empty">
+                    <label for="highPolygonPath" class="custom-file-label">Choose High Polygon Model</label>
+                    <input th:field="*{highPolygonPath}" type="file" id="highPolygonPath" >
+                    <span style="color:red" th:if="${#fields.hasErrors('highPolygonPath')}"
+                          th:errors="*{highPolygonPath}"></span>
 
-            <div class="form-group">
-                <h3>Current path to low polygon: </h3><p th:text="${model.currentLowPolygonPath}"></p>
-                <input th:field="*{currentLowPolygonPath}" readonly type="hidden" >
-                <label>File low polygon model:</label>
-                <input th:field="*{lowPolygonPath}" type="file" class="form-control-file" >
-                <span style="color:red" th:if="${#fields.hasErrors('lowPolygonPath')}"
-                      th:errors="*{lowPolygonPath}"></span>
-            </div>
+                    <label for="currentLowPolygonPath">Low Polygon Path</label>
+                    <input th:field="*{currentLowPolygonPath}" type="text" id="currentLowPolygonPath" readonly value="empty">
+                    <label for="lowPolygonPath" class="custom-file-label">Choose Low Polygon Model</label>
+                    <input th:field="*{lowPolygonPath}" type="file" id="lowPolygonPath" >
+                    <span style="color:red" th:if="${#fields.hasErrors('lowPolygonPath')}"
+                          th:errors="*{lowPolygonPath}"></span>
 
-            <div class="form-group">
-                <h3>Current path to background: </h3> <p th:text="${model.currentBackgroundPath}"></p>
-                <input th:field="*{currentBackgroundPath}" readonly type="hidden" >
-                <label>File background:</label>
-                <input th:field="*{backgroundPath}" type="file" class="form-control-file">
-                <span style="color:red" th:if="${#fields.hasErrors('backgroundPath')}"
-                      th:errors="*{backgroundPath}"></span>
-            </div>
-
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+                    <label for="currentBackgroundPath">Background Path</label>
+                    <input th:field="*{currentBackgroundPath}" type="text" id="currentBackgroundPath" readonly value="empty">
+                    <label for="backgroundPath" class="custom-file-label">Choose Background</label>
+                    <input th:field="*{backgroundPath}" type="file" id="backgroundPath" >
+                    <span style="color:red" th:if="${#fields.hasErrors('backgroundPath')}"
+                          th:errors="*{backgroundPath}"></span>
+                </div>
+                <div class="btn-login-container">
+                    <button type="submit" class="btn-login">Submit</button>
+                </div>
+            </form>
+        </div>
     </div>
 
 </main>

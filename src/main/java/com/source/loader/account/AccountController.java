@@ -68,15 +68,4 @@ public class AccountController {
 
         return "layout";
     }
-
-    @GetMapping("/profile")
-    private String getControllerPanel(Model model, Authentication authentication) {
-        Account account = accountService.findUserByLogin(authentication.getName());
-        model.addAttribute("account", account);
-        model.addAttribute("title", "profile");
-        model.addAttribute("content", "profile");
-        return "layout";
-    }
-
-
 }

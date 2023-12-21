@@ -55,7 +55,7 @@ public class SecurityConfig {
                         .passwordParameter("password")
                         .loginPage("/account/technical/login-page")
                         .loginProcessingUrl("/authenticate")
-                        .defaultSuccessUrl("/model3d/controller-panel")
+                        .defaultSuccessUrl("/")
                         .permitAll()
                 ).sessionManagement(s -> {
                     s.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
@@ -73,7 +73,6 @@ public class SecurityConfig {
                     ).permitAll();
                     authorize
                             .requestMatchers(
-                                    "/account/profile",
                                     "/model3d/**",
                                     "/model3d/create-model-form",
                                     "/model3d/update-model-form",

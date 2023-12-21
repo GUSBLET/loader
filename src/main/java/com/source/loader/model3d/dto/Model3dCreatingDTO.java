@@ -28,6 +28,7 @@ public class Model3dCreatingDTO implements Mapper<Model3dCreatingDTO, Model3D> {
     @NotNull(message = "Enter file height polygon model")
     private MultipartFile highPolygonPath;
 
+    @NotNull(message = "Enter file background of model")
     private MultipartFile backgroundPath;
 
     @NotNull(message = "Enter file low polygon model")

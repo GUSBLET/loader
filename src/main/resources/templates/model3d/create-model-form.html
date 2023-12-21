@@ -7,49 +7,41 @@
 <body>
 
 <main th:fragment="content(model)">
-    <div class="container mt-5">
-        <form th:action="@{/model3d/create-model}" th:object="${model}" method="post" enctype="multipart/form-data">
-            <div class="form-group">
-                <label for="name">Name:</label>
-                <input th:field="*{name}" type="text" class="form-control" id="name" name="name">
+    <div class="container-model">
+        <h1 class="model-title">Add Model</h1>
+        <form th:action="@{/model3d/create-model}" th:object="${model}" method="post" enctype="multipart/form-data" class="model-form">
+            <div class="input-model-container">
+                <label for="name">Name</label>
+                <input th:field="*{name}" type="text" id="name" placeholder="Type name..." >
                 <span style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
-            </div>
 
-            <div class="form-group">
-                <label for="description">Description:</label>
-                <textarea th:field="*{description}" class="form-control" id="description" name="description" rows="4"
-                          maxlength="500"></textarea>
+                <label for="description">Description</label>
+                <textarea th:field="*{description}" id="description" placeholder="Type description..." maxlength="500"></textarea>
                 <span style="color:red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
-            </div>
 
-            <div class="form-group">
-                <label for="brand">Brand:</label>
-                <input th:field="*{brand}" type="text" class="form-control" id="brand" name="brand">
+                <label for="brand">Brand</label>
+                <input th:field="*{brand}" type="text" id="brand" placeholder="Type brand name...">
                 <span style="color:red" th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}"></span>
-            </div>
 
-            <div class="form-group">
-                <label>File high polygon model:</label>
-                <input th:field="*{highPolygonPath}" type="file" class="form-control-file" required>
+                <label for="highPolygonPath" class="custom-file-label">Choose High Polygon Model</label>
+                <input th:field="*{highPolygonPath}" type="file" id="highPolygonPath" required>
                 <span style="color:red" th:if="${#fields.hasErrors('highPolygonPath')}"
                       th:errors="*{highPolygonPath}"></span>
-            </div>
 
-            <div class="form-group">
-                <label>File low polygon model:</label>
-                <input th:field="*{lowPolygonPath}" type="file" class="form-control-file" required>
+                <label for="lowPolygonPath" class="custom-file-label">Choose Low Polygon Model</label>
+                <input th:field="*{lowPolygonPath}" type="file" id="lowPolygonPath" required>
                 <span style="color:red" th:if="${#fields.hasErrors('lowPolygonPath')}"
                       th:errors="*{lowPolygonPath}"></span>
-            </div>
 
-            <div class="form-group">
-                <label>File background:</label>
-                <input th:field="*{backgroundPath}" type="file" class="form-control-file">
+
+                <label for="backgroundPath" class="custom-file-label">Choose Background</label>
+                <input th:field="*{backgroundPath}" type="file" id="backgroundPath" required>
                 <span style="color:red" th:if="${#fields.hasErrors('backgroundPath')}"
                       th:errors="*{backgroundPath}"></span>
             </div>
-
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <div class="btn-login-container">
+                <button type="submit" class="btn-login">Submit</button>
+            </div>
         </form>
     </div>
 

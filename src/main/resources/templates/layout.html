@@ -11,14 +11,15 @@
         <link rel="stylesheet" href="/css/table.css">
     </th:block>
     <th:block th:if="${content == 'create-model-form'}">
-        <link rel="stylesheet" href="/css/model3d.css">
+        <link rel="stylesheet" href="/css/show_model.css">
     </th:block>
     <th:block th:if="${content == 'show-more'}">
-        <link rel="stylesheet" href="/css/model3d.css">
+        <link rel="stylesheet" href="/css/show_model.css">
     </th:block>
 
     <link rel="stylesheet" href="/css/base.css">
     <link rel="stylesheet" href="/css/show_model.css">
+    <link rel="stylesheet" href="/css/modal_window.css">
     <link rel="stylesheet" href="/css/index.css">
 
 
@@ -72,6 +73,17 @@
 <!--        </div>-->
 <!--    </div>-->
 <!--</div>-->
+
+<div id="modal-temp" class="modal">
+    <div class="modal-content">
+        <span class="close" id="closeModalBtn">&times;</span>
+        <p>Are you sure?</p>
+        <div class="btn-container">
+
+        </div>
+    </div>
+</div>
+
 
 <script src="/js/modal.js"></script>
 </body>

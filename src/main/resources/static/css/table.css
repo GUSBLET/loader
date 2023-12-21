@@ -65,3 +65,51 @@ main .tablet a {
     background: rgb(240, 248, 255);
     box-shadow: 0 0 16px rgb(51 65 85);
 }
+
+.pagination {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 2rem 0 auto;
+}
+
+.pagination-pages {
+    display: flex;
+    margin: 1rem;
+}
+
+.pagination a {
+    text-align: center;
+    display: block;
+    margin: 0.5rem;
+    color: rgb(128, 128, 128);
+    font-family: Montserrat, sans-serif;
+    font-size: 1rem;
+    background-color: rgb(229, 231, 235);
+    border: none;
+    outline: none;
+    border-radius: 6px;
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: all 200ms ease-in;
+    box-shadow: 0 0 10px rgb(128, 128, 128);
+}
+
+.pagination a:hover {
+    background: rgb(240, 248, 255);
+    box-shadow: 0 0 16px rgb(51, 65, 85);
+}
+
+.pagination .current-page {
+    font-family: Montserrat, sans-serif;
+    font-size: 1rem;
+    background-color: rgb(240, 248, 255);
+    border: none;
+    outline: none;
+    border-radius: 6px;
+    padding: 0.5rem;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgb(128, 128, 128);
+    margin: 0.5rem;
+    color: rgb(51, 65, 85);
+}

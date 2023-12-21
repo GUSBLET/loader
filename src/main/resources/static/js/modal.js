@@ -1,48 +1,24 @@
 const modalTemp = document.getElementById("modal-temp");
-const controllerPanel = document.getElementById('controller-panel');
-const modalContent = document.querySelector('.main-content');
+const controllerPanel = document.querySelector('.btn-container');
+
 const span = document.getElementsByClassName("close")[0];
 
 span.onclick = function() {
+    removeModalContext();
+}
+
+function removeModalContext(){
     modalTemp.style.display = "none";
-    const modalContent = document.querySelector('.main-content');
-    const controllerPanel = document.querySelector('#controller-panel');
+    const controllerPanel = document.querySelector('.btn-container');
     while (controllerPanel.firstChild) {
         controllerPanel.removeChild(controllerPanel.firstChild);
-    }
-    while (modalContent.firstChild) {
-        modalContent.removeChild(modalContent.firstChild);
     }
 }
 
 window.onclick = function(event) {
     if (event.target === modalTemp) {
-        modalTemp.style.display = "none";
-        const modalContent = document.querySelector('.main-content');
-        const controllerPanel = document.querySelector('#controller-panel');
-        while (controllerPanel.firstChild) {
-            controllerPanel.removeChild(controllerPanel.firstChild);
-        }
-        while (modalContent.firstChild) {
-            modalContent.removeChild(modalContent.firstChild);
-        }
+        removeModalContext();
     }
-}
-
-
-function getCallModalWindow(url){
-    axios.get(url)
-        .then(response => {
-            modalContent.innerHTML = response.data;
-            modalTemp.appendChild(controllerPanel);
-
-            modalTemp.style.display = 'block';
-        }).catch(error => {
-        // Handle any errors that occur during the request
-        console.error('Error:', error);
-    });;
-
-
 }
 
 function deleteNewsConfirming(id){
@@ -52,15 +28,7 @@ function deleteNewsConfirming(id){
                 const elementToDelete = document.getElementById(id);
                 if(elementToDelete){
                     elementToDelete.remove();
-                    modalTemp.style.display = "none";
-                    const modalContent = document.querySelector('.main-content');
-                    const controllerPanel = document.querySelector('#controller-panel');
-                    while (controllerPanel.firstChild) {
-                        controllerPanel.removeChild(controllerPanel.firstChild);
-                    }
-                    while (modalContent.firstChild) {
-                        modalContent.removeChild(modalContent.firstChild);
-                    }
+                    removeModalContext();
                 }
 
                 console.log('Delete successful:', response.data);
@@ -78,14 +46,27 @@ function deleteNewsConfirming(id){
 
 function openModalRemove(button){
     const id = button.getAttribute('data-news-id');
-    const action = document.createElement("button");
-    action.textContent = "Delete";
-    action.className = "button-modal"
-    action.onclick = function (){
+    const deleteButton = createButton("Delete", "btn-delete");
+    deleteButton.onclick = function (){
         deleteNewsConfirming(id);
     };
+    const cancelButton = createButton("Cancel", "btn-cancel");
+    cancelButton.onclick = function () {
+        removeModalContext();
+        modalTemp.style.display = 'none';
+    }
 
-    modalContent.appendChild(action);
-    modalTemp.appendChild(modalContent);
+
+    controllerPanel.appendChild(deleteButton);
+    controllerPanel.appendChild(cancelButton);
     modalTemp.style.display = 'block';
+}
+
+
+function createButton(name, classes,){
+    const action = document.createElement("button");
+    action.textContent = name;
+    action.className = classes
+
+    return action;
 }
