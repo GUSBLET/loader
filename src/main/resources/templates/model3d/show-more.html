@@ -8,8 +8,8 @@
 
 <main th:fragment="content(model)">
     <div class="container">
-        <div class="container-model">
-            <h1 class="model-title">Add Model</h1>
+    <div class="container-model" style="height: 1100px;">
+            <h1 class="model-title">Update Model</h1>
             <form th:action="@{/model3d/update-model}" th:object="${model}" method="post" enctype="multipart/form-data" class="model-form">
                 <input th:field="*{id}" readonly type="hidden" >
                 <div class="input-model-container">
@@ -27,22 +27,22 @@
 
                     <label for="currentHighPolygonPath">High Polygon Path</label>
                     <input th:field="*{currentHighPolygonPath}" type="text" id="currentHighPolygonPath" readonly value="empty">
-                    <label for="highPolygonPath" class="custom-file-label">Choose High Polygon Model</label>
-                    <input th:field="*{highPolygonPath}" type="file" id="highPolygonPath" >
+                    <label for="highPolygonPath" >Choose High Polygon Model</label>
+                    <input th:field="*{highPolygonPath}" accept=".glb" type="file" id="highPolygonPath" >
                     <span style="color:red" th:if="${#fields.hasErrors('highPolygonPath')}"
                           th:errors="*{highPolygonPath}"></span>
 
                     <label for="currentLowPolygonPath">Low Polygon Path</label>
                     <input th:field="*{currentLowPolygonPath}" type="text" id="currentLowPolygonPath" readonly value="empty">
-                    <label for="lowPolygonPath" class="custom-file-label">Choose Low Polygon Model</label>
-                    <input th:field="*{lowPolygonPath}" type="file" id="lowPolygonPath" >
+                    <label for="lowPolygonPath">Choose Low Polygon Model</label>
+                    <input th:field="*{lowPolygonPath}" accept=".glb" type="file" id="lowPolygonPath" >
                     <span style="color:red" th:if="${#fields.hasErrors('lowPolygonPath')}"
                           th:errors="*{lowPolygonPath}"></span>
 
                     <label for="currentBackgroundPath">Background Path</label>
                     <input th:field="*{currentBackgroundPath}" type="text" id="currentBackgroundPath" readonly value="empty">
-                    <label for="backgroundPath" class="custom-file-label">Choose Background</label>
-                    <input th:field="*{backgroundPath}" type="file" id="backgroundPath" >
+                    <label for="backgroundPath">Choose Background</label>
+                    <input th:field="*{backgroundPath}" accept=".jpg" type="file" id="backgroundPath" >
                     <span style="color:red" th:if="${#fields.hasErrors('backgroundPath')}"
                           th:errors="*{backgroundPath}"></span>
                 </div>
@@ -52,6 +52,7 @@
             </form>
         </div>
     </div>
+
 
 </main>
 

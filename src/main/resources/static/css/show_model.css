@@ -1,6 +1,5 @@
 .container-model {
     display: flex;
-    height: 900px;
     flex-direction: column;
     background: white;
     width: 700px;
