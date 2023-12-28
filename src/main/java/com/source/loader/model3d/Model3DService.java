@@ -101,7 +101,7 @@ public class Model3DService {
 
     public Page<Model3D> getTablePage(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return model3DRepository.findAll(pageable);
+        return model3DRepository.findAllByOrderByPriorityAsc(pageable);
     }
 
     public List<Model3dShowcasePageDTO> getModel3dCardList() {

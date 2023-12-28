@@ -24,7 +24,7 @@ public interface Model3DRepository extends PagingAndSortingRepository<Model3D, U
 
     List<Model3D> findTop12ByOrderByIdDesc();
 
-    Page<Model3D> findAll(Pageable pageable);
+    Page<Model3D> findAllByOrderByPriorityAsc(Pageable pageable);
 
     @Modifying
     @Query("UPDATE Model3D m SET m.priority = :priority WHERE m.id = :id")
