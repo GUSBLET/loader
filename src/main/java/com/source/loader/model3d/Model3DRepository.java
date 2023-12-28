@@ -20,8 +20,6 @@ public interface Model3DRepository extends PagingAndSortingRepository<Model3D, U
 
     Optional<Model3D> findFirstByOrderByPriorityDesc();
 
-    Optional<Model3D> findByPriority(Long priority);
-
     boolean existsByName(String name);
 
     List<Model3D> findTop12ByOrderByIdDesc();

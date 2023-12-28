@@ -79,6 +79,10 @@ public class Model3DService {
         Model3D model3D = model3DRepository.findById(id).orElseThrow();
         fileService.removeModelResourcesById(model3D.getId());
         model3DRepository.delete(model3D);
+        model3DRepository.updateModel3DSequenceWherePriorityLessCurrentAndMoreLast(
+                model3DRepository.findFirstByOrderByPriorityDesc().get().getPriority(),
+                model3D.getPriority(),
+                id);
     }
 
 
