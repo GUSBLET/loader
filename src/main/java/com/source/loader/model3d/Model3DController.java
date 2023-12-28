@@ -2,6 +2,8 @@ package com.source.loader.model3d;
 
 import com.source.loader.model3d.dto.Model3dCreatingDTO;
 import com.source.loader.model3d.dto.Model3dUpdateDTO;
+import com.source.loader.technical.model.attribute.ModelAttributeManager;
+import com.source.loader.technical.model.attribute.ModelPageAttributes;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -18,15 +20,18 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class Model3DController {
     private final Model3DService model3DService;
+    private final ModelAttributeManager modelAttributeManager;
 
     @GetMapping("/controller-panel")
     private String getControllerPanel(@RequestParam(name = "page", defaultValue = "0") int page,
                                       @RequestParam(name = "size", defaultValue = "20") int size,
                                       Model model) {
         Page<Model3D> model3DPage = model3DService.getTablePage(page, size);
-        model.addAttribute("title", "panel");
-        model.addAttribute("model3DPage", model3DPage);
-        model.addAttribute("content", "controller-panel");
+        modelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
+                .title("panel")
+                .content("controller-panel")
+                .entity(model3DPage)
+                .build());
         return "layout";
     }
 
@@ -34,12 +39,16 @@ public class Model3DController {
     public String getShowMore(@RequestParam UUID id, Model model) {
         Model3dUpdateDTO dto = model3DService.getModel3dUpdateDTO(id);
         if (dto == null) {
-            model.addAttribute("title", "error");
-            model.addAttribute("content", "error");
+            modelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
+                    .title("error")
+                    .content("error")
+                    .build());
         } else {
-            model.addAttribute("title", dto.getName());
-            model.addAttribute("content", "show-more");
-            model.addAttribute("model", dto);
+            modelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
+                    .title(dto.getName())
+                    .content("show-more")
+                    .entity(dto)
+                    .build());
         }
         return "layout";
     }
@@ -49,38 +58,50 @@ public class Model3DController {
                               BindingResult bindingResult,
                               Model model) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("content", "error");
-            model.addAttribute("title", dto.getName());
+            modelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
+                    .title("error")
+                    .content("error")
+                    .build());
+
             return "layout";
         }
         Model3D model3d = model3DService.findModelByName(dto.getName());
         if (model3d != null && !Objects.equals(model3d.getId(), dto.getId())) {
-            model.addAttribute("title", dto.getName());
-            model.addAttribute("content", "show-more");
-            bindingResult.rejectValue("name", "error","This name exists");
-            model.addAttribute("model", dto.toDto(model3d));
+            modelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
+                    .title(dto.getName())
+                    .content("show-more")
+                    .entity(dto.toDto(model3d))
+                    .build());
+
+            bindingResult.rejectValue("name", "error", "This name exists");
             return "layout";
         }
 
         model3DService.updateModel3d(dto);
-        model.addAttribute("title", "success");
-        model.addAttribute("content", "success");
+        modelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
+                .title("success")
+                .content("success")
+                .build());
 
         return "layout";
     }
 
     @PostMapping("/delete-new-confirming")
     @ResponseBody
-    public boolean removeModel3d(@RequestParam UUID id){
+    public boolean removeModel3d(@RequestParam UUID id) {
         model3DService.removeModel(id);
         return true;
     }
 
     @GetMapping("/create-model-form")
     private String getModelForm(Model model) {
-        model.addAttribute("title", "create");
-        model.addAttribute("model", new Model3dCreatingDTO());
-        model.addAttribute("content", "create-model-form");
+
+        modelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
+                .title("create")
+                .content("create-model-form")
+                .entity(model3DService.getLastModelSequence())
+                .build());
+
         return "layout";
     }
 
@@ -88,24 +109,27 @@ public class Model3DController {
     private String createModel(@Valid @ModelAttribute("model") Model3dCreatingDTO dto, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
-            model.addAttribute("title", "create");
-            model.addAttribute("model", dto);
-            model.addAttribute("content", "create-model-form");
+            modelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
+                    .title("create")
+                    .content("create-model-form")
+                    .entity(dto)
+                    .build());
             return "layout";
         }
         if (model3DService.createModel(dto)) {
-            model.addAttribute("title", "success");
-            model.addAttribute("content", "success");
-            model.addAttribute("message", "");
+            modelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
+                    .title("success")
+                    .content("success")
+                    .build());
         } else {
-            model.addAttribute("title", "create");
-            model.addAttribute("model", dto);
-            model.addAttribute("content", "create-model-form");
-            bindingResult.rejectValue("name", "error","name already exists");
+            modelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
+                    .title("create")
+                    .content("create-model-form")
+                    .entity(dto)
+                    .build());
+            bindingResult.rejectValue("name", "error", "name already exists");
         }
 
         return "layout";
     }
-
-
 }

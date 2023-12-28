@@ -17,11 +17,16 @@ import java.util.UUID;
 
 @Repository
 public interface Model3DRepository extends PagingAndSortingRepository<Model3D, UUID> ,JpaRepository<Model3D, UUID> {
+
+    Optional<Model3D> findFirstByOrderBySequenceDesc();
+
     boolean existsByName(String name);
 
     List<Model3D> findTop12ByOrderByIdDesc();
 
     Page<Model3D> findAll(Pageable pageable);
+
+
 
     @Modifying
     @Query("UPDATE Model3D m SET m.name = :name, m.description = :description, m.lowPolygonPath = :lowPolygonPath, " +

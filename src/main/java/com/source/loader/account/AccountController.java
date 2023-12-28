@@ -2,6 +2,8 @@ package com.source.loader.account;
 
 import com.source.loader.account.dtos.SignInDTO;
 import com.source.loader.account.dtos.SignUpDTO;
+import com.source.loader.technical.model.attribute.ModelAttributeManager;
+import com.source.loader.technical.model.attribute.ModelPageAttributes;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -18,52 +20,67 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class AccountController {
     private final AccountService accountService;
+    private final ModelAttributeManager modelAttributeManager;
 
     @GetMapping("/technical/login-page")
     public String getLoginPage(Model model) {
-        model.addAttribute("title", "Login")
-                .addAttribute("content", "login-page")
-                .addAttribute("signIn", SignInDTO.builder().build());
+        modelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
+                .title("Login")
+                .content("login-page")
+                .entity(new SignInDTO())
+                .build());
         return "layout";
     }
 
     @GetMapping("/technical/registration-page")
     public String getRegistrationPage(Model model) {
-        model.addAttribute("title", "Sign Up")
-                .addAttribute("content", "registration-page")
-                .addAttribute("signUp", new SignUpDTO());
+        modelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
+                .title("Sign Up")
+                .content("registration-page")
+                .entity(new SignUpDTO())
+                .build());
+
         return "layout";
     }
 
     @PostMapping("/technical/registration")
     public String registration(@Valid @ModelAttribute("signUp") SignUpDTO dto,
                                BindingResult bindingResult, Model model) {
-        model.addAttribute("title", "Sign Up");
         if(bindingResult.hasErrors()){
-            model.addAttribute("signUp", dto);
-            model.addAttribute("content", "registration-page");
+            modelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
+                    .title("Sign Up")
+                    .content("registration-page")
+                    .entity(dto)
+                    .build());
+
             return "layout";
         }
 
         if(accountService.loginIsExist(dto.getLogin()))
         {
-            model.addAttribute("title", "Sign Up");
+            modelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
+                    .title("Sign Up")
+                    .content("registration-page")
+                    .entity(dto)
+                    .build());
             bindingResult.rejectValue("login", "error","Login has already used");
-            model.addAttribute("content", "registration-page");
-            model.addAttribute("signUp", dto);
             return "layout";
         }
 
         if(accountService.registration(dto)){
-            model.addAttribute("title", "Sign In");
-            model.addAttribute("content", "login-page");
-            model.addAttribute("signIn", new SignInDTO());
+            modelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
+                    .title("Login")
+                    .content("login-page")
+                    .entity(new SignInDTO())
+                    .build());
         }
         else{
-            model.addAttribute("title", "Sign Up");
+            modelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
+                    .title("Sign Up")
+                    .content("registration-page")
+                    .entity(dto)
+                    .build());
             bindingResult.rejectValue("secretKey", "error","secret key is wrong");
-            model.addAttribute("content", "registration-page");
-            model.addAttribute("signUp", dto);
         }
 
         return "layout";

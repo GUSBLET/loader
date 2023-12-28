@@ -24,6 +24,10 @@
                 <input th:field="*{brand}" type="text" id="brand" placeholder="Type brand name...">
                 <span style="color:red" th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}"></span>
 
+                <label for="sequence">Sequence in a row</label>
+                <input th:field="*{sequence}" type="number" min="1"  id="sequence" placeholder="Type sequence in a row">
+                <span style="color:red" th:if="${#fields.hasErrors('sequence')}" th:errors="*{sequence}"></span>
+
                 <label for="highPolygonPath">Choose High Polygon Model</label>
                 <input th:field="*{highPolygonPath}" type="file" id="highPolygonPath" accept=".glb" required>
                 <span style="color:red" th:if="${#fields.hasErrors('highPolygonPath')}"

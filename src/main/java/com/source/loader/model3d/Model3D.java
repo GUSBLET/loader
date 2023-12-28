@@ -37,6 +37,9 @@ public class Model3D {
     @Column(name = "background_path", columnDefinition = "text unique")
     private String backgroundPath;
 
+    @Column(name = "sequence", columnDefinition = "serial")
+    private Long sequence;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "brand_id")
     private Brand brand;

@@ -48,6 +48,22 @@ public class Model3DService {
         return true;
     }
 
+    private void updateModelsSequenceInRow(Model3D model3D){
+        Long newModelSequence = model3D.getSequence();
+
+
+    }
+
+    public Model3dCreatingDTO getLastModelSequence(){
+        Optional<Model3D> model3D = model3DRepository.findFirstByOrderBySequenceDesc();
+        if(model3D.isPresent()){
+            return Model3dCreatingDTO.builder()
+                    .sequence(model3D.get().getSequence())
+                    .build();
+        }
+        return new Model3dCreatingDTO();
+    }
+
 
     @Modifying
     @Transactional
