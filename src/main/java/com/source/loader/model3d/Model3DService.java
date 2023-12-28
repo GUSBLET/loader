@@ -44,26 +44,34 @@ public class Model3DService {
         model3D.setBrand(brand);
         model3D = fileService.saveResources(model3D, dto);
 
+        model3DRepository.updateModel3DSequenceWherePriorityMoreCurrent(model3D.getPriority(), model3D.getId());
         model3DRepository.save(model3D);
         return true;
     }
 
-    private void updateModelsSequenceInRow(Model3D model3D){
-        Long newModelSequence = model3D.getSequence();
-
-
+    public void updateModelPriorityById(String id, Long priority, Long lastPriority){
+        UUID uuidId = UUID.fromString(id);
+        Optional<Model3D> model3D = model3DRepository.findById(uuidId);
+        if(model3D.isEmpty()){
+            return;
+        }
+        model3DRepository.updateModel3DPriorityById(uuidId, priority);
+        if(priority < lastPriority){
+            model3DRepository.updateModel3DSequenceWherePriorityMoreCurrentAndLessLast(priority, lastPriority, uuidId);
+        } else {
+            model3DRepository.updateModel3DSequenceWherePriorityLessCurrentAndMoreLast(priority, lastPriority, uuidId);
+        }
     }
 
-    public Model3dCreatingDTO getLastModelSequence(){
-        Optional<Model3D> model3D = model3DRepository.findFirstByOrderBySequenceDesc();
+    public Model3dCreatingDTO getLastModelPriority(){
+        Optional<Model3D> model3D = model3DRepository.findFirstByOrderByPriorityDesc();
         if(model3D.isPresent()){
             return Model3dCreatingDTO.builder()
-                    .sequence(model3D.get().getSequence())
+                    .priority(model3D.get().getPriority() + 1)
                     .build();
         }
         return new Model3dCreatingDTO();
     }
-
 
     @Modifying
     @Transactional
@@ -116,7 +124,7 @@ public class Model3DService {
         model3D.setBrand(brandService.updateBrand(dto.getBrand()));
         model3DRepository.updateModel3DById(model3D.getId(), model3D.getName(), model3D.getDescription(),
                 model3D.getLowPolygonPath(), model3D.getHighPolygonPath(), model3D.getBackgroundPath(),
-                model3D.getBrand());
+                model3D.getBrand(), model3D.getPriority());
     }
 
     private void capitalizeMainVariables(@NotNull Model3dCreatingDTO dto) {

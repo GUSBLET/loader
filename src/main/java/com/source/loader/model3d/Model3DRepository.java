@@ -18,7 +18,9 @@ import java.util.UUID;
 @Repository
 public interface Model3DRepository extends PagingAndSortingRepository<Model3D, UUID> ,JpaRepository<Model3D, UUID> {
 
-    Optional<Model3D> findFirstByOrderBySequenceDesc();
+    Optional<Model3D> findFirstByOrderByPriorityDesc();
+
+    Optional<Model3D> findByPriority(Long priority);
 
     boolean existsByName(String name);
 
@@ -26,18 +28,36 @@ public interface Model3DRepository extends PagingAndSortingRepository<Model3D, U
 
     Page<Model3D> findAll(Pageable pageable);
 
+    @Modifying
+    @Query("UPDATE Model3D m SET m.priority = :priority WHERE m.id = :id")
+    @Transactional
+    void updateModel3DPriorityById(@Param("id") UUID id, @Param("priority") Long priority);
 
+    @Modifying
+    @Query("UPDATE Model3D m SET m.priority = m.priority + 1 WHERE m.priority >= :priority and m.id != :id")
+    @Transactional
+    void updateModel3DSequenceWherePriorityMoreCurrent(@Param("priority") Long priority, @Param("id") UUID id);
+
+    @Modifying
+    @Query("UPDATE Model3D m SET m.priority = m.priority + 1 WHERE m.priority >= :priority and m.priority <= :lastPriority and m.id != :id")
+    @Transactional
+    void updateModel3DSequenceWherePriorityMoreCurrentAndLessLast(@Param("priority") Long priority, @Param("lastPriority") Long lastPriority, @Param("id") UUID id);
+
+    @Modifying
+    @Query("UPDATE Model3D m SET m.priority = m.priority - 1 WHERE m.priority <= :priority and m.priority >= :lastPriority and m.id != :id")
+    @Transactional
+    void updateModel3DSequenceWherePriorityLessCurrentAndMoreLast(@Param("priority") Long priority, @Param("lastPriority") Long lastPriority, @Param("id") UUID id);
 
     @Modifying
     @Query("UPDATE Model3D m SET m.name = :name, m.description = :description, m.lowPolygonPath = :lowPolygonPath, " +
-            "m.highPolygonPath = :highPolygonPath, m.backgroundPath = :backgroundPath, m.brand = :brand " +
+            "m.highPolygonPath = :highPolygonPath, m.backgroundPath = :backgroundPath, m.brand = :brand, " +
+            "m.priority = :priority " +
             "WHERE m.id = :id")
     @Transactional
     void updateModel3DById(@Param("id") UUID id, @Param("name") String name, @Param("description") String description,
                            @Param("lowPolygonPath") String lowPolygonPath, @Param("highPolygonPath") String highPolygonPath,
-                           @Param("backgroundPath") String backgroundPath, @Param("brand") Brand brand);
-
-    Optional<Model3D> findByNameAndId(String name, UUID id);
+                           @Param("backgroundPath") String backgroundPath, @Param("brand") Brand brand,
+                           @Param("priority") Long priority);
 
     Optional<Model3D> findByName(String name);
 }

@@ -6,11 +6,11 @@
 </head>
 <body>
 
-<main th:fragment="content(model)">
+<main th:fragment="content(entity)">
     <div class="container">
     <div class="container-model" style="height: 900px;">
         <h1 class="model-title">Add Model</h1>
-        <form th:action="@{/model3d/create-model}" th:object="${model}" method="post" enctype="multipart/form-data" class="model-form">
+        <form th:action="@{/model3d/create-model}" th:object="${entity}" method="post" enctype="multipart/form-data" class="model-form">
             <div class="input-model-container">
                 <label for="name">Name</label>
                 <input th:field="*{name}" type="text" id="name" placeholder="Type name..." >
@@ -24,9 +24,9 @@
                 <input th:field="*{brand}" type="text" id="brand" placeholder="Type brand name...">
                 <span style="color:red" th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}"></span>
 
-                <label for="sequence">Sequence in a row</label>
-                <input th:field="*{sequence}" type="number" min="1"  id="sequence" placeholder="Type sequence in a row">
-                <span style="color:red" th:if="${#fields.hasErrors('sequence')}" th:errors="*{sequence}"></span>
+                <label for="priority">Sequence in a row</label>
+                <input th:field="*{priority}" type="number" min="1" th:max="${entity.priority}"  id="priority" placeholder="Type sequence in a row">
+                <span style="color:red" th:if="${#fields.hasErrors('priority')}" th:errors="*{priority}"></span>
 
                 <label for="highPolygonPath">Choose High Polygon Model</label>
                 <input th:field="*{highPolygonPath}" type="file" id="highPolygonPath" accept=".glb" required>

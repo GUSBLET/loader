@@ -1,6 +1,7 @@
 package com.source.loader.model3d;
 
 import com.source.loader.model3d.dto.Model3dCreatingDTO;
+import com.source.loader.model3d.dto.Model3dShowcasePageDTO;
 import com.source.loader.model3d.dto.Model3dUpdateDTO;
 import com.source.loader.technical.model.attribute.ModelAttributeManager;
 import com.source.loader.technical.model.attribute.ModelPageAttributes;
@@ -53,8 +54,16 @@ public class Model3DController {
         return "layout";
     }
 
+    @PostMapping("/update-priority")
+    public  String updatePriority(@RequestParam(name = "id") String id,
+                                  @RequestParam(name = "priority") Long priority,
+                                  @RequestParam(name = "lastPriority") Long lastPriority){
+        model3DService.updateModelPriorityById(id, priority, lastPriority);
+        return "redirect:/model3d/controller-panel";
+    }
+
     @PostMapping("/update-model")
-    public String updateModel(@Valid @ModelAttribute("model") Model3dUpdateDTO dto,
+    public String updateModel(@Valid @ModelAttribute("entity") Model3dUpdateDTO dto,
                               BindingResult bindingResult,
                               Model model) {
         if (bindingResult.hasErrors()) {
@@ -99,7 +108,7 @@ public class Model3DController {
         modelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
                 .title("create")
                 .content("create-model-form")
-                .entity(model3DService.getLastModelSequence())
+                .entity(model3DService.getLastModelPriority())
                 .build());
 
         return "layout";

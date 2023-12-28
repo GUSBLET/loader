@@ -12,6 +12,7 @@
             <th>Id</th>
             <th>Name</th>
             <th>Brand</th>
+            <th>Priority</th>
             <th>Update</th>
             <th>Remove</th>
         </tr>
@@ -21,6 +22,16 @@
             <td th:text="${model3D.id}"></td>
             <td th:text="${model3D.name}"></td>
             <td th:text="${model3D.brand.name}"></td>
+            <td >
+                <form th:action="@{/model3d/update-priority}" method="post" class="tablet-form">
+                    <label>
+                        <input th:value="${model3D.id}" name="id" type="hidden" required/>
+                        <input th:value="${model3D.priority}" name="lastPriority" type="hidden" required/>
+                        <input type="number" th:value="${model3D.priority}" name="priority" required>
+                    </label>
+                    <button type="submit">Update</button>
+                </form>
+            </td>
             <td><a th:href="@{/model3d/show-more(id=${model3D.id})}" class="btn-table">Show</a></td>
             <td>
                 <button class="btn-table" onclick="openModalRemove(this)" th:data-news-id="${model3D.id}"
@@ -56,7 +67,27 @@
     </span>
     </div>
 
+    <script>
+        const updatePriority = (priorityId) => {
+            let priorityValue = document.getElementById(priorityId).value;
+            axios.post('/model3d/delete-new-confirming?id='+ id)
+                .then(response => {
+                    if(response.data){
+                        const elementToDelete = document.getElementById(id);
+                        if(elementToDelete){
+                            elementToDelete.remove();
+                            removeModalContext();
+                        }
+                        console.log('Delete successful:', response.data);
+                    }
 
+                })
+                .catch(error => {
+                    // Handle any errors that occur during the request
+                    console.error('Error:', error);
+                });
+        }
+    </script>
 
 </main>
 

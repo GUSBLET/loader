@@ -26,7 +26,7 @@ public class Model3dCreatingDTO implements Mapper<Model3dCreatingDTO, Model3D> {
 
     private String description;
 
-    private Long sequence;
+    private Long priority;
 
     @NotNull(message = "Enter file height polygon model")
     private MultipartFile highPolygonPath;
@@ -42,7 +42,7 @@ public class Model3dCreatingDTO implements Mapper<Model3dCreatingDTO, Model3D> {
         return Model3dCreatingDTO.builder()
                 .brand(entity.getBrand().getName())
                 .name(entity.getName())
-                .sequence(entity.getSequence())
+                .priority(entity.getPriority())
                 .description(entity.getDescription())
                 .build();
     }
@@ -53,7 +53,7 @@ public class Model3dCreatingDTO implements Mapper<Model3dCreatingDTO, Model3D> {
                 .name(dto.getName())
                 .description(dto.getDescription())
                 .brand(Brand.builder().name(dto.getBrand()).build())
-                .sequence(dto.getSequence())
+                .priority(dto.getPriority())
                 .build();
     }
 }
