@@ -66,7 +66,7 @@ public class Model3DController {
                                   @RequestParam(name = "priority") Long priority,
                                   @RequestParam(name = "lastPriority") Long lastPriority){
         model3DService.updateModelPriorityById(id, priority, lastPriority);
-        return "redirect:/model3d/controller-panel";
+        return "redirect:https://puppetpalm.com:9999/model3d/controller-panel";
     }
 
     @PostMapping("/update-model")
