@@ -71,7 +71,9 @@ public class Model3DService {
                     .priority(model3D.get().getPriority() + 1)
                     .build();
         }
-        return new Model3dCreatingDTO();
+        return Model3dCreatingDTO.builder()
+                .priority(1L)
+                .build();
     }
 
     @Modifying
