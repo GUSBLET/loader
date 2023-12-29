@@ -1,5 +1,6 @@
 package com.source.loader.model3d.dto;
 
+import com.source.loader.brand.Brand;
 import com.source.loader.mapper.Mapper;
 import com.source.loader.model3d.Model3D;
 import lombok.AllArgsConstructor;
@@ -36,6 +37,9 @@ public class Model3dShowcasePageDTO implements Mapper<Model3dShowcasePageDTO, Mo
 
     @Override
     public Model3D toEntity(Model3dShowcasePageDTO dto) {
-        return null;
+        return Model3D.builder()
+                .name(dto.getName())
+                .brand(Brand.builder().name(dto.getBrand()).build())
+                .build();
     }
 }

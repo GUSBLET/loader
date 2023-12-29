@@ -1,6 +1,9 @@
 package com.source.loader.technical.file.strategy;
 
 import com.source.loader.technical.FileNameSeparatorDTO;
+import lombok.Getter;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -10,17 +13,18 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
 
+@Getter
 @Component
+@Configuration
 public abstract class AbstractFileProcessing {
 
-
-    public final String ABSOLUTE_PATH = "/home/goose/files/";
+    protected String ABSOLUTE_PATH = "D:\\files\\";
 
     protected String generateUniqueFileName(String filename){
         return filename + UUID.randomUUID();
     }
 
-    public abstract String processSaveFile(MultipartFile file, UUID directory);
+    public abstract String processSaveFile(MultipartFile file, String directory);
 
     public abstract String processUpdateFile(MultipartFile newFile, String currentFilePath, String directory);
 

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+
+<main th:fragment="content(entity)" class="container">
+    <table class="custom-table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Mode name</th>
+            <th>Update</th>
+            <th>Remove</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${entity.content}" th:id="${item.id}">
+            <td th:text="${item.id}"></td>
+            <td th:text="${item.modeName}"></td>
+            <td><a th:href="@{/showcase-background/show-more(id=${item.id})}" class="btn-table">Show</a></td>
+            <td>
+                <button class="btn-table" th:data-url="@{'/showcase-background/delete-new-confirming?id=' + ${item.id}}" th:data-id="${item.id}" onclick="openModalRemove(this)">
+                        Delete
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+    <div class="pagination tablet">
+    <span th:if="${entity.hasPrevious()}">
+        <a th:href="@{/showcase-background/controller-panel(page=${entity.number - 1})}" aria-label="Previous" class="btn-table">
+            <span aria-hidden="true">&laquo; Previous</span>
+        </a>
+    </span>
+        <span th:if="${entity.getTotalElements() > 0}" class="pagination-pages">
+            <span th:each="pageNumber : ${#numbers.sequence(0, entity.totalPages - 1)}">
+                <span th:if="${pageNumber == entity.number}" class="current-page">
+                    <span th:text="${pageNumber + 1}"></span>
+                </span>
+                <span th:unless="${pageNumber == entity.number}">
+                    <a th:href="@{/model3d/controller-panel(page=${pageNumber})}" th:text="${pageNumber + 1}" class="btn-table"></a>
+                </span>
+            </span>
+        </span>
+
+        <span th:if="${entity.hasNext()}">
+        <a th:href="@{/showcase-background/controller-panel(page=${entity.number + 1})}" aria-label="Next" class="btn-table">
+            <span aria-hidden="true">Next &raquo;</span>
+        </a>
+    </span>
+    </div>
+
+</main>
+
+</body>
+</html>

@@ -9,6 +9,7 @@ import com.source.loader.technical.file.strategy.LowPolygonFileProcessing;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.PathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -30,10 +31,11 @@ import java.util.zip.GZIPOutputStream;
 @Getter
 @RequiredArgsConstructor
 public class FileService {
+    @Value("${absolute.path}")
+    public String ABSOLUTE_PATH;
 
     public Resource getResource(String directory, String filename){
-        AbstractFileProcessing fileProcessing = new BackgroundProcessing();
-        Path pathToFolder = Path.of(fileProcessing.ABSOLUTE_PATH);
+        Path pathToFolder = Path.of(ABSOLUTE_PATH);
         Path filePath = pathToFolder.resolve(pathToFolder + "/"+ directory + "/" + filename).normalize();
         Resource resource = new PathResource(filePath.toUri());
 
@@ -46,23 +48,23 @@ public class FileService {
 
     public Model3D saveResources(Model3D model3D, Model3dCreatingDTO dto) {
         AbstractFileProcessing fileProcessing = new BackgroundProcessing();
-        createDirectory(model3D.getId(), fileProcessing.ABSOLUTE_PATH);
+        createDirectory(model3D.getId(), fileProcessing.getABSOLUTE_PATH());
 
         if (!dto.getBackgroundPath().isEmpty()) {
             fileProcessing = new BackgroundProcessing();
-            model3D.setBackgroundPath(fileProcessing.processSaveFile(dto.getBackgroundPath(), model3D.getId()));
+            model3D.setBackgroundPath(fileProcessing.processSaveFile(dto.getBackgroundPath(), model3D.getId().toString()));
         }
         fileProcessing = new LowPolygonFileProcessing();
-        model3D.setLowPolygonPath(fileProcessing.processSaveFile(dto.getLowPolygonPath(), model3D.getId()));
+        model3D.setLowPolygonPath(fileProcessing.processSaveFile(dto.getLowPolygonPath(), model3D.getId().toString()));
         fileProcessing = new HeightPolygonFileProcessing();
-        model3D.setHighPolygonPath(fileProcessing.processSaveFile( dto.getHighPolygonPath(), model3D.getId()));
+        model3D.setHighPolygonPath(fileProcessing.processSaveFile( dto.getHighPolygonPath(), model3D.getId().toString()));
         return model3D;
     }
 
-    public String updateFile(MultipartFile file, String currentFilePath, UUID id, AbstractFileProcessing strategy) {
+    public String updateFile(MultipartFile file, String currentFilePath, String directory, AbstractFileProcessing strategy) {
         if (isFileValid(file) || file.isEmpty())
             return currentFilePath;
-        return strategy.processUpdateFile(file, currentFilePath, id.toString());
+        return strategy.processUpdateFile(file, currentFilePath, directory.toString());
     }
 
     private boolean isFileValid(MultipartFile file) {
@@ -72,7 +74,7 @@ public class FileService {
     public void removeModelResourcesById(UUID id){
         try {
             AbstractFileProcessing fileProcessing = new BackgroundProcessing();
-            FileUtils.deleteDirectory(new File(fileProcessing.ABSOLUTE_PATH + id));
+            FileUtils.deleteDirectory(new File(fileProcessing.getABSOLUTE_PATH() + id));
         } catch (IOException e){
                 e.printStackTrace();
         }

@@ -10,7 +10,7 @@ import java.util.UUID;
 @Component
 public class LowPolygonFileProcessing extends AbstractFileProcessing {
     @Override
-    public String processSaveFile(MultipartFile file, UUID directory) {
+    public String processSaveFile(MultipartFile file, String directory) {
         FileNameSeparatorDTO dto = removeExtension(Objects.requireNonNull(file.getOriginalFilename()));
         String fileUniqueName = generateUniqueFileName(dto.getName());
         saveFile(file, ABSOLUTE_PATH + directory + "/" + fileUniqueName + dto.getType());

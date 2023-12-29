@@ -7,51 +7,60 @@
     <th:block th:if="${content == 'login-page' or content == 'registration-page'}">
         <link rel="stylesheet" href="/css/account.css">
     </th:block>
-    <th:block th:if="${content == 'controller-panel'}">
+    <th:block th:if="${content == 'controller-panel' or content == 'controller-background-panel'}">
         <link rel="stylesheet" href="/css/table.css">
     </th:block>
-    <th:block th:if="${content == 'create-model-form'}">
+    <th:block th:if="${content == 'create-model-form' or content == 'creating-background-form'}">
         <link rel="stylesheet" href="/css/show_model.css">
     </th:block>
-    <th:block th:if="${content == 'show-more'}">
+    <th:block th:if="${content == 'show-more' or content == 'showcase-background-show-more'}">
         <link rel="stylesheet" href="/css/show_model.css">
     </th:block>
-
     <link rel="stylesheet" href="/css/base.css">
     <link rel="stylesheet" href="/css/show_model.css">
     <link rel="stylesheet" href="/css/modal_window.css">
     <link rel="stylesheet" href="/css/index.css">
-
-
-<!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">-->
 </head>
 <body>
 <nav th:replace="~{fragments/navbar :: navbar()}"></nav>
 
 <th:block th:switch="${content}">
+
     <th:block th:case="'profile'">
-        <main th:replace="~{account/profile :: content(${account})}"></main>
+        <main th:replace="~{account/profile :: content(${entity})}"></main>
     </th:block>
     <th:block th:case="'login-page'">
-        <main th:replace="~{account/login :: content(signIn)}"></main>
+        <main th:replace="~{account/login :: content(entity)}"></main>
     </th:block>
     <th:block th:case="'registration-page'">
-        <main th:replace="~{account/registration :: content(signUp)}"></main>
+        <main th:replace="~{account/registration :: content(entity)}"></main>
     </th:block>
+
     <th:block th:case="'controller-panel'">
-        <main th:replace="~{model3d/controller-panel :: content(${model3DPage})}"></main>
+        <main th:replace="~{model3d/controller-panel :: content(${entity})}"></main>
     </th:block>
     <th:block th:case="'create-model-form'">
-        <main th:replace="~{model3d/create-model-form :: content(${model})}"></main>
+        <main th:replace="~{model3d/create-model-form :: content(${entity})}"></main>
     </th:block>
     <th:block th:case="'show-more'">
-        <main th:replace="~{model3d/show-more :: content(${model})}"></main>
+        <main th:replace="~{model3d/show-more :: content(${entity})}"></main>
     </th:block>
+
+    <th:block th:case="'creating-background-form'">
+        <main th:replace="~{showcase-background/create-showcase-background-form :: content(${entity})}"></main>
+    </th:block>
+    <th:block th:case="'controller-background-panel'">
+        <main th:replace="~{showcase-background/controller-panel :: content(${entity})}"></main>
+    </th:block>
+    <th:block th:case="'showcase-background-show-more'">
+        <main th:replace="~{showcase-background/show-more :: content(${entity})}"></main>
+    </th:block>
+
     <th:block th:case="'success'">
-        <main th:replace="~{fragments/success :: content(message)}"></main>
+        <main th:replace="~{fragments/success :: content(entity)}"></main>
     </th:block>
     <th:block th:case="'error'">
-        <main th:replace="~{fragments/error :: content(message)}"></main>
+        <main th:replace="~{fragments/error :: content(entity)}"></main>
     </th:block>
     <th:block th:case="'welcome'">
         <main th:replace="~{welcome :: welcome()}"></main>
@@ -60,19 +69,6 @@
 
 <div th:replace="~{fragments/footer :: footer()}"></div>
 
-
-
-<!--<div id="modal-temp" class="modal">-->
-<!--    <div class="modal-content">-->
-<!--        <span class="close">&times;</span>-->
-<!--        <div class="main-content">-->
-
-<!--        </div>-->
-<!--        <div style="padding-top: 10px" id="controller-panel">-->
-
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
 
 <div id="modal-temp" class="modal">
     <div class="modal-content">

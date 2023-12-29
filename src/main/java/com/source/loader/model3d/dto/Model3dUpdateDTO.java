@@ -3,6 +3,7 @@ package com.source.loader.model3d.dto;
 import com.source.loader.brand.Brand;
 import com.source.loader.mapper.Mapper;
 import com.source.loader.model3d.Model3D;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

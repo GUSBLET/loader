@@ -12,6 +12,7 @@
             <th>Id</th>
             <th>Name</th>
             <th>Brand</th>
+            <th>Priority</th>
             <th>Update</th>
             <th>Remove</th>
         </tr>
@@ -21,10 +22,20 @@
             <td th:text="${model3D.id}"></td>
             <td th:text="${model3D.name}"></td>
             <td th:text="${model3D.brand.name}"></td>
+            <td >
+                <form th:action="@{/model3d/update-priority}" method="post" class="tablet-form">
+                    <label>
+                        <input th:value="${model3D.id}" name="id" type="hidden" required/>
+                        <input th:value="${model3D.priority}" name="lastPriority" type="hidden" required/>
+                        <input type="number" th:value="${model3D.priority}" name="priority" required>
+                    </label>
+                    <button type="submit">Update</button>
+                </form>
+            </td>
             <td><a th:href="@{/model3d/show-more(id=${model3D.id})}" class="btn-table">Show</a></td>
             <td>
-                <button class="btn-table" onclick="openModalRemove(this)" th:data-news-id="${model3D.id}"
-                        type="button">Delete
+                <button class="btn-table" th:data-url="@{'/model3d/delete-new-confirming?id=' + ${model3D.id}}" th:data-id="${model3D.id}" onclick="openModalRemove(this)">
+                    Delete
                 </button>
             </td>
         </tr>
@@ -38,17 +49,16 @@
             <span aria-hidden="true">&laquo; Previous</span>
         </a>
     </span>
-
         <span th:if="${model3DPage.getTotalElements() > 0}" class="pagination-pages">
-        <span th:each="pageNumber : ${#numbers.sequence(0, model3DPage.totalPages - 1)}">
-            <span th:if="${pageNumber == model3DPage.number}" class="current-page">
-                <span th:text="${pageNumber + 1}"></span>
-            </span>
-            <span th:unless="${pageNumber == model3DPage.number}">
-                <a th:href="@{/model3d/controller-panel(page=${pageNumber})}" th:text="${pageNumber + 1}" class="btn-table"></a>
+            <span th:each="pageNumber : ${#numbers.sequence(0, model3DPage.totalPages - 1)}">
+                <span th:if="${pageNumber == model3DPage.number}" class="current-page">
+                    <span th:text="${pageNumber + 1}"></span>
+                </span>
+                <span th:unless="${pageNumber == model3DPage.number}">
+                    <a th:href="@{/model3d/controller-panel(page=${pageNumber})}" th:text="${pageNumber + 1}" class="btn-table"></a>
+                </span>
             </span>
         </span>
-    </span>
 
         <span th:if="${model3DPage.hasNext()}">
         <a th:href="@{/model3d/controller-panel(page=${model3DPage.number + 1})}" aria-label="Next" class="btn-table">
@@ -57,7 +67,27 @@
     </span>
     </div>
 
+    <script>
+        const updatePriority = (priorityId) => {
+            let priorityValue = document.getElementById(priorityId).value;
+            axios.post('/model3d/delete-new-confirming?id='+ id)
+                .then(response => {
+                    if(response.data){
+                        const elementToDelete = document.getElementById(id);
+                        if(elementToDelete){
+                            elementToDelete.remove();
+                            removeModalContext();
+                        }
+                        console.log('Delete successful:', response.data);
+                    }
 
+                })
+                .catch(error => {
+                    // Handle any errors that occur during the request
+                    console.error('Error:', error);
+                });
+        }
+    </script>
 
 </main>
 

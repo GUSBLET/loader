@@ -3,6 +3,7 @@ package com.source.loader.model3d.dto;
 import com.source.loader.brand.Brand;
 import com.source.loader.mapper.Mapper;
 import com.source.loader.model3d.Model3D;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -25,6 +26,8 @@ public class Model3dCreatingDTO implements Mapper<Model3dCreatingDTO, Model3D> {
 
     private String description;
 
+    private Long priority;
+
     @NotNull(message = "Enter file height polygon model")
     private MultipartFile highPolygonPath;
 
@@ -38,6 +41,9 @@ public class Model3dCreatingDTO implements Mapper<Model3dCreatingDTO, Model3D> {
     public Model3dCreatingDTO toDto(Model3D entity) {
         return Model3dCreatingDTO.builder()
                 .brand(entity.getBrand().getName())
+                .name(entity.getName())
+                .priority(entity.getPriority())
+                .description(entity.getDescription())
                 .build();
     }
 
@@ -47,6 +53,7 @@ public class Model3dCreatingDTO implements Mapper<Model3dCreatingDTO, Model3D> {
                 .name(dto.getName())
                 .description(dto.getDescription())
                 .brand(Brand.builder().name(dto.getBrand()).build())
+                .priority(dto.getPriority())
                 .build();
     }
 }

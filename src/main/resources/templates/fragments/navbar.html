@@ -13,10 +13,10 @@
                 <img src="/images/logo.svg" alt="logo" class="logo-img" />
             </a>
         </li>
-
-
         <th:block sec:authorize="isAuthenticated()">
             <li class="nav-item">
+                <a class="btn-primary" href="/showcase-background/controller-panel">Background Panel</a>
+                <a class="btn-primary" href="/showcase-background/creating-form">Create background form</a>
                 <a class="btn-primary" href="/model3d/controller-panel">Panel</a>
                 <a class="btn-primary" href="/model3d/create-model-form">Create form</a>
                 <a th:href="@{/account/technical/logout}" th:method="post"

@@ -6,11 +6,11 @@
 </head>
 <body>
 
-<main th:fragment="content(model)">
+<main th:fragment="content(entity)">
     <div class="container">
     <div class="container-model" style="height: 1100px;">
             <h1 class="model-title">Update Model</h1>
-            <form th:action="@{/model3d/update-model}" th:object="${model}" method="post" enctype="multipart/form-data" class="model-form">
+            <form th:action="@{/model3d/update-model}" th:object="${entity}" method="post" enctype="multipart/form-data" class="model-form">
                 <input th:field="*{id}" readonly type="hidden" >
                 <div class="input-model-container">
                     <label for="name">Name</label>
