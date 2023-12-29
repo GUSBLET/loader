@@ -66,7 +66,7 @@ public class ShowcaseBackgroundService {
         showcaseBackgroundRepository.updateShowcaseBackgroundById(showcaseBackground.getId(),showcaseBackground.getModeName(), showcaseBackground.getName());
     }
 
-    public ShowcaseBackground findBackgroundByName(String modeName) {
+    public ShowcaseBackground findBackgroundByModeName(String modeName) {
         return showcaseBackgroundRepository.findByModeName(UniqueStringCustomizer.capitalizeRecord(modeName)).orElse(null);
     }
 

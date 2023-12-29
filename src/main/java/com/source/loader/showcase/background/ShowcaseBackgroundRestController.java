@@ -18,7 +18,7 @@ public class ShowcaseBackgroundRestController {
 
     @GetMapping("/get-showcase-background")
     public ResponseEntity<ShowcaseBackgroundDTO> getShowcaseBackground(@RequestParam(name = "name") String name) {
-        ShowcaseBackground showcaseBackground = backgroundService.findBackgroundByName(name);
+        ShowcaseBackground showcaseBackground = backgroundService.findBackgroundByModeName(name);
         if(showcaseBackground == null)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         ShowcaseBackgroundDTO dto = new ShowcaseBackgroundDTO();

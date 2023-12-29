@@ -71,7 +71,9 @@ public class Model3DService {
                     .priority(model3D.get().getPriority() + 1)
                     .build();
         }
-        return new Model3dCreatingDTO();
+        return Model3dCreatingDTO.builder()
+                .priority(1L)
+                .build();
     }
 
     @Modifying
@@ -129,7 +131,7 @@ public class Model3DService {
         model3D.setBrand(brandService.updateBrand(dto.getBrand()));
         model3DRepository.updateModel3DById(model3D.getId(), model3D.getName(), model3D.getDescription(),
                 model3D.getLowPolygonPath(), model3D.getHighPolygonPath(), model3D.getBackgroundPath(),
-                model3D.getBrand(), model3D.getPriority());
+                model3D.getBrand());
     }
 
     private void capitalizeMainVariables(@NotNull Model3dCreatingDTO dto) {

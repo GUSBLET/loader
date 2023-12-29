@@ -62,7 +62,7 @@ public class ShowcaseBackgroundController {
                     .build());
             return "layout";
         }
-        ShowcaseBackground background = backgroundService.findBackgroundByName(dto.getModeName());
+        ShowcaseBackground background = backgroundService.findBackgroundByModeName(dto.getModeName());
         if (background != null && !Objects.equals(background.getId(), dto.getId())) {
             modelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
                     .title(dto.getCurrentFile())
