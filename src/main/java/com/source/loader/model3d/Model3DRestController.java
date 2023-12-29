@@ -42,12 +42,4 @@ public class Model3DRestController {
 
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
-
-    @PostMapping("/delete-new-confirming")
-    @ResponseBody
-    public boolean removeModel3d(@RequestParam UUID id) {
-        model3DService.removeModel(id);
-        return true;
-    }
-
 }

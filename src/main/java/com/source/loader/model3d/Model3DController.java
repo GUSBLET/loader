@@ -23,6 +23,13 @@ public class Model3DController {
     private final Model3DService model3DService;
     private final ModelAttributeManager modelAttributeManager;
 
+    @PostMapping("/delete-new-confirming")
+    @ResponseBody
+    public boolean removeModel3d(@RequestParam String id) {
+        model3DService.removeModel(UUID.fromString(id));
+        return true;
+    }
+
     @GetMapping("/controller-panel")
     private String getControllerPanel(@RequestParam(name = "page", defaultValue = "0") int page,
                                       @RequestParam(name = "size", defaultValue = "20") int size,
