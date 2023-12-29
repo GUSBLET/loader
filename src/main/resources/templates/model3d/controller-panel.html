@@ -34,8 +34,8 @@
             </td>
             <td><a th:href="@{/model3d/show-more(id=${model3D.id})}" class="btn-table">Show</a></td>
             <td>
-                <button class="btn-table" onclick="openModalRemove(this)" th:data-news-id="${model3D.id}"
-                        type="button">Delete
+                <button class="btn-table" th:data-url="@{'/model3d/delete-new-confirming?id=' + ${model3D.id}}" th:data-id="${model3D.id}" onclick="openModalRemove(this)">
+                    Delete
                 </button>
             </td>
         </tr>

@@ -20,9 +20,9 @@ window.onclick = function(event) {
         removeModalContext();
     }
 }
-
-function deleteNewsConfirming(id){
-    axios.post('/model3d/delete-new-confirming?id='+ id)
+// '/model3d/delete-new-confirming?id='
+function deleteNewsConfirming(id, url){
+    axios.post(url)
         .then(response => {
             if(response.data){
                 const elementToDelete = document.getElementById(id);
@@ -33,22 +33,18 @@ function deleteNewsConfirming(id){
 
                 console.log('Delete successful:', response.data);
             }
-            else{
-
-            }
-
         })
         .catch(error => {
-            // Handle any errors that occur during the request
             console.error('Error:', error);
         });
 }
 
 function openModalRemove(button){
-    const id = button.getAttribute('data-news-id');
+    const id = button.getAttribute('data-id');
+    const url = button.getAttribute('data-url');
     const deleteButton = createButton("Delete", "btn-delete");
     deleteButton.onclick = function (){
-        deleteNewsConfirming(id);
+        deleteNewsConfirming(id, url);
     };
     const cancelButton = createButton("Cancel", "btn-cancel");
     cancelButton.onclick = function () {

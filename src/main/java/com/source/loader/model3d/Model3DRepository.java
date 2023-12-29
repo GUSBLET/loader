@@ -16,7 +16,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface Model3DRepository extends PagingAndSortingRepository<Model3D, UUID> ,JpaRepository<Model3D, UUID> {
+public interface Model3DRepository extends PagingAndSortingRepository<Model3D, UUID> , JpaRepository<Model3D, UUID> {
 
     Optional<Model3D> findFirstByOrderByPriorityDesc();
 

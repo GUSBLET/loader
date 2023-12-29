@@ -79,10 +79,10 @@ public class Model3DController {
             modelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
                     .title(dto.getName())
                     .content("show-more")
-                    .entity(dto.toDto(model3d))
+                    .entity(dto)
                     .build());
 
-            bindingResult.rejectValue("name", "error", "This name exists");
+            bindingResult.rejectValue("name", "entity", model3d.getName()+ " exists");
             return "layout";
         }
 
@@ -93,13 +93,6 @@ public class Model3DController {
                 .build());
 
         return "layout";
-    }
-
-    @PostMapping("/delete-new-confirming")
-    @ResponseBody
-    public boolean removeModel3d(@RequestParam UUID id) {
-        model3DService.removeModel(id);
-        return true;
     }
 
     @GetMapping("/create-model-form")
@@ -115,7 +108,7 @@ public class Model3DController {
     }
 
     @PostMapping("/create-model")
-    private String createModel(@Valid @ModelAttribute("model") Model3dCreatingDTO dto, BindingResult bindingResult, Model model) {
+    private String createModel(@Valid @ModelAttribute("entity") Model3dCreatingDTO dto, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
             modelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
@@ -136,7 +129,7 @@ public class Model3DController {
                     .content("create-model-form")
                     .entity(dto)
                     .build());
-            bindingResult.rejectValue("name", "error", "name already exists");
+            bindingResult.rejectValue("name", "entity", "name already exists");
         }
 
         return "layout";

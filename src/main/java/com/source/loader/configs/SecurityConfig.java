@@ -67,6 +67,7 @@ public class SecurityConfig {
                     authorize.requestMatchers(
                             "/api/**",
                             "/files/**",
+                            "/background-api/**",
                             "/",
                             "/account/technical/**"
 
@@ -74,6 +75,7 @@ public class SecurityConfig {
                     authorize
                             .requestMatchers(
                                     "/model3d/**",
+                                    "/showcase-background/**",
                                     "/model3d/create-model-form",
                                     "/model3d/update-model-form",
                                     "/model3d/show-models**"

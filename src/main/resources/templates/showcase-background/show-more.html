@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<main th:fragment="content(entity)">
+    <div class="container">
+        <div class="container-model" style="height: 500px;">
+            <h1 class="model-title">Add Background</h1>
+            <form th:action="@{/showcase-background/update-background}" th:object="${entity}" method="post" enctype="multipart/form-data"
+                  class="model-form">
+                <input th:field="*{id}" readonly type="hidden" >
+                <div class="input-model-container">
+                    <label for="modeName">Mode name</label>
+                    <input th:field="*{modeName}" type="text" maxlength="50" id="modeName" placeholder="Type mode name...">
+                    <span style="color:red" th:if="${#fields.hasErrors('modeName')}" th:errors="*{modeName}"></span>
+
+                    <label for="currentFile">Current background name</label>
+                    <input th:field="*{currentFile}" type="text" id="currentFile" readonly value="empty">
+                    <label for="file">Choose Background</label>
+                    <input th:field="*{file}" accept=".jpg" type="file" id="file">
+                    <span style="color:red" th:if="${#fields.hasErrors('file')}"
+                          th:errors="*{file}"></span>
+                </div>
+                <div class="btn-login-container">
+                    <button type="submit" class="btn-login">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+</body>
+</html>

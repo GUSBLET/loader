@@ -10,6 +10,7 @@ import com.source.loader.technical.*;
 import com.source.loader.technical.file.strategy.BackgroundProcessing;
 import com.source.loader.technical.file.strategy.HeightPolygonFileProcessing;
 import com.source.loader.technical.file.strategy.LowPolygonFileProcessing;
+import com.source.loader.technical.unique.string.customizer.UniqueStringCustomizer;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
@@ -96,7 +97,7 @@ public class Model3DService {
     }
 
     public Model3D findModelByName(String name) {
-        return model3DRepository.findByName(name).orElse(null);
+        return model3DRepository.findByName(UniqueStringCustomizer.capitalizeRecord(name)).orElse(null);
     }
 
     public Page<Model3D> getTablePage(int page, int size) {
@@ -122,9 +123,9 @@ public class Model3DService {
     public void updateModel3d(Model3dUpdateDTO dto) {
         capitalizeMainVariables(dto);
         Model3D model3D = dto.toEntity(dto);
-        model3D.setBackgroundPath(fileService.updateFile(dto.getBackgroundPath(), dto.getCurrentBackgroundPath(), model3D.getId(), new BackgroundProcessing()));
-        model3D.setHighPolygonPath(fileService.updateFile(dto.getHighPolygonPath(), dto.getCurrentHighPolygonPath(), model3D.getId(), new HeightPolygonFileProcessing()));
-        model3D.setLowPolygonPath(fileService.updateFile(dto.getLowPolygonPath(), dto.getCurrentLowPolygonPath(), model3D.getId(), new LowPolygonFileProcessing()));
+        model3D.setBackgroundPath(fileService.updateFile(dto.getBackgroundPath(), dto.getCurrentBackgroundPath(), model3D.getId().toString(), new BackgroundProcessing()));
+        model3D.setHighPolygonPath(fileService.updateFile(dto.getHighPolygonPath(), dto.getCurrentHighPolygonPath(), model3D.getId().toString(), new HeightPolygonFileProcessing()));
+        model3D.setLowPolygonPath(fileService.updateFile(dto.getLowPolygonPath(), dto.getCurrentLowPolygonPath(), model3D.getId().toString(), new LowPolygonFileProcessing()));
         model3D.setBrand(brandService.updateBrand(dto.getBrand()));
         model3DRepository.updateModel3DById(model3D.getId(), model3D.getName(), model3D.getDescription(),
                 model3D.getLowPolygonPath(), model3D.getHighPolygonPath(), model3D.getBackgroundPath(),
@@ -132,18 +133,16 @@ public class Model3DService {
     }
 
     private void capitalizeMainVariables(@NotNull Model3dCreatingDTO dto) {
-        dto.setBrand(capitalizeRecord(dto.getBrand()));
-        dto.setName(capitalizeRecord(dto.getName()));
+        UniqueStringCustomizer uniqueStringCustomizer = new UniqueStringCustomizer();
+        dto.setBrand(uniqueStringCustomizer.capitalizeRecord(dto.getBrand()));
+        dto.setName(uniqueStringCustomizer.capitalizeRecord(dto.getName()));
     }
 
     private void capitalizeMainVariables(Model3dUpdateDTO dto) {
-        dto.setBrand(capitalizeRecord(dto.getBrand()));
-        dto.setName(capitalizeRecord(dto.getName()));
+        UniqueStringCustomizer uniqueStringCustomizer = new UniqueStringCustomizer();
+        dto.setBrand(uniqueStringCustomizer.capitalizeRecord(dto.getBrand()));
+        dto.setName(uniqueStringCustomizer.capitalizeRecord(dto.getName()));
     }
 
-    private String capitalizeRecord(String name) {
-        if (name != null && !name.isEmpty())
-            return name.substring(0, 1).toUpperCase() + name.substring(1);
-        return name;
-    }
+
 }
