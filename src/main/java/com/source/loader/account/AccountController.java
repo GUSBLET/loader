@@ -44,7 +44,7 @@ public class AccountController {
     }
 
     @PostMapping("/technical/registration")
-    public String registration(@Valid @ModelAttribute("signUp") SignUpDTO dto,
+    public String registration(@Valid @ModelAttribute("entity") SignUpDTO dto,
                                BindingResult bindingResult, Model model) {
         if(bindingResult.hasErrors()){
             modelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()

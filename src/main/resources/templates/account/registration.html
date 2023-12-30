@@ -5,11 +5,11 @@
     <title>Title</title>
 </head>
 <body>
-<main th:fragment="content(signUp)">
+<main th:fragment="content(entity)">
     <div class="container">
         <div class="container-login">
             <h1 class="account-title">Sign Up</h1>
-            <form th:action="@{/account/technical/registration}" th:object="${signUp}" method="post" class="login-form">
+            <form th:action="@{/account/technical/registration}" th:object="${entity}" method="post" class="login-form">
                 <div class="input-container">
                     <label for="login">Login</label>
                     <input th:field="*{login}" type="text" id="login" placeholder="Type login...">
