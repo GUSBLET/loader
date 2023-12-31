@@ -2,11 +2,14 @@ package com.source.loader.model3d;
 
 
 import com.source.loader.brand.Brand;
+import com.source.loader.model3d.camera.point.CameraPoint;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Getter
@@ -43,4 +46,7 @@ public class Model3D {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "brand_id")
     private Brand brand;
+
+    @OneToMany(mappedBy = "model3D", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    private Set<CameraPoint> views = new HashSet<>();
 }

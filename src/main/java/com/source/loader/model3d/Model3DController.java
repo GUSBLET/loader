@@ -35,11 +35,19 @@ public class Model3DController {
                                       @RequestParam(name = "size", defaultValue = "20") int size,
                                       Model model) {
         Page<Model3D> model3DPage = model3DService.getTablePage(page, size);
-        modelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
-                .title("panel")
-                .content("controller-panel")
-                .entity(model3DPage)
-                .build());
+        if (model3DPage.isEmpty()) {
+            modelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
+                    .title("error")
+                    .content("error")
+                    .build());
+        } else {
+            modelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
+                    .title("panel")
+                    .content("controller-panel")
+                    .entity(model3DPage)
+                    .build());
+        }
+
         return "layout";
     }
 
@@ -62,9 +70,9 @@ public class Model3DController {
     }
 
     @PostMapping("/update-priority")
-    public  String updatePriority(@RequestParam(name = "id") String id,
-                                  @RequestParam(name = "priority") Long priority,
-                                  @RequestParam(name = "lastPriority") Long lastPriority){
+    public String updatePriority(@RequestParam(name = "id") String id,
+                                 @RequestParam(name = "priority") Long priority,
+                                 @RequestParam(name = "lastPriority") Long lastPriority) {
         model3DService.updateModelPriorityById(id, priority, lastPriority);
         return "redirect:https://puppetpalm.com:9999/model3d/controller-panel";
     }
@@ -89,7 +97,7 @@ public class Model3DController {
                     .entity(dto)
                     .build());
 
-            bindingResult.rejectValue("name", "entity", model3d.getName()+ " exists");
+            bindingResult.rejectValue("name", "entity", model3d.getName() + " exists");
             return "layout";
         }
 
