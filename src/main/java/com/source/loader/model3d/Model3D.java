@@ -2,11 +2,14 @@ package com.source.loader.model3d;
 
 
 import com.source.loader.brand.Brand;
+import com.source.loader.model3d.camera.point.CameraPoint;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Getter
@@ -19,7 +22,7 @@ import java.util.UUID;
 public class Model3D {
 
     @Id
-    @Column(columnDefinition = "BINARY(16) primary key")
+    @Column(columnDefinition = "uuid primary key")
     private UUID id;
 
     @Column(name = "name", columnDefinition = "varchar(50) not null unique")
@@ -34,8 +37,11 @@ public class Model3D {
     @Column(name = "high_polygon_path", columnDefinition = "text not null unique")
     private String highPolygonPath;
 
-    @Column(name = "background_path", columnDefinition = "text unique")
-    private String backgroundPath;
+    @Column(name = "background_path_light", columnDefinition = "text unique")
+    private String backgroundPathLight;
+
+    @Column(name = "background_path_dark", columnDefinition = "text unique")
+    private String backgroundPathDark;
 
     @Column(name = "priority", columnDefinition = "serial")
     private Long priority;
@@ -43,4 +49,7 @@ public class Model3D {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "brand_id")
     private Brand brand;
+
+    @OneToMany(mappedBy = "model3D", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    private Set<CameraPoint> cameraPoints = new HashSet<>();
 }

@@ -27,7 +27,7 @@
                     <label>
                         <input th:value="${model3D.id}" name="id" type="hidden" required/>
                         <input th:value="${model3D.priority}" name="lastPriority" type="hidden" required/>
-                        <input type="number" th:value="${model3D.priority}" name="priority" required>
+                        <input type="number" th:value="${model3D.priority}" min="1" name="priority" required>
                     </label>
                     <button type="submit">Update</button>
                 </form>

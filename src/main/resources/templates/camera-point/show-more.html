@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<main th:fragment="content(entity)">
+    <div class="container">
+        <div class="container-model" style="height: 1000px; padding: 20px;">
+            <h1 class="model-title">Update Model</h1>
+            <form th:action="@{/camera-point/update-point}" th:object="${entity}" method="post" enctype="multipart/form-data"
+                  class="model-form">
+                <input th:field="*{id}" readonly type="hidden">
+                <div class="input-model-container">
+                    <label for="name">Name</label>
+                    <input th:field="*{name}" type="text" id="name" placeholder="Type name..." required>
+                    <span style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+
+                    <label for="description">Description</label>
+                    <textarea th:field="*{description}" id="description" placeholder="Type description..."
+                              maxlength="500"></textarea>
+                    <span style="color:red" th:if="${#fields.hasErrors('description')}" th:max="500"
+                          th:errors="*{description}"></span>
+
+                    <label for="pointX">Point X Position:</label>
+                    <input type="number" id="pointX" th:field="*{point_x_position}" step="0.1" required/>
+                    <span style="color:red" th:if="${#fields.hasErrors('point_x_position')}" th:errors="*{point_x_position}"></span>
+
+                    <label for="pointY">Point Y Position:</label>
+                    <input type="number" id="pointY" name="point_y_position" th:field="*{point_y_position}" step="0.1" required/>
+                    <span style="color:red" th:if="${#fields.hasErrors('point_y_position')}" th:errors="*{point_y_position}"></span>
+
+                    <label for="pointZ">Point Z Position:</label>
+                    <input type="number" id="pointZ" name="point_z_position" th:field="*{point_z_position}" step="0.1" required/>
+                    <span style="color:red" th:if="${#fields.hasErrors('point_z_position')}" th:errors="*{point_z_position}"></span>
+
+                    <label for="cameraX">Camera X Position:</label>
+                    <input type="number" id="cameraX" name="camera_x_position" th:field="*{camera_x_position}" step="0.1" required/>
+                    <span style="color:red" th:if="${#fields.hasErrors('camera_x_position')}" th:errors="*{camera_x_position}"></span>
+
+                    <label for="cameraY">Camera Y Position:</label>
+                    <input type="number" id="cameraY" name="camera_y_position" th:field="*{camera_y_position}" step="0.1" required/>
+                    <span style="color:red" th:if="${#fields.hasErrors('camera_y_position')}" th:errors="*{camera_y_position}"></span>
+
+                    <label for="cameraZ">Camera Z Position:</label>
+                    <input type="number" id="cameraZ" name="camera_z_position" th:field="*{camera_z_position}" step="0.1" required/>
+                    <span style="color:red" th:if="${#fields.hasErrors('camera_z_position')}" th:errors="*{camera_z_position}"></span>
+                </div>
+                <div class="btn-login-container">
+                    <button type="submit" class="btn-login">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+
+</body>
+</html>

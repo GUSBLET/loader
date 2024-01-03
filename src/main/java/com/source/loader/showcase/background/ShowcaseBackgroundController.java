@@ -19,11 +19,10 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ShowcaseBackgroundController {
     private final ShowcaseBackgroundService backgroundService;
-    private final ModelAttributeManager modelAttributeManager;
 
     @GetMapping("/creating-form")
     public String getCreatingForm(Model model) {
-        modelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
+        ModelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
                 .title("creating background")
                 .content("creating-background-form")
                 .entity(new ShowcaseBackgroundCreatingDTO())
@@ -36,12 +35,12 @@ public class ShowcaseBackgroundController {
     public String getShowMore(@RequestParam UUID id, Model model) {
         ShowcaseBackgroundUpdateDTO dto = backgroundService.getShowcaseBackgroundPageById(id);
         if (dto == null) {
-            modelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
+            ModelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
                     .title("error")
                     .content("error")
                     .build());
         } else {
-            modelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
+            ModelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
                     .title(dto.getModeName())
                     .content("showcase-background-show-more")
                     .entity(dto)
@@ -55,7 +54,7 @@ public class ShowcaseBackgroundController {
                                      BindingResult bindingResult,
                                      Model model){
         if(bindingResult.hasErrors()){
-            modelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
+            ModelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
                     .title(dto.getModeName())
                     .content("showcase-background-show-more")
                     .entity(dto)
@@ -64,7 +63,7 @@ public class ShowcaseBackgroundController {
         }
         ShowcaseBackground background = backgroundService.findBackgroundByModeName(dto.getModeName());
         if (background != null && !Objects.equals(background.getId(), dto.getId())) {
-            modelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
+            ModelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
                     .title(dto.getCurrentFile())
                     .content("showcase-background-show-more")
                     .entity(dto)
@@ -74,7 +73,7 @@ public class ShowcaseBackgroundController {
             return "layout";
         }
         backgroundService.updateShowcaseBackground(dto);
-        modelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
+        ModelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
                 .title("success")
                 .content("success")
                 .build());
@@ -93,7 +92,7 @@ public class ShowcaseBackgroundController {
                                 BindingResult bindingResult,
                                 Model model) {
         if (bindingResult.hasErrors()) {
-            modelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
+            ModelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
                     .title("creating background")
                     .content("creating-background-form")
                     .entity(dto)
@@ -102,12 +101,12 @@ public class ShowcaseBackgroundController {
         }
 
         if (backgroundService.createShowcaseBackground(dto)) {
-            modelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
+            ModelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
                     .title("success")
                     .content("success")
                     .build());
         } else {
-            modelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
+            ModelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
                     .title("creating background")
                     .content("creating-background-form")
                     .entity(dto)
@@ -122,7 +121,7 @@ public class ShowcaseBackgroundController {
                                       @RequestParam(name = "size", defaultValue = "20") int size,
                                       Model model) {
 
-        modelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
+        ModelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
                 .title("creating background")
                 .content("controller-background-panel")
                 .entity(backgroundService.getTablePage(page, size))

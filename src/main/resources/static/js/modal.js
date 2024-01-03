@@ -66,3 +66,19 @@ function createButton(name, classes,){
 
     return action;
 }
+
+
+function updateDescriptionColor(selectElement) {
+    const cameraId = selectElement.getAttribute('data-camera-id');
+    const cameraPointIdValue = document.getElementById("cameraPointId" + cameraId).value;
+    const selectedColorValue = selectElement.value;
+    const url = "/camera-point/update-camera-point-description-color?id=" + cameraPointIdValue + "&selectedColor=" + selectedColorValue;
+
+    axios.get(url)
+        .then(response => {
+            console.log(response);
+        })
+        .catch(err => {
+            console.log(err);
+        });
+}

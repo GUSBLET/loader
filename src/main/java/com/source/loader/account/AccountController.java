@@ -20,11 +20,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class AccountController {
     private final AccountService accountService;
-    private final ModelAttributeManager modelAttributeManager;
 
     @GetMapping("/technical/login-page")
     public String getLoginPage(Model model) {
-        modelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
+        ModelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
                 .title("Login")
                 .content("login-page")
                 .entity(new SignInDTO())
@@ -34,7 +33,7 @@ public class AccountController {
 
     @GetMapping("/technical/registration-page")
     public String getRegistrationPage(Model model) {
-        modelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
+        ModelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
                 .title("Sign Up")
                 .content("registration-page")
                 .entity(new SignUpDTO())
@@ -47,7 +46,7 @@ public class AccountController {
     public String registration(@Valid @ModelAttribute("entity") SignUpDTO dto,
                                BindingResult bindingResult, Model model) {
         if(bindingResult.hasErrors()){
-            modelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
+            ModelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
                     .title("Sign Up")
                     .content("registration-page")
                     .entity(dto)
@@ -58,7 +57,7 @@ public class AccountController {
 
         if(accountService.loginIsExist(dto.getLogin()))
         {
-            modelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
+            ModelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
                     .title("Sign Up")
                     .content("registration-page")
                     .entity(dto)
@@ -68,14 +67,14 @@ public class AccountController {
         }
 
         if(accountService.registration(dto)){
-            modelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
+            ModelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
                     .title("Login")
                     .content("login-page")
                     .entity(new SignInDTO())
                     .build());
         }
         else{
-            modelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
+            ModelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
                     .title("Sign Up")
                     .content("registration-page")
                     .entity(dto)

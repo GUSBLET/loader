@@ -8,7 +8,7 @@
 
 <main th:fragment="content(entity)">
     <div class="container">
-    <div class="container-model" style="height: 900px;">
+    <div class="container-model" style="height: 900px; padding: 20px;">
         <h1 class="model-title">Add Model</h1>
         <form th:action="@{/model3d/create-model}" th:object="${entity}" method="post" enctype="multipart/form-data" class="model-form">
             <div class="input-model-container">
@@ -38,11 +38,15 @@
                 <span style="color:red" th:if="${#fields.hasErrors('lowPolygonPath')}"
                       th:errors="*{lowPolygonPath}"></span>
 
+                <label for="backgroundPathLight" >Choose Light Background</label>
+                <input th:field="*{backgroundPathLight}" accept=".jpg" type="file" id="backgroundPathLight" required>
+                <span style="color:red" th:if="${#fields.hasErrors('backgroundPathLight')}"
+                      th:errors="*{backgroundPathLight}"></span>
 
-                <label for="backgroundPath" >Choose Background</label>
-                <input th:field="*{backgroundPath}" accept=".jpg" type="file" id="backgroundPath" required>
-                <span style="color:red" th:if="${#fields.hasErrors('backgroundPath')}"
-                      th:errors="*{backgroundPath}"></span>
+                <label for="backgroundPathDark" >Choose Dark Background</label>
+                <input th:field="*{backgroundPathDark}" accept=".jpg" type="file" id="backgroundPathDark" required>
+                <span style="color:red" th:if="${#fields.hasErrors('backgroundPathDark')}"
+                      th:errors="*{backgroundPathDark}"></span>
             </div>
             <div class="btn-login-container">
                 <button type="submit" class="btn-login">Submit</button>
