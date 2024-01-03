@@ -87,7 +87,7 @@ public class Model3DService {
             return;
         }
         fileService.removeModelResourcesById(model3D.get().getId());
-        cameraPointService.removeCameraPointsByModel3dId(id);
+
         model3DRepository.delete(model3D.get());
 
         if(model3DRepository.count() > 0){
