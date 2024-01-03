@@ -48,12 +48,13 @@ public interface Model3DRepository extends PagingAndSortingRepository<Model3D, U
 
     @Modifying
     @Query("UPDATE Model3D m SET m.name = :name, m.description = :description, m.lowPolygonPath = :lowPolygonPath, " +
-            "m.highPolygonPath = :highPolygonPath, m.backgroundPath = :backgroundPath, m.brand = :brand " +
+            "m.highPolygonPath = :highPolygonPath, m.backgroundPathLight = :backgroundPathLight, m.backgroundPathDark = :backgroundPathDark, " +
+            "m.brand = :brand " +
             "WHERE m.id = :id")
     @Transactional
     void updateModel3DById(@Param("id") UUID id, @Param("name") String name, @Param("description") String description,
                            @Param("lowPolygonPath") String lowPolygonPath, @Param("highPolygonPath") String highPolygonPath,
-                           @Param("backgroundPath") String backgroundPath, @Param("brand") Brand brand);
+                           @Param("backgroundPathLight") String backgroundPathLight, @Param("backgroundPathDark") String backgroundPathDark, @Param("brand") Brand brand);
 
     Optional<Model3D> findByName(String name);
 }

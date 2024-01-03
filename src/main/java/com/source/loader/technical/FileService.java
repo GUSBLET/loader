@@ -50,10 +50,9 @@ public class FileService {
         AbstractFileProcessing fileProcessing = new BackgroundProcessing();
         createDirectory(model3D.getId(), fileProcessing.getABSOLUTE_PATH());
 
-        if (!dto.getBackgroundPath().isEmpty()) {
-            fileProcessing = new BackgroundProcessing();
-            model3D.setBackgroundPath(fileProcessing.processSaveFile(dto.getBackgroundPath(), model3D.getId().toString()));
-        }
+        fileProcessing = new BackgroundProcessing();
+        model3D.setBackgroundPathLight(fileProcessing.processSaveFile(dto.getBackgroundPathLight(), model3D.getId().toString()));
+        model3D.setBackgroundPathDark(fileProcessing.processSaveFile(dto.getBackgroundPathDark(), model3D.getId().toString()));
         fileProcessing = new LowPolygonFileProcessing();
         model3D.setLowPolygonPath(fileProcessing.processSaveFile(dto.getLowPolygonPath(), model3D.getId().toString()));
         fileProcessing = new HeightPolygonFileProcessing();
@@ -85,7 +84,7 @@ public class FileService {
             Path path = Path.of(location + id);
             Files.createDirectories(path);
         } catch (IOException e) {
-            System.err.println("Failed to create directory!" + e.getMessage());
+            e.printStackTrace();
         }
     }
 }

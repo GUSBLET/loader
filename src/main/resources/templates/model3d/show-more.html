@@ -8,43 +8,85 @@
 
 <main th:fragment="content(entity)">
     <div class="container">
-    <div class="container-model" style="height: 1100px;">
+        <div class="container-model" style="height: 1400px; padding: 20px;">
             <h1 class="model-title">Update Model</h1>
-            <form th:action="@{/model3d/update-model}" th:object="${entity}" method="post" enctype="multipart/form-data" class="model-form">
-                <input th:field="*{id}" readonly type="hidden" >
+            <form th:action="@{/model3d/update-model}" th:object="${entity}" method="post" enctype="multipart/form-data"
+                  class="model-form">
+                <input th:field="*{id}" readonly type="hidden">
                 <div class="input-model-container">
                     <label for="name">Name</label>
-                    <input th:field="*{name}" type="text" id="name" placeholder="Type name..." >
+                    <input th:field="*{name}" type="text" id="name" placeholder="Type name...">
                     <span style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
 
                     <label for="description">Description</label>
-                    <textarea th:field="*{description}" id="description" placeholder="Type description..." maxlength="500"></textarea>
-                    <span style="color:red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+                    <textarea th:field="*{description}" id="description" placeholder="Type description..."
+                              maxlength="500"></textarea>
+                    <span style="color:red" th:if="${#fields.hasErrors('description')}"
+                          th:errors="*{description}"></span>
 
                     <label for="brand">Brand</label>
                     <input th:field="*{brand}" type="text" id="brand" placeholder="Type brand name...">
                     <span style="color:red" th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}"></span>
 
                     <label for="currentHighPolygonPath">High Polygon Path</label>
-                    <input th:field="*{currentHighPolygonPath}" type="text" id="currentHighPolygonPath" readonly value="empty">
-                    <label for="highPolygonPath" >Choose High Polygon Model</label>
-                    <input th:field="*{highPolygonPath}" accept=".glb" type="file" id="highPolygonPath" >
+                    <input th:field="*{currentHighPolygonPath}" type="text" id="currentHighPolygonPath" readonly
+                           value="empty">
+                    <label for="highPolygonPath">Choose High Polygon Model</label>
+                    <input th:field="*{highPolygonPath}" accept=".glb" type="file" id="highPolygonPath">
                     <span style="color:red" th:if="${#fields.hasErrors('highPolygonPath')}"
                           th:errors="*{highPolygonPath}"></span>
 
                     <label for="currentLowPolygonPath">Low Polygon Path</label>
-                    <input th:field="*{currentLowPolygonPath}" type="text" id="currentLowPolygonPath" readonly value="empty">
+                    <input th:field="*{currentLowPolygonPath}" type="text" id="currentLowPolygonPath" readonly
+                           value="empty">
                     <label for="lowPolygonPath">Choose Low Polygon Model</label>
-                    <input th:field="*{lowPolygonPath}" accept=".glb" type="file" id="lowPolygonPath" >
+                    <input th:field="*{lowPolygonPath}" accept=".glb" type="file" id="lowPolygonPath">
                     <span style="color:red" th:if="${#fields.hasErrors('lowPolygonPath')}"
                           th:errors="*{lowPolygonPath}"></span>
 
-                    <label for="currentBackgroundPath">Background Path</label>
-                    <input th:field="*{currentBackgroundPath}" type="text" id="currentBackgroundPath" readonly value="empty">
-                    <label for="backgroundPath">Choose Background</label>
-                    <input th:field="*{backgroundPath}" accept=".jpg" type="file" id="backgroundPath" >
-                    <span style="color:red" th:if="${#fields.hasErrors('backgroundPath')}"
-                          th:errors="*{backgroundPath}"></span>
+                    <label for="currentBackgroundPathLight">Light background path</label>
+                    <input th:field="*{currentBackgroundPathLight}" type="text" id="currentBackgroundPathLight" readonly
+                           value="empty">
+                    <label for="backgroundPathLight">Choose new light background</label>
+                    <input th:field="*{backgroundPathLight}" accept=".jpg" type="file" id="backgroundPathLight">
+                    <span style="color:red" th:if="${#fields.hasErrors('backgroundPathLight')}"
+                          th:errors="*{backgroundPathLight}"></span>
+
+                    <label for="currentBackgroundPathDark">Dark background path</label>
+                    <input th:field="*{currentBackgroundPathDark}" type="text" id="currentBackgroundPathDark" readonly
+                           value="empty">
+                    <label for="backgroundPathDark">Choose new dark background</label>
+                    <input th:field="*{backgroundPathDark}" accept=".jpg" type="file" id="backgroundPathDark">
+                    <span style="color:red" th:if="${#fields.hasErrors('backgroundPathDark')}"
+                          th:errors="*{backgroundPathDark}"></span>
+
+                    <table class="custom-table">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description color</th>
+                            <th>Update</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="camera : ${entity.cameraPoints}" th:id="${camera.id}">
+                            <td th:text="${camera.cameraPointName.name}"></td>
+                            <td>
+                                <label>
+                                    <input th:value="${camera.id}" th:id="'cameraPointId' + ${camera.id}" type="hidden" required/>
+                                    <select id="descriptionColor" name="color" th:data-camera-id="${camera.id}" onchange="updateDescriptionColor(this)">
+                                        <option value="white" th:selected="${camera.cameraPointColorDescription.name eq 'white'}">White</option>
+                                        <option value="black" th:selected="${camera.cameraPointColorDescription.name eq 'black'}">Black</option>
+                                        <option value="00-658" th:selected="${camera.cameraPointColorDescription.name eq '00-658'}">Jelly bean</option>
+                                        <option value="C21807" th:selected="${camera.cameraPointColorDescription.name eq 'C21807'}">Rad</option>
+                                        <option value="65c2f5" th:selected="${camera.cameraPointColorDescription.name eq 'black'}">Blue</option>
+                                    </select>
+                                </label>
+                            </td>
+                            <td><a th:href="@{/camera-point/update-camera-point(id=${camera.id})}">Update</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
                 <div class="btn-login-container">
                     <button type="submit" class="btn-login">Submit</button>
@@ -52,6 +94,10 @@
             </form>
         </div>
     </div>
+
+
+
+
 
 
 </main>

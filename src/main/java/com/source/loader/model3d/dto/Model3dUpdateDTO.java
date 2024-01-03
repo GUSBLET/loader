@@ -3,6 +3,7 @@ package com.source.loader.model3d.dto;
 import com.source.loader.brand.Brand;
 import com.source.loader.mapper.Mapper;
 import com.source.loader.model3d.Model3D;
+import com.source.loader.model3d.camera.point.CameraPoint;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -10,8 +11,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.sql.Update;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Data
@@ -30,7 +34,9 @@ public class Model3dUpdateDTO implements Mapper<Model3dUpdateDTO, Model3D> {
 
     private String description;
 
-    private String currentBackgroundPath;
+    private String currentBackgroundPathLight;
+
+    private String currentBackgroundPathDark;
 
     private String currentHighPolygonPath;
 
@@ -38,9 +44,13 @@ public class Model3dUpdateDTO implements Mapper<Model3dUpdateDTO, Model3D> {
 
     private MultipartFile highPolygonPath;
 
-    private MultipartFile backgroundPath;
+    private MultipartFile backgroundPathLight;
+
+    private MultipartFile backgroundPathDark;
 
     private MultipartFile lowPolygonPath;
+
+    private Set<CameraPoint> cameraPoints;
 
     @Override
     public Model3dUpdateDTO toDto(Model3D entity) {
@@ -48,10 +58,12 @@ public class Model3dUpdateDTO implements Mapper<Model3dUpdateDTO, Model3D> {
                 .id(entity.getId())
                 .name(entity.getName())
                 .description(entity.getDescription())
-                .currentBackgroundPath(entity.getBackgroundPath())
+                .currentBackgroundPathLight(entity.getBackgroundPathLight())
+                .currentBackgroundPathDark(entity.getBackgroundPathDark())
                 .currentLowPolygonPath(entity.getLowPolygonPath())
                 .currentHighPolygonPath(entity.getHighPolygonPath())
                 .brand(entity.getBrand().getName())
+                .cameraPoints(entity.getCameraPoints())
                 .build();
     }
 

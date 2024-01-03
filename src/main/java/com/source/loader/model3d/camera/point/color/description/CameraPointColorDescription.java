@@ -1,7 +1,6 @@
-package com.source.loader.model3d.camera.point.name;
+package com.source.loader.model3d.camera.point.color.description;
 
 
-import com.source.loader.model3d.Model3D;
 import com.source.loader.model3d.camera.point.CameraPoint;
 import jakarta.persistence.*;
 import lombok.*;
@@ -15,16 +14,15 @@ import java.util.Set;
 @Builder
 @Getter
 @Setter
-@Table(name = "camera_point_names")
-public class CameraPointName {
-
+@Table(name = "camera_point_color_description")
+public class CameraPointColorDescription {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "name", columnDefinition = "varchar(25) not null unique")
+    @Column(name = "name", columnDefinition = "varchar(30) not null unique")
     private String name;
 
-    @OneToMany(mappedBy = "cameraPointName", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "cameraPointColorDescription", cascade = CascadeType.PERSIST)
     private Set<CameraPoint> cameraPoints = new HashSet<>();
 }

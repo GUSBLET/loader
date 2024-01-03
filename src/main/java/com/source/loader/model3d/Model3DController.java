@@ -21,7 +21,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class Model3DController {
     private final Model3DService model3DService;
-    private final ModelAttributeManager modelAttributeManager;
 
     @PostMapping("/delete-new-confirming")
     @ResponseBody
@@ -36,12 +35,12 @@ public class Model3DController {
                                       Model model) {
         Page<Model3D> model3DPage = model3DService.getTablePage(page, size);
         if (model3DPage.isEmpty()) {
-            modelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
+            ModelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
                     .title("error")
                     .content("error")
                     .build());
         } else {
-            modelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
+            ModelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
                     .title("panel")
                     .content("controller-panel")
                     .entity(model3DPage)
@@ -55,12 +54,12 @@ public class Model3DController {
     public String getShowMore(@RequestParam UUID id, Model model) {
         Model3dUpdateDTO dto = model3DService.getModel3dUpdateDTO(id);
         if (dto == null) {
-            modelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
+            ModelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
                     .title("error")
                     .content("error")
                     .build());
         } else {
-            modelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
+            ModelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
                     .title(dto.getName())
                     .content("show-more")
                     .entity(dto)
@@ -82,7 +81,7 @@ public class Model3DController {
                               BindingResult bindingResult,
                               Model model) {
         if (bindingResult.hasErrors()) {
-            modelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
+            ModelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
                     .title("error")
                     .content("error")
                     .build());
@@ -91,7 +90,7 @@ public class Model3DController {
         }
         Model3D model3d = model3DService.findModelByName(dto.getName());
         if (model3d != null && !Objects.equals(model3d.getId(), dto.getId())) {
-            modelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
+            ModelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
                     .title(dto.getName())
                     .content("show-more")
                     .entity(dto)
@@ -102,7 +101,7 @@ public class Model3DController {
         }
 
         model3DService.updateModel3d(dto);
-        modelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
+        ModelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
                 .title("success")
                 .content("success")
                 .build());
@@ -113,7 +112,7 @@ public class Model3DController {
     @GetMapping("/create-model-form")
     private String getModelForm(Model model) {
 
-        modelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
+        ModelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
                 .title("create")
                 .content("create-model-form")
                 .entity(model3DService.getLastModelPriority())
@@ -126,7 +125,7 @@ public class Model3DController {
     private String createModel(@Valid @ModelAttribute("entity") Model3dCreatingDTO dto, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
-            modelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
+            ModelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
                     .title("create")
                     .content("create-model-form")
                     .entity(dto)
@@ -134,12 +133,12 @@ public class Model3DController {
             return "layout";
         }
         if (model3DService.createModel(dto)) {
-            modelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
+            ModelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
                     .title("success")
                     .content("success")
                     .build());
         } else {
-            modelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
+            ModelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
                     .title("create")
                     .content("create-model-form")
                     .entity(dto)

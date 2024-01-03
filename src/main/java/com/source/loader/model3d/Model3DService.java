@@ -2,6 +2,8 @@ package com.source.loader.model3d;
 
 import com.source.loader.brand.Brand;
 import com.source.loader.brand.BrandService;
+import com.source.loader.model3d.camera.point.CameraPointDTO;
+import com.source.loader.model3d.camera.point.CameraPointService;
 import com.source.loader.model3d.dto.Model3dCreatingDTO;
 import com.source.loader.model3d.dto.Model3dPageDTO;
 import com.source.loader.model3d.dto.Model3dShowcasePageDTO;
@@ -20,9 +22,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -30,6 +30,7 @@ public class Model3DService {
     private final Model3DRepository model3DRepository;
     private final BrandService brandService;
     private final FileService fileService;
+    private final CameraPointService cameraPointService;
 
 
     public boolean createModel(Model3dCreatingDTO dto) {
@@ -46,27 +47,30 @@ public class Model3DService {
         model3D = fileService.saveResources(model3D, dto);
 
         model3DRepository.updateModel3DSequenceWherePriorityMoreCurrent(model3D.getPriority(), model3D.getId());
-        model3DRepository.save(model3D);
+        model3D = model3DRepository.save(model3D);
+        model3D.setCameraPoints(cameraPointService.createCameraPoints(govno(model3D)));
         return true;
     }
 
-    public void updateModelPriorityById(String id, Long priority, Long lastPriority){
+
+
+    public void updateModelPriorityById(String id, Long priority, Long lastPriority) {
         UUID uuidId = UUID.fromString(id);
         Optional<Model3D> model3D = model3DRepository.findById(uuidId);
-        if(model3D.isEmpty()){
+        if (model3D.isEmpty()) {
             return;
         }
         model3DRepository.updateModel3DPriorityById(uuidId, priority);
-        if(priority < lastPriority){
+        if (priority < lastPriority) {
             model3DRepository.updateModel3DSequenceWherePriorityMoreCurrentAndLessLast(priority, lastPriority, uuidId);
         } else {
             model3DRepository.updateModel3DSequenceWherePriorityLessCurrentAndMoreLast(priority, lastPriority, uuidId);
         }
     }
 
-    public Model3dCreatingDTO getLastModelPriority(){
+    public Model3dCreatingDTO getLastModelPriority() {
         Optional<Model3D> model3D = model3DRepository.findFirstByOrderByPriorityDesc();
-        if(model3D.isPresent()){
+        if (model3D.isPresent()) {
             return Model3dCreatingDTO.builder()
                     .priority(model3D.get().getPriority() + 1)
                     .build();
@@ -79,12 +83,15 @@ public class Model3DService {
     @Modifying
     @Transactional
     public void removeModel(UUID id) {
-        Model3D model3D = model3DRepository.findById(id).orElseThrow();
-        fileService.removeModelResourcesById(model3D.getId());
-        model3DRepository.delete(model3D);
+        Optional<Model3D> model3D = model3DRepository.findById(id);
+        if (model3D.isEmpty()) {
+            return;
+        }
+        fileService.removeModelResourcesById(model3D.get().getId());
+        model3DRepository.delete(model3D.get());
         model3DRepository.updateModel3DSequenceWherePriorityLessCurrentAndMoreLast(
                 model3DRepository.findFirstByOrderByPriorityDesc().get().getPriority(),
-                model3D.getPriority(),
+                model3D.get().getPriority(),
                 id);
     }
 
@@ -125,26 +132,69 @@ public class Model3DService {
     public void updateModel3d(Model3dUpdateDTO dto) {
         capitalizeMainVariables(dto);
         Model3D model3D = dto.toEntity(dto);
-        model3D.setBackgroundPath(fileService.updateFile(dto.getBackgroundPath(), dto.getCurrentBackgroundPath(), model3D.getId().toString(), new BackgroundProcessing()));
+        model3D.setBackgroundPathLight(fileService.updateFile(dto.getBackgroundPathLight(), dto.getCurrentBackgroundPathLight(), model3D.getId().toString(), new BackgroundProcessing()));
+        model3D.setBackgroundPathDark(fileService.updateFile(dto.getBackgroundPathDark(), dto.getCurrentBackgroundPathDark(), model3D.getId().toString(), new BackgroundProcessing()));
         model3D.setHighPolygonPath(fileService.updateFile(dto.getHighPolygonPath(), dto.getCurrentHighPolygonPath(), model3D.getId().toString(), new HeightPolygonFileProcessing()));
         model3D.setLowPolygonPath(fileService.updateFile(dto.getLowPolygonPath(), dto.getCurrentLowPolygonPath(), model3D.getId().toString(), new LowPolygonFileProcessing()));
         model3D.setBrand(brandService.updateBrand(dto.getBrand()));
         model3DRepository.updateModel3DById(model3D.getId(), model3D.getName(), model3D.getDescription(),
-                model3D.getLowPolygonPath(), model3D.getHighPolygonPath(), model3D.getBackgroundPath(),
-                model3D.getBrand());
+                model3D.getLowPolygonPath(), model3D.getHighPolygonPath(), model3D.getBackgroundPathLight(),
+                model3D.getBackgroundPathDark(), model3D.getBrand());
     }
 
     private void capitalizeMainVariables(@NotNull Model3dCreatingDTO dto) {
-        UniqueStringCustomizer uniqueStringCustomizer = new UniqueStringCustomizer();
-        dto.setBrand(uniqueStringCustomizer.capitalizeRecord(dto.getBrand()));
-        dto.setName(uniqueStringCustomizer.capitalizeRecord(dto.getName()));
+        dto.setBrand(UniqueStringCustomizer.capitalizeRecord(dto.getBrand()));
+        dto.setName(UniqueStringCustomizer.capitalizeRecord(dto.getName()));
     }
 
     private void capitalizeMainVariables(Model3dUpdateDTO dto) {
-        UniqueStringCustomizer uniqueStringCustomizer = new UniqueStringCustomizer();
-        dto.setBrand(uniqueStringCustomizer.capitalizeRecord(dto.getBrand()));
-        dto.setName(uniqueStringCustomizer.capitalizeRecord(dto.getName()));
+        dto.setBrand(UniqueStringCustomizer.capitalizeRecord(dto.getBrand()));
+        dto.setName(UniqueStringCustomizer.capitalizeRecord(dto.getName()));
     }
 
+
+    private List<CameraPointDTO> govno(Model3D model3D) {
+        List<CameraPointDTO> list = new ArrayList<>();
+        list.add(CameraPointDTO.builder()
+                .point_x_position(-2.46F)
+                .point_y_position(0.16F)
+                .point_z_position(0.1F)
+                .camera_x_position(-6.46F)
+                .camera_y_position(2.16F)
+                .camera_z_position(4F)
+                .description("Default")
+                .name("top")
+                .colorDescription("dark")
+                .model3D(model3D)
+                .build());
+
+        list.add(CameraPointDTO.builder()
+                .point_x_position(1.64F)
+                .point_y_position(0.7F)
+                .point_z_position(0.18F)
+                .camera_x_position(1.7F)
+                .camera_y_position(12F)
+                .camera_z_position(0.1F)
+                .description("Default")
+                .name("middle")
+                .colorDescription("dark")
+                .model3D(model3D)
+                .build());
+
+        list.add(CameraPointDTO.builder()
+                .point_x_position(-0.3F)
+                .point_y_position(-0.8F)
+                .point_z_position(-0.78F)
+                .camera_x_position(0.2F)
+                .camera_y_position(-3F)
+                .camera_z_position(-4F)
+                .description("Default")
+                .name("bottom")
+                .colorDescription("dark")
+                .model3D(model3D)
+                .build());
+
+        return list;
+    }
 
 }

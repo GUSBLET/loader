@@ -22,7 +22,7 @@ import java.util.UUID;
 public class Model3D {
 
     @Id
-    @Column(columnDefinition = "BINARY(16) primary key")
+    @Column(columnDefinition = "uuid primary key")
     private UUID id;
 
     @Column(name = "name", columnDefinition = "varchar(50) not null unique")
@@ -37,8 +37,11 @@ public class Model3D {
     @Column(name = "high_polygon_path", columnDefinition = "text not null unique")
     private String highPolygonPath;
 
-    @Column(name = "background_path", columnDefinition = "text unique")
-    private String backgroundPath;
+    @Column(name = "background_path_light", columnDefinition = "text unique")
+    private String backgroundPathLight;
+
+    @Column(name = "background_path_dark", columnDefinition = "text unique")
+    private String backgroundPathDark;
 
     @Column(name = "priority", columnDefinition = "serial")
     private Long priority;
@@ -48,5 +51,5 @@ public class Model3D {
     private Brand brand;
 
     @OneToMany(mappedBy = "model3D", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    private Set<CameraPoint> views = new HashSet<>();
+    private Set<CameraPoint> cameraPoints = new HashSet<>();
 }

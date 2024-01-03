@@ -1,9 +1,15 @@
 package com.source.loader.technical.unique.string.customizer;
 
 public class UniqueStringCustomizer {
-    public  static String capitalizeRecord(String name) {
+    public static String capitalizeRecord(String name) {
         if (name != null && !name.isEmpty())
             return name.substring(0, 1).toUpperCase() + name.substring(1);
+        return name;
+    }
+
+    public static String decapitalizeRecord(String name) {
+        if (name != null && !name.isEmpty())
+            return name.substring(0, 1).toLowerCase() + name.substring(1);
         return name;
     }
 }

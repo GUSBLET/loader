@@ -13,8 +13,10 @@
     <th:block th:if="${content == 'create-model-form' or content == 'creating-background-form'}">
         <link rel="stylesheet" href="/css/show_model.css">
     </th:block>
-    <th:block th:if="${content == 'show-more' or content == 'showcase-background-show-more'}">
+    <th:block th:if="${content == 'show-more' or content == 'showcase-background-show-more' or content == 'update-camera-point'} ">
         <link rel="stylesheet" href="/css/show_model.css">
+        <link rel="stylesheet" href="/css/table_update.css">
+
     </th:block>
     <link rel="stylesheet" href="/css/base.css">
     <link rel="stylesheet" href="/css/show_model.css">
@@ -54,6 +56,10 @@
     </th:block>
     <th:block th:case="'showcase-background-show-more'">
         <main th:replace="~{showcase-background/show-more :: content(${entity})}"></main>
+    </th:block>
+
+    <th:block th:case="'update-camera-point'">
+        <main th:replace="~{camera-point/show-more :: content(${entity})}"></main>
     </th:block>
 
     <th:block th:case="'success'">

@@ -60,7 +60,7 @@ public class SecurityConfig {
                 ).sessionManagement(s -> {
                     s.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
                 })
-                .logout(logout ->  logout.logoutUrl("/account/technical/logout")
+                .logout(logout -> logout.logoutUrl("/account/technical/logout")
                         .logoutSuccessUrl("https://puppetpalm.com:9999/account/technical/login-page"))
                 .exceptionHandling(e -> e.accessDeniedPage("/"))
                 .authorizeHttpRequests(authorize -> {
@@ -69,21 +69,22 @@ public class SecurityConfig {
                             "/files/**",
                             "/background-api/**",
                             "/",
-                            "/account/technical/**"
-
+                            "/swagger/**",
+                            "/v3/**",
+                            "/account/technical/**",
+                            "/swagger-ui/**"
                     ).permitAll();
-                    authorize
-                            .requestMatchers(
-                                    "/model3d/**",
-                                    "/showcase-background/**",
-                                    "/model3d/create-model-form",
-                                    "/model3d/update-model-form",
-                                    "/model3d/show-models**"
-                            ).authenticated();
+                    authorize.requestMatchers(
+                            "/model3d/**",
+                            "/camera-point/**",
+                            "/showcase-background/**",
+                            "/model3d/create-model-form",
+                            "/model3d/update-model-form",
+                            "/model3d/show-models**"
+                    ).authenticated();
                 })
                 .build();
     }
-
 
 
     @Bean
