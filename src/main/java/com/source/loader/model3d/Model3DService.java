@@ -80,19 +80,22 @@ public class Model3DService {
                 .build();
     }
 
-    @Modifying
-    @Transactional
+
     public void removeModel(UUID id) {
         Optional<Model3D> model3D = model3DRepository.findById(id);
         if (model3D.isEmpty()) {
             return;
         }
         fileService.removeModelResourcesById(model3D.get().getId());
+        cameraPointService.removeCameraPointsByModel3dId(id);
         model3DRepository.delete(model3D.get());
-        model3DRepository.updateModel3DSequenceWherePriorityLessCurrentAndMoreLast(
-                model3DRepository.findFirstByOrderByPriorityDesc().get().getPriority(),
-                model3D.get().getPriority(),
-                id);
+
+        if(model3DRepository.count() > 0){
+            model3DRepository.updateModel3DSequenceWherePriorityLessCurrentAndMoreLast(
+                    model3DRepository.findFirstByOrderByPriorityDesc().get().getPriority(),
+                    model3D.get().getPriority(),
+                    id);
+        }
     }
 
 

@@ -4,7 +4,9 @@ import com.source.loader.model3d.camera.point.color.description.CameraPointColor
 import com.source.loader.model3d.camera.point.color.description.CameraPointColorDescriptionService;
 import com.source.loader.model3d.camera.point.name.CameraPointName;
 import com.source.loader.model3d.camera.point.name.CameraPointNameService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -38,7 +40,11 @@ public class CameraPointService {
         cameraPointRepository.updateCameraPointColorDescriptionById(id, cameraPointColorDescription);
     }
 
-
+    @Modifying
+    @Transactional
+    public void removeCameraPointsByModel3dId(UUID id){
+        cameraPointRepository.deleteByModel3DId(id);
+    }
 
     public void updatePoint(CameraPointDTO dto) {
            CameraPoint cameraPoint = dto.toEntity(dto);
