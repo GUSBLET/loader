@@ -167,7 +167,7 @@ public class Model3DService {
                 .camera_z_position(4F)
                 .description("Default")
                 .name("top")
-                .colorDescription("dark")
+                .colorDescription("black")
                 .model3D(model3D)
                 .build());
 
@@ -180,7 +180,7 @@ public class Model3DService {
                 .camera_z_position(0.1F)
                 .description("Default")
                 .name("middle")
-                .colorDescription("dark")
+                .colorDescription("black")
                 .model3D(model3D)
                 .build());
 
@@ -193,7 +193,7 @@ public class Model3DService {
                 .camera_z_position(-4F)
                 .description("Default")
                 .name("bottom")
-                .colorDescription("dark")
+                .colorDescription("black")
                 .model3D(model3D)
                 .build());
 
