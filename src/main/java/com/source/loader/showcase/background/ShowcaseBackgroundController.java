@@ -62,7 +62,7 @@ public class ShowcaseBackgroundController {
             return "layout";
         }
         ShowcaseBackground background = backgroundService.findBackgroundByModeName(dto.getModeName());
-        if (background != null && !Objects.equals(background.getId(), dto.getId())) {
+        if (background != null && !Objects.equals(background.getId().toString(), dto.getId())) {
             ModelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
                     .title(dto.getCurrentFile())
                     .content("showcase-background-show-more")
