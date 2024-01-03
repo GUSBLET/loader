@@ -50,6 +50,6 @@ public class Model3D {
     @JoinColumn(name = "brand_id")
     private Brand brand;
 
-    @OneToMany(mappedBy = "model3D", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "model3D", cascade = CascadeType.ALL , fetch = FetchType.EAGER,  orphanRemoval = true)
     private Set<CameraPoint> cameraPoints = new HashSet<>();
 }

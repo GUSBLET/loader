@@ -34,18 +34,13 @@ public class Model3DController {
                                       @RequestParam(name = "size", defaultValue = "20") int size,
                                       Model model) {
         Page<Model3D> model3DPage = model3DService.getTablePage(page, size);
-        if (model3DPage.isEmpty()) {
-            ModelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
-                    .title("error")
-                    .content("error")
-                    .build());
-        } else {
-            ModelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
-                    .title("panel")
-                    .content("controller-panel")
-                    .entity(model3DPage)
-                    .build());
-        }
+
+        ModelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
+                .title("panel")
+                .content("controller-panel")
+                .entity(model3DPage)
+                .build());
+
 
         return "layout";
     }
