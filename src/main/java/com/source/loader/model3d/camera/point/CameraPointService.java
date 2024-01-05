@@ -2,6 +2,8 @@ package com.source.loader.model3d.camera.point;
 
 import com.source.loader.model3d.camera.point.color.description.CameraPointColorDescription;
 import com.source.loader.model3d.camera.point.color.description.CameraPointColorDescriptionService;
+import com.source.loader.model3d.camera.point.dto.CameraPointDTO;
+import com.source.loader.model3d.camera.point.dto.CameraPositionUpdateDTO;
 import com.source.loader.model3d.camera.point.name.CameraPointName;
 import com.source.loader.model3d.camera.point.name.CameraPointNameService;
 import jakarta.transaction.Transactional;
@@ -63,5 +65,22 @@ public class CameraPointService {
         cameraPoint.setCameraPointColorDescription(cameraPointColorDescription);
         cameraPointRepository.save(cameraPoint);
         return cameraPoint;
+    }
+
+    public boolean updateCameraPositionByNameAndID(CameraPositionUpdateDTO dto) {
+        UUID id = tryConvertingStringToUUID(dto.getId());
+        if(id == null || cameraPointRepository.existsById(id))
+            return false;
+
+        cameraPointRepository.updateCameraPositionById(id, dto.getPosition_x(), dto.getPosition_y(), dto.getPosition_z());
+        return true;
+    }
+
+    private UUID tryConvertingStringToUUID(String line){
+        try {
+            return UUID.fromString(line);
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
     }
 }

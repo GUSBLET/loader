@@ -3,8 +3,8 @@ package com.source.loader.model3d.dto;
 import com.source.loader.mapper.Mapper;
 import com.source.loader.model3d.Model3D;
 import com.source.loader.model3d.camera.point.CameraPoint;
-import com.source.loader.model3d.camera.point.CameraPointDTO;
-import com.source.loader.model3d.camera.point.CameraPointPageDTO;
+import com.source.loader.model3d.camera.point.dto.CameraPointDTO;
+import com.source.loader.model3d.camera.point.dto.CameraPointPageDTO;
 import lombok.*;
 
 import java.util.*;

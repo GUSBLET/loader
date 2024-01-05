@@ -1,8 +1,7 @@
 package com.source.loader.model3d.camera.point;
 
-import lombok.Getter;
+import com.source.loader.model3d.camera.point.dto.CameraPositionUpdateDTO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -13,6 +12,8 @@ import java.util.UUID;
 public class CameraPointRestController {
     private final CameraPointService cameraPointService;
 
+
+
     @GetMapping("/update-camera-point-description-color")
     public void updateCameraPointDescriptionColor(@RequestParam(name = "id") String id,
                                                   @RequestParam(name = "selectedColor") String selectedColor){
@@ -20,6 +21,8 @@ public class CameraPointRestController {
             return;
         cameraPointService.updateColorDescription(UUID.fromString(id), selectedColor);
     }
+
+
 }
 
 
