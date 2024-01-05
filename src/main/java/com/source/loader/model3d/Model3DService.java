@@ -2,7 +2,7 @@ package com.source.loader.model3d;
 
 import com.source.loader.brand.Brand;
 import com.source.loader.brand.BrandService;
-import com.source.loader.model3d.camera.point.CameraPointDTO;
+import com.source.loader.model3d.camera.point.dto.CameraPointDTO;
 import com.source.loader.model3d.camera.point.CameraPointService;
 import com.source.loader.model3d.dto.Model3dCreatingDTO;
 import com.source.loader.model3d.dto.Model3dPageDTO;
@@ -13,13 +13,11 @@ import com.source.loader.technical.file.strategy.BackgroundProcessing;
 import com.source.loader.technical.file.strategy.HeightPolygonFileProcessing;
 import com.source.loader.technical.file.strategy.LowPolygonFileProcessing;
 import com.source.loader.technical.unique.string.customizer.UniqueStringCustomizer;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
 import java.util.*;

@@ -1,5 +1,7 @@
 package com.source.loader.model3d.camera.point;
 
+import com.source.loader.model3d.camera.point.dto.CameraPointDTO;
+import com.source.loader.model3d.camera.point.position.updating.CameraPointPositionUpdatingService;
 import com.source.loader.technical.model.attribute.ModelAttributeManager;
 import com.source.loader.technical.model.attribute.ModelPageAttributes;
 import jakarta.validation.Valid;
@@ -16,6 +18,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class CameraPointController {
     private final CameraPointService cameraPointService;
+    private final CameraPointPositionUpdatingService cameraPointPositionUpdatingService;
 
     @GetMapping("/update-camera-point")
     public String getUpdateCameraPointById(@RequestParam(name = "id") String id, Model model) {
@@ -27,10 +30,14 @@ public class CameraPointController {
                     .build());
         } else {
             CameraPointDTO dto = new CameraPointDTO();
+            dto = dto.toDto(cameraPoint);
+            dto.setTechnicalUrl("https://puppetpalm.com/item-technical?cameraId=" + dto.getId() +
+                    "&modelId=" + dto.getModel3D().getId() + "&secretKey=" + cameraPointPositionUpdatingService.addSecretKey(UUID.randomUUID().toString()));
+
             ModelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()
                     .title("Update camera point")
                     .content("update-camera-point")
-                    .entity(dto.toDto(cameraPoint))
+                    .entity(dto)
                     .build());
         }
         return "layout";
@@ -44,7 +51,6 @@ public class CameraPointController {
                     .content("update-camera-point")
                     .entity(dto)
                     .build());
-
         } else {
             cameraPointService.updatePoint(dto);
             ModelAttributeManager.setModelAttribute(model, ModelPageAttributes.builder()

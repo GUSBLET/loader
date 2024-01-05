@@ -1,7 +1,8 @@
-package com.source.loader.model3d.camera.point;
+package com.source.loader.model3d.camera.point.dto;
 
 
 import com.source.loader.mapper.Mapper;
+import com.source.loader.model3d.camera.point.CameraPoint;
 import lombok.*;
 
 

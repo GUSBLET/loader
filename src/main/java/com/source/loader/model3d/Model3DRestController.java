@@ -1,6 +1,9 @@
 package com.source.loader.model3d;
 
 
+import com.source.loader.model3d.camera.point.CameraPointService;
+import com.source.loader.model3d.camera.point.dto.CameraPositionUpdateDTO;
+import com.source.loader.model3d.camera.point.position.updating.CameraPointPositionUpdatingService;
 import com.source.loader.model3d.dto.Model3dPageDTO;
 import com.source.loader.model3d.dto.Model3dShowcasePageDTO;
 import lombok.RequiredArgsConstructor;
@@ -17,29 +20,37 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class Model3DRestController {
     private final Model3DService model3DService;
-
+    private final CameraPointService cameraPointService;
+    private final CameraPointPositionUpdatingService cameraPointPositionUpdatingService;
 
     @PostMapping("/get-model-page/{id}")
-    public ResponseEntity<Model3dPageDTO> getPageData(@PathVariable UUID id){
+    public ResponseEntity<Model3dPageDTO> getPageData(@PathVariable UUID id) {
         Model3dPageDTO dto = model3DService.getModel3dPageById(id);
-        if(dto == null)
+        if (dto == null)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         return ResponseEntity.status(HttpStatus.OK).body(dto);
     }
 
     @GetMapping("/get-cards")
-    public ResponseEntity<List<Model3dShowcasePageDTO>> getCards(){
+    public ResponseEntity<List<Model3dShowcasePageDTO>> getCards() {
         return ResponseEntity.status(HttpStatus.OK).body(model3DService.getModel3dCardList());
     }
 
-    
+
     @GetMapping("/get-showcase-page")
     public ResponseEntity<Page<Model3dShowcasePageDTO>> getCardsPageable(@RequestParam(name = "page", defaultValue = "0") int page,
-                                                                         @RequestParam(name = "size", defaultValue = "8") int size){
+                                                                         @RequestParam(name = "size", defaultValue = "8") int size) {
         Page<Model3D> buffer = model3DService.getTablePage(page, size);
         Model3dShowcasePageDTO dto = new Model3dShowcasePageDTO();
         Page<Model3dShowcasePageDTO> result = buffer.map(dto::toDto);
 
         return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
+
+    @PostMapping("/update-camera-position")
+    public boolean updateCameraPositionByNameAndID(@RequestBody CameraPositionUpdateDTO dto) {
+        if(!cameraPointPositionUpdatingService.findSecretKey(dto.getSecretKey()))
+            return false;
+        return cameraPointService.updateCameraPositionByNameAndID(dto);
     }
 }

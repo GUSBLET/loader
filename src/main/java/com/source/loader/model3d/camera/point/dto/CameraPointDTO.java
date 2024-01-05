@@ -1,7 +1,8 @@
-package com.source.loader.model3d.camera.point;
+package com.source.loader.model3d.camera.point.dto;
 
 import com.source.loader.mapper.Mapper;
 import com.source.loader.model3d.Model3D;
+import com.source.loader.model3d.camera.point.CameraPoint;
 import com.source.loader.model3d.camera.point.color.description.CameraPointColorDescription;
 import com.source.loader.model3d.camera.point.name.CameraPointName;
 import lombok.*;
@@ -37,6 +38,8 @@ public class CameraPointDTO implements Mapper<CameraPointDTO, CameraPoint> {
     private UUID id;
 
     private Model3D model3D;
+
+    private String technicalUrl;
 
     @Override
     public CameraPointDTO toDto(CameraPoint entity) {

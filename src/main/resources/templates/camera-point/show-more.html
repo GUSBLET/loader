@@ -36,6 +36,8 @@
                     <input type="number" id="pointZ" name="point_z_position" th:field="*{point_z_position}" step="0.1" required/>
                     <span style="color:red" th:if="${#fields.hasErrors('point_z_position')}" th:errors="*{point_z_position}"></span>
 
+                    <a th:href="${entity.technicalUrl}" style="color: #1f4bc1; font-size: 20px">Click here for update camera position</a>
+
                     <label for="cameraX">Camera X Position:</label>
                     <input type="number" id="cameraX" name="camera_x_position" th:field="*{camera_x_position}" step="0.1" required/>
                     <span style="color:red" th:if="${#fields.hasErrors('camera_x_position')}" th:errors="*{camera_x_position}"></span>
