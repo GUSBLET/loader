@@ -24,6 +24,7 @@ public class CameraPointPositionUpdatingService {
     public boolean findSecretKey(String secretKey){
         for (CameraPointPositionUpdating record : list) {
             if (record.getSecretKey().equals(secretKey)) {
+                list.remove(record);
                 return true;
             }
         }

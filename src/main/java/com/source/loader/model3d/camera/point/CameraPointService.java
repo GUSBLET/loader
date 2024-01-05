@@ -69,7 +69,7 @@ public class CameraPointService {
 
     public boolean updateCameraPositionByNameAndID(CameraPositionUpdateDTO dto) {
         UUID id = tryConvertingStringToUUID(dto.getId());
-        if(id == null || cameraPointRepository.existsById(id))
+        if(id == null || cameraPointRepository.findById(id).isEmpty())
             return false;
 
         cameraPointRepository.updateCameraPositionById(id, dto.getPosition_x(), dto.getPosition_y(), dto.getPosition_z());
