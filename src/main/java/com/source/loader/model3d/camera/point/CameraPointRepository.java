@@ -18,10 +18,7 @@ public interface CameraPointRepository extends JpaRepository<CameraPoint, UUID> 
     void updateCameraPointColorDescriptionById(@Param("id") UUID id, @Param("colorDescription")CameraPointColorDescription colorDescription);
 
     @Modifying
-    @Query("UPDATE CameraPoint c SET c.camera_x_position = :camera_x_position, c.camera_y_position = :camera_y_position, " +
-            "c.camera_z_position = :camera_z_position, c.point_x_position = :point_x_position, " +
-            "c.point_y_position = :point_y_position, c.point_z_position = :point_z_position," +
-            "c.description = :description, c.cameraPointName = :cameraPointName " +
+    @Query("UPDATE CameraPoint c SET c.description = :description, c.cameraPointName = :cameraPointName " +
             "WHERE c.id = :id")
     @Transactional
     void updateCameraPointWithoutColorDescriptionById(@Param("id") UUID id, @Param("cameraPointName") CameraPointName cameraPointName,
