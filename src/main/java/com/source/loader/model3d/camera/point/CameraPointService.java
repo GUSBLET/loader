@@ -52,8 +52,7 @@ public class CameraPointService {
            CameraPoint cameraPoint = dto.toEntity(dto);
            cameraPoint.setCameraPointName(cameraPointNameService.createCameraPointName(dto.getName()));
            cameraPointRepository.updateCameraPointWithoutColorDescriptionById(cameraPoint.getId(), cameraPoint.getCameraPointName(),
-                   cameraPoint.getDescription(), cameraPoint.getPoint_x_position(), cameraPoint.getPoint_y_position(), cameraPoint.getPoint_z_position(),
-                   cameraPoint.getCamera_x_position(), cameraPoint.getCamera_y_position(), cameraPoint.getCamera_z_position());
+                   cameraPoint.getDescription());
     }
 
     private CameraPoint createCameraPoint(
