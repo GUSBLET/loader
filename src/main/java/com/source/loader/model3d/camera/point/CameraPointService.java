@@ -72,8 +72,8 @@ public class CameraPointService {
         if(id == null || cameraPointRepository.findById(id).isEmpty())
             return false;
 
-        cameraPointRepository.updateCameraPositionById(id, roundingNumberToTheNearestTithe(dto.getPosition_x()),
-                roundingNumberToTheNearestTithe(dto.getPosition_y()), roundingNumberToTheNearestTithe(dto.getPosition_z()));
+        cameraPointRepository.updateCameraPositionById(id, dto.getPosition_x(),
+                dto.getPosition_y(), dto.getPosition_z());
         return true;
     }
 
