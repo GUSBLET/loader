@@ -38,7 +38,7 @@ public class CameraPointService {
     public void updateColorDescription(UUID id, String color){
         if (!cameraPointRepository.existsById(id))
             return;
-        CameraPointColorDescription cameraPointColorDescription = cameraPointColorDescriptionService.createCameraColorDescription(color);
+        CameraPointColorDescription cameraPointColorDescription = cameraPointColorDescriptionService.createCameraOrFindColorDescription(color);
         cameraPointRepository.updateCameraPointColorDescriptionById(id, cameraPointColorDescription);
     }
 
