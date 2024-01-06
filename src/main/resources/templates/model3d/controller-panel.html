@@ -32,7 +32,7 @@
                     <button type="submit">Update</button>
                 </form>
             </td>
-            <td><a th:href="@{/model3d/show-more(id=${model3D.id})}" class="btn-table">Update model</a></td>
+            <td><a th:href="@{/model3d/show-more(id=${model3D.id})}" class="btn-table">Update </a></td>
             <td>
                 <button class="btn-table" th:data-url="@{'/model3d/delete-new-confirming?id=' + ${model3D.id}}" th:data-id="${model3D.id}" onclick="openModalRemove(this)">
                     Delete

@@ -10,13 +10,18 @@ public class CameraPointColorDescriptionService {
     private final CameraPointColorDescriptionRepository cameraPointColorDescriptionRepository;
 
     public CameraPointColorDescription createCameraColorDescription(String name){
-        CameraPointColorDescription cameraPointColorDescription = cameraPointColorDescriptionRepository.findByName(UniqueStringCustomizer.capitalizeRecord(name)).orElse(null);
+        String hexCode = improveLineToHexCode(name);
+        CameraPointColorDescription cameraPointColorDescription = cameraPointColorDescriptionRepository.findByName(hexCode).orElse(null);
         if(cameraPointColorDescription == null){
             cameraPointColorDescription = CameraPointColorDescription.builder()
-                    .name(UniqueStringCustomizer.capitalizeRecord(name))
+                    .name(name)
                     .build();
             cameraPointColorDescription = cameraPointColorDescriptionRepository.save(cameraPointColorDescription);
         }
         return cameraPointColorDescription;
+    }
+
+    private String improveLineToHexCode(String line){
+        return "#" + line;
     }
 }

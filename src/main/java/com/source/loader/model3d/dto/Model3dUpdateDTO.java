@@ -14,9 +14,8 @@ import lombok.NoArgsConstructor;
 import org.hibernate.sql.Update;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
@@ -50,7 +49,7 @@ public class Model3dUpdateDTO implements Mapper<Model3dUpdateDTO, Model3D> {
 
     private MultipartFile lowPolygonPath;
 
-    private Set<CameraPoint> cameraPoints;
+    private List<CameraPoint> cameraPoints;
 
     @Override
     public Model3dUpdateDTO toDto(Model3D entity) {
@@ -63,7 +62,7 @@ public class Model3dUpdateDTO implements Mapper<Model3dUpdateDTO, Model3D> {
                 .currentLowPolygonPath(entity.getLowPolygonPath())
                 .currentHighPolygonPath(entity.getHighPolygonPath())
                 .brand(entity.getBrand().getName())
-                .cameraPoints(entity.getCameraPoints())
+                .cameraPoints(convertSetToList(entity.getCameraPoints()))
                 .build();
     }
 
@@ -75,5 +74,11 @@ public class Model3dUpdateDTO implements Mapper<Model3dUpdateDTO, Model3D> {
                 .description(dto.getDescription())
                 .brand(Brand.builder().name(dto.getBrand()).build())
                 .build();
+    }
+
+    private List<CameraPoint> convertSetToList(Set<CameraPoint> set){
+        List<CameraPoint> list = new ArrayList<>(set);
+        list.sort(Comparator.comparing(cameraPoint -> cameraPoint.getCameraPointName().getName()));
+        return list;
     }
 }
