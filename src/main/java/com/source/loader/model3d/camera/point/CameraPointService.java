@@ -24,7 +24,7 @@ public class CameraPointService {
         Set<CameraPoint> points = new HashSet<>();
         for (CameraPointDTO dto : list) {
             CameraPointName cameraPointName = cameraPointNameService.createCameraPointName(dto.getName());
-            CameraPointColorDescription cameraPointColorDescription = cameraPointColorDescriptionService.createCameraColorDescription(dto.getColorDescription());
+            CameraPointColorDescription cameraPointColorDescription = cameraPointColorDescriptionService.createCameraOrFindColorDescription(dto.getColorDescription());
             points.add(createCameraPoint(dto, cameraPointName, cameraPointColorDescription));
         }
         return points;
@@ -38,7 +38,7 @@ public class CameraPointService {
     public void updateColorDescription(UUID id, String color){
         if (!cameraPointRepository.existsById(id))
             return;
-        CameraPointColorDescription cameraPointColorDescription = cameraPointColorDescriptionService.createCameraColorDescription(color);
+        CameraPointColorDescription cameraPointColorDescription = cameraPointColorDescriptionService.createCameraOrFindColorDescription(color);
         cameraPointRepository.updateCameraPointColorDescriptionById(id, cameraPointColorDescription);
     }
 
