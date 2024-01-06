@@ -9,12 +9,12 @@ import org.springframework.stereotype.Service;
 public class CameraPointColorDescriptionService {
     private final CameraPointColorDescriptionRepository cameraPointColorDescriptionRepository;
 
-    public CameraPointColorDescription createCameraColorDescription(String name){
+    public CameraPointColorDescription createCameraOrFindColorDescription(String name){
         String hexCode = improveLineToHexCode(name);
         CameraPointColorDescription cameraPointColorDescription = cameraPointColorDescriptionRepository.findByName(hexCode).orElse(null);
         if(cameraPointColorDescription == null){
             cameraPointColorDescription = CameraPointColorDescription.builder()
-                    .name(name)
+                    .name(hexCode)
                     .build();
             cameraPointColorDescription = cameraPointColorDescriptionRepository.save(cameraPointColorDescription);
         }
