@@ -1,6 +1,8 @@
 package com.source.loader.model3d.camera.point.position.updating;
 
 
+import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 
 @Service
+@Slf4j
 public class CameraPointPositionUpdatingService {
     private static final List<CameraPointPositionUpdating> list = new ArrayList<>();
 
@@ -34,7 +37,7 @@ public class CameraPointPositionUpdatingService {
 
     @Scheduled(fixedRate = 300000)
     public void checkAndRemoveExpiredRecords() {
-        System.out.println("Checking and removing expired records...");
+        log.info("Checking and removing expired records...");
 
         LocalTime currentTime = LocalTime.now();
         Iterator<CameraPointPositionUpdating> iterator = list.iterator();
@@ -45,7 +48,7 @@ public class CameraPointPositionUpdatingService {
             long minutesElapsed = recordTime.until(currentTime, java.time.temporal.ChronoUnit.MINUTES);
 
             if (minutesElapsed >= 5) {
-                System.out.println("Removing record with secret key: " + record.getSecretKey());
+                log.info("Removing record with secret key: " + record.getSecretKey());
                 iterator.remove();
             }
         }
