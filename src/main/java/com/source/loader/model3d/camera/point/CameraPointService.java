@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
 import java.util.*;
 
 @Service
@@ -71,8 +72,14 @@ public class CameraPointService {
         if(id == null || cameraPointRepository.findById(id).isEmpty())
             return false;
 
-        cameraPointRepository.updateCameraPositionById(id, dto.getPosition_x(), dto.getPosition_y(), dto.getPosition_z());
+        cameraPointRepository.updateCameraPositionById(id, roundingNumberToTheNearestTithe(dto.getPosition_x()),
+                roundingNumberToTheNearestTithe(dto.getPosition_y()), roundingNumberToTheNearestTithe(dto.getPosition_z()));
         return true;
+    }
+
+    private float roundingNumberToTheNearestTithe(float number){
+        DecimalFormat decimalFormat = new DecimalFormat("#.##");
+        return Float.parseFloat(decimalFormat.format(number));
     }
 
     private UUID tryConvertingStringToUUID(String line){
