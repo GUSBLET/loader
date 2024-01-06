@@ -25,12 +25,16 @@ public interface CameraPointRepository extends JpaRepository<CameraPoint, UUID> 
                                                       @Param("description") String description);
 
     @Modifying
-    @Query("UPDATE CameraPoint c SET c.camera_x_position = :camera_x_position, c.camera_y_position = :camera_y_position, " +
-            "c.camera_z_position = :camera_z_position " +
+    @Query("UPDATE CameraPoint c SET c.camera_x_position = ROUND(:camera_x_position, 2), " +
+            "c.camera_y_position = ROUND(:camera_y_position, 2), " +
+            "c.camera_z_position = ROUND(:camera_z_position, 2) " +
             "WHERE c.id = :id")
     @Transactional
-    void updateCameraPositionById(@Param("id") UUID id, @Param("camera_x_position") float camera_x_position,
-                                                      @Param("camera_y_position") float camera_y_position, @Param("camera_z_position") float camera_z_position);
+    void updateCameraPositionById(@Param("id") UUID id,
+                                  @Param("camera_x_position") float camera_x_position,
+                                  @Param("camera_y_position") float camera_y_position,
+                                  @Param("camera_z_position") float camera_z_position);
+
 
 
 
