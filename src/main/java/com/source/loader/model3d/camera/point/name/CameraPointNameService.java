@@ -10,10 +10,10 @@ public class CameraPointNameService {
     private final CameraPointNameRepository cameraPointNameRepository;
 
     public CameraPointName createCameraPointName(String name){
-        CameraPointName cameraPointName = cameraPointNameRepository.findByName(UniqueStringCustomizer.capitalizeRecord(name)).orElse(null);
+        CameraPointName cameraPointName = cameraPointNameRepository.findByName(UniqueStringCustomizer.decapitalizeRecord(name)).orElse(null);
         if(cameraPointName == null){
             cameraPointName = CameraPointName.builder()
-                    .name(UniqueStringCustomizer.capitalizeRecord(name))
+                    .name(UniqueStringCustomizer.decapitalizeRecord(name))
                     .build();
             cameraPointName = cameraPointNameRepository.save(cameraPointName);
         }

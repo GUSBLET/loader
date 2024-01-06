@@ -2,6 +2,7 @@ package com.source.loader.technical.file.strategy;
 
 import com.source.loader.technical.FileNameSeparatorDTO;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
@@ -16,9 +17,11 @@ import java.util.UUID;
 @Getter
 @Component
 @Configuration
+@Slf4j
 public abstract class AbstractFileProcessing {
 
-    protected String ABSOLUTE_PATH = "D:\\files\\";
+    @Value("${absolute.path}")
+    protected String ABSOLUTE_PATH;
 
     protected String generateUniqueFileName(String filename){
         return filename + UUID.randomUUID();
@@ -35,7 +38,7 @@ public abstract class AbstractFileProcessing {
 
             Files.write(path, bytes);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("File saving error:" + e.getMessage());
         }
     }
 
@@ -45,7 +48,7 @@ public abstract class AbstractFileProcessing {
             try {
                 Files.delete(path);
             } catch (IOException e) {
-                e.printStackTrace();
+                log.error("File removing error:" + e.getMessage());
             }
         }
     }
@@ -60,6 +63,4 @@ public abstract class AbstractFileProcessing {
         }
         return FileNameSeparatorDTO.builder().name(name).build();
     }
-
-
 }

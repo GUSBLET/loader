@@ -19,7 +19,7 @@
         <tr th:each="item : ${entity.content}" th:id="${item.id}">
             <td th:text="${item.id}"></td>
             <td th:text="${item.modeName}"></td>
-            <td><a th:href="@{/showcase-background/show-more(id=${item.id})}" class="btn-table">Show</a></td>
+            <td><a th:href="@{/showcase-background/show-more(id=${item.id})}" class="btn-table">Update background</a></td>
             <td>
                 <button class="btn-table" th:data-url="@{'/showcase-background/delete-new-confirming?id=' + ${item.id}}" th:data-id="${item.id}" onclick="openModalRemove(this)">
                         Delete

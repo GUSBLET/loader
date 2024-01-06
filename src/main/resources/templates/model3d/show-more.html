@@ -75,21 +75,21 @@
                                 <label>
                                     <input th:value="${camera.id}" th:id="'cameraPointId' + ${camera.id}" type="hidden" required/>
                                     <select id="descriptionColor" name="color" th:data-camera-id="${camera.id}" onchange="updateDescriptionColor(this)">
-                                        <option value="white" th:selected="${camera.cameraPointColorDescription.name eq 'White'}">White</option>
-                                        <option value="black" th:selected="${camera.cameraPointColorDescription.name eq 'Black'}">Black</option>
-                                        <option value="00-658" th:selected="${camera.cameraPointColorDescription.name eq '00-658'}">Jelly bean</option>
-                                        <option value="C21807" th:selected="${camera.cameraPointColorDescription.name eq 'C21807'}">Rad</option>
-                                        <option value="65c2f5" th:selected="${camera.cameraPointColorDescription.name eq '65c2f5'}">Blue</option>
+                                        <option value="white" th:selected="${camera.cameraPointColorDescription.name eq 'white'}">White</option>
+                                        <option value="black" th:selected="${camera.cameraPointColorDescription.name eq 'black'}">Black</option>
+                                        <option value="#00-658" th:selected="${camera.cameraPointColorDescription.name eq '#00-658'}">Jelly bean</option>
+                                        <option value="#C21807" th:selected="${camera.cameraPointColorDescription.name eq '#C21807'}">Rad</option>
+                                        <option value="#65c2f5" th:selected="${camera.cameraPointColorDescription.name eq '#65c2f5'}">Blue</option>
                                     </select>
                                 </label>
                             </td>
-                            <td><a th:href="@{/camera-point/update-camera-point(id=${camera.id})}">Update</a></td>
+                            <td><a th:href="@{/camera-point/update-camera-point(id=${camera.id})}">Update camera position</a></td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="btn-login-container">
-                    <button type="submit" class="btn-login">Submit</button>
+                    <button type="submit" class="btn-login">Update</button>
                 </div>
             </form>
         </div>
