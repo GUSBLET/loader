@@ -48,7 +48,7 @@ public class FileService {
 
     public Model3D saveResources(Model3D model3D, Model3dCreatingDTO dto) {
         AbstractFileProcessing fileProcessing = new BackgroundProcessing();
-        createDirectory(model3D.getId(), fileProcessing.getABSOLUTE_PATH());
+        createDirectory(model3D.getId(), ABSOLUTE_PATH);
 
         fileProcessing = new BackgroundProcessing();
         model3D.setBackgroundPathLight(fileProcessing.processSaveFile(dto.getBackgroundPathLight(), model3D.getId().toString()));
@@ -73,7 +73,7 @@ public class FileService {
     public void removeModelResourcesById(UUID id){
         try {
             AbstractFileProcessing fileProcessing = new BackgroundProcessing();
-            FileUtils.deleteDirectory(new File(fileProcessing.getABSOLUTE_PATH() + id));
+            FileUtils.deleteDirectory(new File(ABSOLUTE_PATH + id));
         } catch (IOException e){
                 e.printStackTrace();
         }
