@@ -12,9 +12,9 @@ import lombok.*;
 public class CameraPositionUpdateDTO implements Mapper<CameraPositionUpdateDTO, CameraPoint> {
     private String id;
     private String secretKey;
-    private float position_x;
-    private float position_y;
-    private float position_z;
+    private Double position_x;
+    private Double position_y;
+    private Double position_z;
 
     @Override
     public CameraPositionUpdateDTO toDto(CameraPoint entity) {

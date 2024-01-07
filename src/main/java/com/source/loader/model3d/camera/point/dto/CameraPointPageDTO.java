@@ -13,17 +13,17 @@ import lombok.*;
 @NoArgsConstructor
 public class CameraPointPageDTO implements Mapper<CameraPointPageDTO, CameraPoint> {
 
-    private Float camera_z_position;
+    private Double camera_z_position;
 
-    private Float camera_y_position;
+    private Double camera_y_position;
 
-    private Float camera_x_position;
+    private Double camera_x_position;
 
-    private Float point_z_position;
+    private Double point_z_position;
 
-    private Float point_y_position;
+    private Double point_y_position;
 
-    private Float point_x_position;
+    private Double point_x_position;
 
     private String description;
 

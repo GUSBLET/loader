@@ -13,6 +13,17 @@ import java.util.UUID;
 public interface CameraPointRepository extends JpaRepository<CameraPoint, UUID> {
 
     @Modifying
+    @Query("UPDATE CameraPoint c SET c.camera_x_position = round(:camera_x_position, 2), " +
+            "c.camera_y_position = round(:camera_y_position,2), " +
+            "c.camera_z_position = round(:camera_z_position,2) " +
+            "WHERE c.id = :id")
+    @Transactional
+    void updateCameraPositionById(@Param("id") UUID id,
+                                  @Param("camera_x_position") Double camera_x_position,
+                                  @Param("camera_y_position") Double camera_y_position,
+                                  @Param("camera_z_position") Double camera_z_position);
+
+    @Modifying
     @Query("UPDATE CameraPoint c SET c.cameraPointColorDescription = :colorDescription WHERE c.id = :id")
     @Transactional
     void updateCameraPointColorDescriptionById(@Param("id") UUID id, @Param("colorDescription")CameraPointColorDescription colorDescription);
@@ -23,18 +34,6 @@ public interface CameraPointRepository extends JpaRepository<CameraPoint, UUID> 
     @Transactional
     void updateCameraPointWithoutColorDescriptionById(@Param("id") UUID id, @Param("cameraPointName") CameraPointName cameraPointName,
                                                       @Param("description") String description);
-
-    @Modifying
-    @Query("UPDATE CameraPoint c SET c.camera_x_position = ROUND(:camera_x_position, 2), " +
-            "c.camera_y_position = ROUND(:camera_y_position, 2), " +
-            "c.camera_z_position = ROUND(:camera_z_position, 2) " +
-            "WHERE c.id = :id")
-    @Transactional
-    void updateCameraPositionById(@Param("id") UUID id,
-                                  @Param("camera_x_position") float camera_x_position,
-                                  @Param("camera_y_position") float camera_y_position,
-                                  @Param("camera_z_position") float camera_z_position);
-
 
 
 
