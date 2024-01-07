@@ -72,8 +72,11 @@ public class CameraPointService {
         if(id == null || cameraPointRepository.findById(id).isEmpty())
             return false;
 
-        cameraPointRepository.updateCameraPositionById(id, dto.getPosition_x(),
-                dto.getPosition_y(), dto.getPosition_z());
+        double roundedX = Math.round(dto.getPosition_x()* 100.0) / 100.0;
+        double roundedY = Math.round(dto.getPosition_y()* 100.0) / 100.0;
+        double roundedZ = Math.round(dto.getPosition_z() * 100.0) / 100.0;
+        cameraPointRepository.updateCameraPositionById(id, roundedX, roundedY
+                , roundedZ );
         return true;
     }
 

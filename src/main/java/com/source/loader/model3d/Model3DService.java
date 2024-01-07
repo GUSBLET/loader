@@ -133,10 +133,10 @@ public class Model3DService {
     public void updateModel3d(Model3dUpdateDTO dto) {
         capitalizeMainVariables(dto);
         Model3D model3D = dto.toEntity(dto);
-        model3D.setBackgroundPathLight(fileService.updateFile(dto.getBackgroundPathLight(), dto.getCurrentBackgroundPathLight(), model3D.getId().toString(), new BackgroundProcessing()));
-        model3D.setBackgroundPathDark(fileService.updateFile(dto.getBackgroundPathDark(), dto.getCurrentBackgroundPathDark(), model3D.getId().toString(), new BackgroundProcessing()));
-        model3D.setHighPolygonPath(fileService.updateFile(dto.getHighPolygonPath(), dto.getCurrentHighPolygonPath(), model3D.getId().toString(), new HeightPolygonFileProcessing()));
-        model3D.setLowPolygonPath(fileService.updateFile(dto.getLowPolygonPath(), dto.getCurrentLowPolygonPath(), model3D.getId().toString(), new LowPolygonFileProcessing()));
+        model3D.setBackgroundPathLight(fileService.updateFile(dto.getBackgroundPathLight(), dto.getCurrentBackgroundPathLight(), model3D.getId().toString(), new BackgroundProcessing(fileService.ABSOLUTE_PATH)));
+        model3D.setBackgroundPathDark(fileService.updateFile(dto.getBackgroundPathDark(), dto.getCurrentBackgroundPathDark(), model3D.getId().toString(), new BackgroundProcessing(fileService.ABSOLUTE_PATH)));
+        model3D.setHighPolygonPath(fileService.updateFile(dto.getHighPolygonPath(), dto.getCurrentHighPolygonPath(), model3D.getId().toString(), new HeightPolygonFileProcessing(fileService.ABSOLUTE_PATH)));
+        model3D.setLowPolygonPath(fileService.updateFile(dto.getLowPolygonPath(), dto.getCurrentLowPolygonPath(), model3D.getId().toString(), new LowPolygonFileProcessing(fileService.ABSOLUTE_PATH)));
         model3D.setBrand(brandService.updateBrand(dto.getBrand()));
         model3DRepository.updateModel3DById(model3D.getId(), model3D.getName(), model3D.getDescription(),
                 model3D.getLowPolygonPath(), model3D.getHighPolygonPath(), model3D.getBackgroundPathLight(),
@@ -157,36 +157,36 @@ public class Model3DService {
     private List<CameraPointDTO> govno(Model3D model3D) {
         List<CameraPointDTO> list = new ArrayList<>();
         list.add(CameraPointDTO.builder()
-                .point_x_position(-0.146F)
-                .point_y_position(0F)
-                .point_z_position(0F)
-                .camera_x_position(-1.5F)
-                .camera_y_position(1.6F)
-                .camera_z_position(0.8F)
+                .point_x_position(-0.146)
+                .point_y_position(0.0)
+                .point_z_position(0.0)
+                .camera_x_position(-1.5)
+                .camera_y_position(1.6)
+                .camera_z_position(0.8)
                 .name("top")
                 .colorDescription("black")
                 .model3D(model3D)
                 .build());
 
         list.add(CameraPointDTO.builder()
-                .point_x_position(-0.01F)
-                .point_y_position(0F)
-                .point_z_position(0F)
-                .camera_x_position(1.2F)
-                .camera_y_position(-2.5F)
-                .camera_z_position(-0.9F)
+                .point_x_position(-0.01)
+                .point_y_position(0.0)
+                .point_z_position(0.0)
+                .camera_x_position(1.2)
+                .camera_y_position(-2.5)
+                .camera_z_position(-0.9)
                 .name("middle")
                 .colorDescription("black")
                 .model3D(model3D)
                 .build());
 
         list.add(CameraPointDTO.builder()
-                .point_x_position(0.1F)
-                .point_y_position(0F)
-                .point_z_position(0F)
-                .camera_x_position(2F)
-                .camera_y_position(0F)
-                .camera_z_position(0.8F)
+                .point_x_position(0.1)
+                .point_y_position(0.0)
+                .point_z_position(0.0)
+                .camera_x_position(2.0)
+                .camera_y_position(0.0)
+                .camera_z_position(0.8)
                 .name("bottom")
                 .colorDescription("black")
                 .model3D(model3D)
