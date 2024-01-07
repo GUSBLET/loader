@@ -8,6 +8,7 @@ import com.source.loader.technical.file.strategy.HeightPolygonFileProcessing;
 import com.source.loader.technical.file.strategy.LowPolygonFileProcessing;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.PathResource;
@@ -30,6 +31,7 @@ import java.util.zip.GZIPOutputStream;
 @Service
 @Getter
 @RequiredArgsConstructor
+@Slf4j
 public class FileService {
     @Value("${absolute.path}")
     public String ABSOLUTE_PATH;
@@ -47,23 +49,25 @@ public class FileService {
     }
 
     public Model3D saveResources(Model3D model3D, Model3dCreatingDTO dto) {
-        AbstractFileProcessing fileProcessing = new BackgroundProcessing();
+        AbstractFileProcessing fileProcessing;
+
         createDirectory(model3D.getId(), ABSOLUTE_PATH);
 
-        fileProcessing = new BackgroundProcessing();
+        fileProcessing = new BackgroundProcessing(ABSOLUTE_PATH);
         model3D.setBackgroundPathLight(fileProcessing.processSaveFile(dto.getBackgroundPathLight(), model3D.getId().toString()));
         model3D.setBackgroundPathDark(fileProcessing.processSaveFile(dto.getBackgroundPathDark(), model3D.getId().toString()));
-        fileProcessing = new LowPolygonFileProcessing();
+        fileProcessing = new LowPolygonFileProcessing(ABSOLUTE_PATH);
         model3D.setLowPolygonPath(fileProcessing.processSaveFile(dto.getLowPolygonPath(), model3D.getId().toString()));
-        fileProcessing = new HeightPolygonFileProcessing();
+        fileProcessing = new HeightPolygonFileProcessing(ABSOLUTE_PATH);
         model3D.setHighPolygonPath(fileProcessing.processSaveFile( dto.getHighPolygonPath(), model3D.getId().toString()));
+
         return model3D;
     }
 
     public String updateFile(MultipartFile file, String currentFilePath, String directory, AbstractFileProcessing strategy) {
         if (isFileValid(file) || file.isEmpty())
             return currentFilePath;
-        return strategy.processUpdateFile(file, currentFilePath, directory.toString());
+        return strategy.processUpdateFile(file, currentFilePath, directory);
     }
 
     private boolean isFileValid(MultipartFile file) {
@@ -72,10 +76,9 @@ public class FileService {
 
     public void removeModelResourcesById(UUID id){
         try {
-            AbstractFileProcessing fileProcessing = new BackgroundProcessing();
             FileUtils.deleteDirectory(new File(ABSOLUTE_PATH + id));
         } catch (IOException e){
-                e.printStackTrace();
+            log.error(e.getMessage());
         }
     }
 
@@ -84,7 +87,7 @@ public class FileService {
             Path path = Path.of(location + id);
             Files.createDirectories(path);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
     }
 }

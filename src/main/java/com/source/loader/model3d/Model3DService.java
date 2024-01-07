@@ -133,10 +133,10 @@ public class Model3DService {
     public void updateModel3d(Model3dUpdateDTO dto) {
         capitalizeMainVariables(dto);
         Model3D model3D = dto.toEntity(dto);
-        model3D.setBackgroundPathLight(fileService.updateFile(dto.getBackgroundPathLight(), dto.getCurrentBackgroundPathLight(), model3D.getId().toString(), new BackgroundProcessing()));
-        model3D.setBackgroundPathDark(fileService.updateFile(dto.getBackgroundPathDark(), dto.getCurrentBackgroundPathDark(), model3D.getId().toString(), new BackgroundProcessing()));
-        model3D.setHighPolygonPath(fileService.updateFile(dto.getHighPolygonPath(), dto.getCurrentHighPolygonPath(), model3D.getId().toString(), new HeightPolygonFileProcessing()));
-        model3D.setLowPolygonPath(fileService.updateFile(dto.getLowPolygonPath(), dto.getCurrentLowPolygonPath(), model3D.getId().toString(), new LowPolygonFileProcessing()));
+        model3D.setBackgroundPathLight(fileService.updateFile(dto.getBackgroundPathLight(), dto.getCurrentBackgroundPathLight(), model3D.getId().toString(), new BackgroundProcessing(fileService.ABSOLUTE_PATH)));
+        model3D.setBackgroundPathDark(fileService.updateFile(dto.getBackgroundPathDark(), dto.getCurrentBackgroundPathDark(), model3D.getId().toString(), new BackgroundProcessing(fileService.ABSOLUTE_PATH)));
+        model3D.setHighPolygonPath(fileService.updateFile(dto.getHighPolygonPath(), dto.getCurrentHighPolygonPath(), model3D.getId().toString(), new HeightPolygonFileProcessing(fileService.ABSOLUTE_PATH)));
+        model3D.setLowPolygonPath(fileService.updateFile(dto.getLowPolygonPath(), dto.getCurrentLowPolygonPath(), model3D.getId().toString(), new LowPolygonFileProcessing(fileService.ABSOLUTE_PATH)));
         model3D.setBrand(brandService.updateBrand(dto.getBrand()));
         model3DRepository.updateModel3DById(model3D.getId(), model3D.getName(), model3D.getDescription(),
                 model3D.getLowPolygonPath(), model3D.getHighPolygonPath(), model3D.getBackgroundPathLight(),

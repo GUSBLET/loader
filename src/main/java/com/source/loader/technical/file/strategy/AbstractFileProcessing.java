@@ -2,6 +2,7 @@ package com.source.loader.technical.file.strategy;
 
 import com.source.loader.technical.FileNameSeparatorDTO;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -14,14 +15,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
 
-@Getter
-@Component
-@Configuration
 @Slf4j
+@RequiredArgsConstructor
 public abstract class AbstractFileProcessing {
 
-    @Value("${absolute.path}")
-    protected String ABSOLUTE_PATH;
+    protected final String ABSOLUTE_PATH;
 
     protected String generateUniqueFileName(String filename){
         return filename + UUID.randomUUID();
